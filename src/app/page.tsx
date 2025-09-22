@@ -1,10 +1,17 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { Star, Gift, Gamepad2, Target, Zap, Users, CheckCircle, ArrowRight, Sparkles, Shield } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/context/AuthContext"
 
 export default function HomePage() {
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-pink-50">
       <Header />
@@ -23,18 +30,30 @@ export default function HomePage() {
             learning into an exciting adventure for the whole family!
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-lg px-8 py-6"
-            >
-              Sign Up as Parent
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-6 bg-transparent">
-              Log In
-            </Button>
+          <div>
+            {!isAuthenticated && 
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-lg px-8 py-6"
+                  onClick={() => router.push("/auth/register")}
+                >
+                  Sign Up as Parent
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="text-lg px-8 py-6 bg-transparent"
+                  onClick={() => router.push("/auth/login")}
+                >
+                  Log In
+                </Button>
+              </div>
+            }
           </div>
+          
+          
 
           {/* Hero Image Placeholder */}
           <div className="max-w-4xl mx-auto">
@@ -241,7 +260,11 @@ export default function HomePage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <img src="/parent-dashboard-interface-with-task-management-an.png" alt="Parent dashboard view" className="w-full h-64 object-cover" />
+              <img
+                src="/parent-dashboard-interface-with-task-management-an.png"
+                alt="Parent dashboard view"
+                className="w-full h-64 object-cover"
+              />
             </CardContent>
           </Card>
 
@@ -254,7 +277,11 @@ export default function HomePage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <img src="/colorful-child-interface-with-games--rewards-and-a.png" alt="Child interface view" className="w-full h-64 object-cover" />
+              <img
+                src="/colorful-child-interface-with-games--rewards-and-a.png"
+                alt="Child interface view"
+                className="w-full h-64 object-cover"
+              />
             </CardContent>
           </Card>
         </div>
@@ -335,6 +362,7 @@ export default function HomePage() {
                 size="lg"
                 variant="secondary"
                 className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6"
+                onClick={() => router.push("/auth/register")}
               >
                 Start Free Trial
                 <ArrowRight className="w-5 h-5 ml-2" />
@@ -343,6 +371,7 @@ export default function HomePage() {
                 size="lg"
                 variant="outline"
                 className="border-white text-white hover:bg-white/10 text-lg px-8 py-6 bg-transparent"
+                onClick={() => router.push("/auth/demo")}
               >
                 Watch Demo
               </Button>
