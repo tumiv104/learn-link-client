@@ -2,12 +2,14 @@ import api, { setAccessToken } from "@/lib/api";
 import { jwtDecode } from "jwt-decode";
 
 export type UserDto = {
+  id: number,
   email: string;
   name: string;
   role?: "Parent" | "Child" | "Admin";
 };
 
 type JwtPayload = {
+  id: string,
   email: string; 
   name: string;
   role: string;
@@ -19,8 +21,8 @@ export async function login(email: string, password: string) {
   setAccessToken(accessToken);
 
   const payload = jwtDecode<JwtPayload>(accessToken);
-  console.log(payload);
   const user: UserDto = {
+    id: Number(payload.id),
     email: payload.email,
     name: payload.name,
     role: payload.role as "Parent" | "Child" | "Admin" | undefined,
@@ -46,6 +48,26 @@ export async function register(
     avatarUrl: avatarUrl || null
   };
   const res = await api.post("/auth/register", payload);
+  return res.data;
+}
+
+export async function registerChild(
+  name: string,
+  email: string,
+  password: string,
+  parentId: number,
+  dob?: Date,
+  avatarUrl?: string
+) {
+  const payload = {
+    name,
+    email,
+    password,
+    dob: dob ? dob.toISOString() : null, 
+    avatarUrl: avatarUrl || null,
+    parentId,
+  };
+  const res = await api.post("/auth/register-child", payload);
   return res.data;
 }
 

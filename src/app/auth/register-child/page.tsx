@@ -12,6 +12,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { User, Calendar, Camera, Star, Heart, Sparkles, Gift, Mail, Lock, EyeOff, Eye } from "lucide-react"
 import Link from "next/link"
+import useRequireAuth from "@/hooks/useRequireAuth"
 
 const avatarOptions = [
   { id: 1, emoji: "🦄", name: "Unicorn", color: "bg-purple-100" },
@@ -25,7 +26,8 @@ const avatarOptions = [
 ]
 
 export default function RegisterChildPage() {
-  const { register, loading } = useAuth()
+  const { registerChild, loading, user } = useAuth()
+  const { ready } = useRequireAuth("/auth/login", ["Parent"])
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -69,12 +71,13 @@ export default function RegisterChildPage() {
     }
 
     try {
+      if (user == null) return;
       const dob = new Date(formData.dateOfBirth)
-      await register(
+      await registerChild(
         formData.name,
         formData.email,
         formData.password,
-        3, // roleId = 3 for Child
+        user.id,
         dob,
         formData.selectedAvatar || "🌟",
       )
@@ -91,6 +94,8 @@ export default function RegisterChildPage() {
   const handleSkip = () => {
     router.push("/parent/dashboard")
   }
+
+  if (!ready) return null;
 
   if (success) {
     return (

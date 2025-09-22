@@ -1,10 +1,11 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { login as loginApi, logout as logoutApi, register as registerApi, refresh as refreshApi, UserDto } from "@/services/auth/authService";
+import { login as loginApi, logout as logoutApi, register as registerApi, registerChild as registerChildApi, refresh as refreshApi, UserDto } from "@/services/auth/authService";
 import { jwtDecode } from "jwt-decode";
 
 type JwtPayload = {
+  id: string;
   email: string; 
   name: string;
   role: string;
@@ -22,6 +23,12 @@ type AuthContextType = {
             roleId: number,
             dob?: Date,
             avatarUrl?: string) => Promise<void>;
+  registerChild: (name: string,
+                  email: string,
+                  password: string,
+                  parentId: number,
+                  dob?: Date,
+                  avatarUrl?: string) => Promise<void>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
 };
@@ -44,6 +51,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const payload = jwtDecode<JwtPayload>(token);
 
     setUser({
+      id: Number(payload.id),
       email: payload.email,
       name: payload.name,
       role: payload.role as any,
@@ -90,6 +98,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(false);
   };
 
+  const doRegisterChild = async (
+    name: string,
+    email: string,
+    password: string,
+    parentId: number,
+    dob?: Date,
+    avatarUrl?: string
+  ) => {
+    setLoading(true);
+    await registerChildApi(name, email, password, parentId, dob, avatarUrl);
+    setLoading(false);
+  };
+
   const doLogout = async () => {
     setLoading(true);
     try {
@@ -125,6 +146,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       loading,
       login: doLogin,
       register: doRegister,
+      registerChild: doRegisterChild,
       logout: doLogout,
       isAuthenticated: !!user,
     }),
