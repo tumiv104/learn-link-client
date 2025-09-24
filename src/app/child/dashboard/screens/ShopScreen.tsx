@@ -5,23 +5,25 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Star } from "lucide-react"
 import { mockData } from "@/data/mockData"
+import { useTranslations } from "next-intl"
 
 export default function ShopScreen() {
+  const t = useTranslations("childDashboard.shop")
   return (
     <div className="space-y-6 pb-24">
       <div className="text-center mb-6">
         <div className="text-6xl animate-bounce mb-2">🏪</div>
-        <h2 className="text-3xl font-bold text-gray-800">Power-Up Shop</h2>
-        <p className="text-gray-600">Spend your coins on awesome rewards!</p>
+        <h2 className="text-3xl font-bold text-gray-800">{t("title")}</h2>
+        <p className="text-gray-600">{t("subtitle")}</p>
         <div className="flex justify-center gap-4 mt-4">
           <div className="bg-yellow-100 px-4 py-2 rounded-full border-2 border-yellow-300">
             <span className="font-bold text-yellow-800 flex items-center gap-1">
               <Star className="w-5 h-5" />
-              {mockData.player.coins} coins
+              {mockData.player.coins} {t("coins")}
             </span>
           </div>
           <div className="bg-purple-100 px-4 py-2 rounded-full border-2 border-purple-300">
-            <span className="font-bold text-purple-800 flex items-center gap-1">💎 {mockData.player.gems} gems</span>
+            <span className="font-bold text-purple-800 flex items-center gap-1">💎 {mockData.player.gems} {t("gems")}</span>
           </div>
         </div>
       </div>
@@ -65,17 +67,17 @@ export default function ShopScreen() {
                 <Star className="w-4 h-4" />
                 {item.cost}
               </div>
-              <p className="text-xs text-gray-500 mb-2">Stock: {item.available}</p>
+              <p className="text-xs text-gray-500 mb-2">{t("stock")}: {item.available}</p>
               <Button
                 size="sm"
                 className="w-full text-xs"
                 disabled={mockData.player.coins < item.cost || item.available === 0}
               >
                 {mockData.player.coins < item.cost
-                  ? "💰 Need More"
+                  ? t("needMore")
                   : item.available === 0
-                    ? "❌ Sold Out"
-                    : "🛒 Buy Now"}
+                    ? t("soldOut")
+                    : t("buyNow")}
               </Button>
             </CardContent>
           </Card>

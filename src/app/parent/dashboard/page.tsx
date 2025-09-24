@@ -17,8 +17,10 @@ import RewardScreen from "./screens/RewardScreen"
 import ReportScreen from "./screens/ReportScreen"
 import ProfileScreen from "./screens/ProfileScreen"
 import OverviewScreen from "./screens/OverviewScreen"
+import { useTranslations } from "next-intl"
 
 export default function ParentDashboard() {
+  const t = useTranslations("parentDashboard")
   const { user, loading, ready } = useRequireAuth("/auth/login", ["Parent"])
   const [activeTab, setActiveTab] = useState("overview")
 
@@ -38,35 +40,35 @@ export default function ParentDashboard() {
       <div className="p-4 pt-20">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">Welcome back, {user?.name}! 👋</h1>
-            <p className="text-gray-600 text-lg">Here's how your children are doing today</p>
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">{t("welcome")}, {user?.name}! 👋</h1>
+            <p className="text-gray-600 text-lg">{t("subtitle")}</p>
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
             <TabsList className="grid w-full grid-cols-6 bg-white/80 backdrop-blur-sm">
               <TabsTrigger value="overview" className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4" />
-                Overview
+                {t("tabs.overview")}
               </TabsTrigger>
               <TabsTrigger value="missions" className="flex items-center gap-2">
                 <Target className="w-4 h-4" />
-                Missions
+                {t("tabs.missions")}
               </TabsTrigger>
               <TabsTrigger value="submissions" className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
-                Submissions
+                {t("tabs.submissions")}
               </TabsTrigger>
               <TabsTrigger value="rewards" className="flex items-center gap-2">
                 <Gift className="w-4 h-4" />
-                Rewards
+                {t("tabs.rewards")}
               </TabsTrigger>
               <TabsTrigger value="reports" className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4" />
-                Reports
+                {t("tabs.reports")}
               </TabsTrigger>
               <TabsTrigger value="profile" className="flex items-center gap-2">
                 <Users className="w-4 h-4" />
-                Profile
+                {t("tabs.profile")}
               </TabsTrigger>
             </TabsList>
 

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Star, CheckCircle, Camera, Trophy, Gamepad2, Heart, Sparkles } from "lucide-react"
 import { ProgressBar } from "../ProgressBar"
+import { useTranslations } from "next-intl"
 
 interface MissionCardProps {
   id: number
@@ -33,6 +34,8 @@ export function MissionCard({
   bonus,
   feedback,
 }: MissionCardProps) {
+  const t = useTranslations("childDashboard.missions")
+
   const getCardStyle = () => {
     switch (status) {
       case "completed":
@@ -95,7 +98,7 @@ export function MissionCard({
               <div className="bg-green-100 border-2 border-green-300 rounded-lg p-3 mb-3">
                 <p className="text-green-800 font-medium flex items-center gap-2">
                   <Heart className="w-4 h-4" />
-                  Parent's Feedback:
+                  {t("feedback")}
                 </p>
                 <p className="text-green-700">{feedback}</p>
               </div>
@@ -107,7 +110,7 @@ export function MissionCard({
               <Star className="w-6 h-6" />
               {reward}
             </div>
-            <Badge variant={getDifficultyVariant()}>{difficulty}</Badge>
+            <Badge variant={getDifficultyVariant()}>{t(`difficulty.${difficulty}`)}</Badge>
           </div>
         </div>
 
@@ -115,25 +118,25 @@ export function MissionCard({
           {status === "new" && (
             <Button className="bg-purple-500 hover:bg-purple-600 flex-1">
               <Gamepad2 className="w-4 h-4 mr-2" />
-              Start Mission
+              {t("actions.start")}
             </Button>
           )}
           {status === "active" && (
             <>
               <Button className="bg-green-500 hover:bg-green-600 flex-1">
                 <CheckCircle className="w-4 h-4 mr-2" />
-                Complete
+                {t("actions.complete")}
               </Button>
               <Button variant="outline" className="flex-1 bg-transparent">
                 <Camera className="w-4 h-4 mr-2" />
-                Add Photo
+                {t("actions.addPhoto")}
               </Button>
             </>
           )}
           {status === "completed" && (
             <Button disabled className="bg-green-500 flex-1">
               <Trophy className="w-4 h-4 mr-2" />
-              Completed!
+              {t("actions.completed")}
             </Button>
           )}
         </div>

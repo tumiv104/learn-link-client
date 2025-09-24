@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { mockData } from "@/data/mockData"
 import { UserDto } from "@/services/auth/authService"
 import { MessageCircle, Star, Trophy, User, Zap } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 interface ProfileScreenProps {
   user: UserDto | null
@@ -13,6 +14,7 @@ interface ProfileScreenProps {
 }
 
 export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
+  const t = useTranslations("childDashboard.profile")
     return (
         <div className="space-y-6 pb-24">
       <div className="text-center mb-6">
@@ -20,8 +22,8 @@ export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
         <h2 className="text-3xl font-bold text-gray-800">{user?.name}</h2>
         <p className="text-gray-600">{mockData.player.title}</p>
         <div className="flex justify-center gap-2 mt-2">
-          <Badge className="bg-purple-500">Level {mockData.player.level}</Badge>
-          <Badge className="bg-orange-500">🔥 {mockData.player.streak} days</Badge>
+          <Badge className="bg-purple-500">{t("level", { level: mockData.player.level })}</Badge>
+          <Badge className="bg-orange-500">🔥 {mockData.player.streak} {t("days")}</Badge>
         </div>
       </div>
 
@@ -30,7 +32,7 @@ export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
           <CardContent className="p-4 text-center">
             <Star className="w-8 h-8 mx-auto mb-2 text-yellow-600" />
             <div className="text-2xl font-bold text-yellow-800">{mockData.player.coins}</div>
-            <p className="text-yellow-700">Total Coins</p>
+            <p className="text-yellow-700">{t("coins")}</p>
           </CardContent>
         </Card>
 
@@ -38,7 +40,7 @@ export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
           <CardContent className="p-4 text-center">
             <div className="text-3xl mb-2">💎</div>
             <div className="text-2xl font-bold text-purple-800">{mockData.player.gems}</div>
-            <p className="text-purple-700">Gems</p>
+            <p className="text-purple-700">{t("gems")}</p>
           </CardContent>
         </Card>
 
@@ -48,7 +50,7 @@ export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
             <div className="text-2xl font-bold text-blue-800">
               {mockData.achievements.filter((a) => a.earned).length}
             </div>
-            <p className="text-blue-700">Achievements</p>
+            <p className="text-blue-700">{t("achievements")}</p>
           </CardContent>
         </Card>
 
@@ -56,7 +58,7 @@ export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
           <CardContent className="p-4 text-center">
             <Zap className="w-8 h-8 mx-auto mb-2 text-green-600" />
             <div className="text-2xl font-bold text-green-800">{mockData.player.energy}%</div>
-            <p className="text-green-700">Energy</p>
+            <p className="text-green-700">{t("energy")}</p>
           </CardContent>
         </Card>
       </div>
@@ -64,20 +66,20 @@ export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
       <div className="space-y-4">
         <Button className="w-full bg-purple-500 hover:bg-purple-600 text-lg py-3">
           <User className="w-5 h-5 mr-2" />
-          Edit Profile
+          {t("editProfile")}
         </Button>
         <Button variant="outline" className="w-full text-lg py-3 bg-transparent">
           <MessageCircle className="w-5 h-5 mr-2" />
-          Message Parents
+          {t("messageParents")}
         </Button>
         <Button
           onClick={onLogout}
           variant="outline"
           className="w-full text-lg py-3 text-red-600 border-red-300 hover:bg-red-50 bg-transparent"
         >
-          Logout
+          {t("logout")}
         </Button>
-      </div>
+      </div>  
     </div>
     )
 }

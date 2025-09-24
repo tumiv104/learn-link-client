@@ -1,5 +1,7 @@
+import LanguageSwitcher from "@/components/LanguageSwitcher"
 import { Button } from "@/components/ui/button"
 import { Star, Flame, Bell, Settings } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 interface HeaderProps {
   activeScreen: string
@@ -11,21 +13,9 @@ interface HeaderProps {
 }
 
 export function Header({ activeScreen, player }: HeaderProps) {
+  const t = useTranslations("childDashboard.header")
   const getScreenTitle = () => {
-    switch (activeScreen) {
-      case "home":
-        return "🏠 Dashboard"
-      case "missions":
-        return "🚀 Mission Control"
-      case "shop":
-        return "🏪 Power-Up Shop"
-      case "achievements":
-        return "🏆 Trophy Collection"
-      case "profile":
-        return "👤 My Profile"
-      default:
-        return "Dashboard"
-    }
+    return t(activeScreen as any)
   }
 
   return (
@@ -36,6 +26,7 @@ export function Header({ activeScreen, player }: HeaderProps) {
         </div>
 
         <div className="flex items-center gap-4">
+          <LanguageSwitcher />
           <div className="flex items-center gap-4 bg-gray-100 rounded-full px-4 py-2">
             <div className="flex items-center gap-1 text-yellow-600 font-bold">
               <Star className="w-5 h-5" />

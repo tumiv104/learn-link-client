@@ -1,7 +1,9 @@
+//src\components\dashboard\child\QuestCard.tsx
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Star } from "lucide-react"
 import { ProgressBar } from "../ProgressBar"
+import { useTranslations } from "next-intl"
 
 interface QuestCardProps {
   title: string
@@ -15,6 +17,8 @@ interface QuestCardProps {
 }
 
 export function QuestCard({ title, description, progress, total, reward, type, icon, difficulty }: QuestCardProps) {
+  const t = useTranslations("childDashboard.quests")
+  
   const getDifficultyVariant = () => {
     switch (difficulty) {
       case "easy":
@@ -43,7 +47,7 @@ export function QuestCard({ title, description, progress, total, reward, type, i
               {type === "coins" ? <Star className="w-6 h-6" /> : "💎"}
               {reward}
             </div>
-            <Badge variant={getDifficultyVariant()}>{difficulty}</Badge>
+            <Badge variant={getDifficultyVariant()}>{t(`difficulty.${difficulty}`)}</Badge>
           </div>
         </div>
       </CardContent>

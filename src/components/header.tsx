@@ -4,8 +4,11 @@ import { Button } from "@/components/ui/button"
 import { Star, LogOut } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/context/AuthContext"
+import LanguageSwitcher from "./LanguageSwitcher"
+import { useTranslations } from "next-intl"
 
 export default function Header() {
+  const t = useTranslations("header");
   const router = useRouter()
   const { user, logout, isAuthenticated } = useAuth()
 
@@ -30,25 +33,26 @@ export default function Header() {
           </h1>
         </div>
         <div className="flex items-center gap-4">
+          <LanguageSwitcher />
           {isAuthenticated ? (
             <>
-              <span className="text-sm text-muted-foreground">Welcome, {user?.name}!</span>
+              <span className="text-sm text-muted-foreground">{t("welcome")}, {user?.name}!</span>
               <Button variant="ghost" size="sm" onClick={handleLogout} className="flex items-center gap-2">
                 <LogOut className="w-4 h-4" />
-                Logout
+                {t("logout")}
               </Button>
             </>
           ) : (
             <>
               <Button variant="ghost" size="sm" onClick={() => router.push("/auth/login")}>
-                Log In
+                {t("login")}
               </Button>
               <Button
                 size="sm"
                 className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90"
                 onClick={() => router.push("/auth/register")}
               >
-                Sign Up Free
+                {t("signup")}
               </Button>
             </>
           )}
