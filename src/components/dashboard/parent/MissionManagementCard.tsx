@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Star, Award } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 interface Mission {
   MissionId: number
@@ -20,6 +21,7 @@ interface MissionManagementCardProps {
 }
 
 export function MissionManagementCard({ mission }: MissionManagementCardProps) {
+  const t = useTranslations("parentDashboard.missions")
   const getStatusVariant = () => {
     switch (mission.Status) {
       case "Completed":
@@ -38,32 +40,32 @@ export function MissionManagementCard({ mission }: MissionManagementCardProps) {
           <div className="flex-1">
             <h3 className="font-semibold text-lg">{mission.Title}</h3>
             <p className="text-gray-600 mb-2">{mission.Description}</p>
-            <p className="text-sm text-gray-500 mb-2">Assigned to: {mission.ChildName}</p>
+            <p className="text-sm text-gray-500 mb-2">{t("assignedTo")}: {mission.ChildName}</p>
             <div className="flex items-center gap-4 mt-2">
-              <Badge variant={getStatusVariant()}>{mission.Status}</Badge>
+              <Badge variant={getStatusVariant()}>{t(`missionStatus.${mission.Status}`)}</Badge>
               <span className="text-sm text-gray-500">
                 <Calendar className="w-4 h-4 inline mr-1" />
-                Due: {mission.Deadline}
+                {t("due")}: {mission.Deadline}
               </span>
               <span className="text-sm font-medium text-amber-600">
                 <Star className="w-4 h-4 inline mr-1" />
-                {mission.Points} points
+                {mission.Points} {t("points")}
                 {mission.BonusPoints && ` (+${mission.BonusPoints} bonus)`}
               </span>
             </div>
             {mission.Promise && (
               <div className="mt-2 p-2 bg-purple-50 rounded text-sm text-purple-700">
                 <Award className="w-4 h-4 inline mr-1" />
-                Promise: {mission.Promise}
+                {t("promise")}: {mission.Promise}
               </div>
             )}
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm">
-              Edit
+              {t("edit")}
             </Button>
             <Button variant="outline" size="sm">
-              View
+              {t("view")}
             </Button>
           </div>
         </div>

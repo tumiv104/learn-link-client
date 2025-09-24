@@ -20,12 +20,14 @@ import { UserDto } from "@/services/auth/authService"
 import { ProgressBar } from "@/components/dashboard/ProgressBar"
 import { QuestCard } from "@/components/dashboard/child/QuestCard"
 import { MissionCard } from "@/components/dashboard/child/MissionCard"
+import { useTranslations } from "next-intl"
 
 interface UserProps {
   user: UserDto | null
 }
 
 export default function HomeScreen(user : UserProps) {
+  const t = useTranslations("childDashboard.childHome");
   return (
     <div className="space-y-6">
       {/* Welcome Header */}
@@ -34,16 +36,16 @@ export default function HomeScreen(user : UserProps) {
         <div className="flex items-center gap-6 mb-6">
           <div className="text-8xl animate-bounce">{mockData.player.avatar}</div>
           <div className="flex-1">
-            <h1 className="text-4xl font-bold mb-2">Hey {user.user?.name}! 🎉</h1>
+            <h1 className="text-4xl font-bold mb-2">{t("welcome.greeting")} {user.user?.name}! 🎉</h1>
             <p className="text-xl text-purple-100 mb-2">{mockData.player.title}</p>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <Crown className="w-6 h-6 text-yellow-300" />
-                <span className="text-xl font-bold">Level {mockData.player.level}</span>
+                <span className="text-xl font-bold">{t("welcome.level", { level: mockData.player.level })}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Flame className="w-6 h-6 text-orange-300" />
-                <span className="text-xl font-bold">{mockData.player.streak} day streak!</span>
+                <span className="text-xl font-bold">{t("welcome.streak", { days: mockData.player.streak })}</span>
               </div>
             </div>
           </div>
@@ -53,29 +55,29 @@ export default function HomeScreen(user : UserProps) {
           <div className="text-center bg-white/20 rounded-2xl p-4">
             <div className="text-3xl font-bold">{mockData.player.coins}</div>
             <div className="text-sm text-purple-100 flex items-center justify-center gap-1">
-              <Star className="w-4 h-4" /> Coins
+              <Star className="w-4 h-4" /> {t("welcome.coins")}
             </div>
           </div>
           <div className="text-center bg-white/20 rounded-2xl p-4">
             <div className="text-3xl font-bold">{mockData.player.gems}</div>
-            <div className="text-sm text-purple-100 flex items-center justify-center gap-1">💎 Gems</div>
+            <div className="text-sm text-purple-100 flex items-center justify-center gap-1">💎 {t("welcome.gems")}</div>
           </div>
           <div className="text-center bg-white/20 rounded-2xl p-4">
             <div className="text-3xl font-bold">{mockData.player.energy}%</div>
             <div className="text-sm text-purple-100 flex items-center justify-center gap-1">
-              <Zap className="w-4 h-4" /> Energy
+              <Zap className="w-4 h-4" /> {t("welcome.energy")}
             </div>
           </div>
           <div className="text-center bg-white/20 rounded-2xl p-4">
             <div className="text-3xl font-bold">{mockData.player.totalMissionsCompleted}</div>
-            <div className="text-sm text-purple-100">Total Missions</div>
+            <div className="text-sm text-purple-100">{t("welcome.totalMissions")}</div>
           </div>
         </div>
 
         <ProgressBar
           current={mockData.player.xp}
           total={mockData.player.nextLevelXp}
-          label="Level Progress"
+          label={t("welcome.progress")}
           className="text-white"
         />
       </div>
@@ -88,7 +90,7 @@ export default function HomeScreen(user : UserProps) {
           <div>
             <h2 className="text-3xl font-bold text-gray-800 mb-4 flex items-center gap-2">
               <Target className="w-8 h-8 text-blue-500" />
-              Daily Quests 🎯
+              {t("sections.dailyQuests")}
             </h2>
             <div className="space-y-4">
               {mockData.dailyQuests.map((quest) => (
@@ -101,7 +103,7 @@ export default function HomeScreen(user : UserProps) {
           <div>
             <h2 className="text-3xl font-bold text-gray-800 mb-4 flex items-center gap-2">
               <Trophy className="w-8 h-8 text-green-500" />
-              Active Missions 🚀
+              {t("sections.activeMissions")}
             </h2>
             <div className="space-y-4">
               {mockData.missions
@@ -120,23 +122,23 @@ export default function HomeScreen(user : UserProps) {
             <CardContent className="p-6">
               <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                 <Calendar className="w-6 h-6 text-purple-500" />
-                This Week 📅
+                {t("sections.weekly")}
               </h3>
               <div className="space-y-4">
                 <ProgressBar
                   current={mockData.player.weeklyProgress}
                   total={mockData.player.weeklyGoal}
-                  label="Weekly Goal"
+                  label={t("weekly.goal")}
                 />
 
                 <div className="grid grid-cols-2 gap-3 mt-4">
                   <div className="text-center bg-white/50 rounded-lg p-3">
                     <div className="text-2xl font-bold text-purple-600">{mockData.weeklyStats.missionsCompleted}</div>
-                    <div className="text-xs text-gray-600">Missions Done</div>
+                    <div className="text-xs text-gray-600">{t("weekly.missionsDone")}</div>
                   </div>
                   <div className="text-center bg-white/50 rounded-lg p-3">
                     <div className="text-2xl font-bold text-yellow-600">{mockData.weeklyStats.coinsEarned}</div>
-                    <div className="text-xs text-gray-600">Coins Earned</div>
+                    <div className="text-xs text-gray-600">{t("weekly.coinsEarned")}</div>
                   </div>
                 </div>
               </div>
@@ -148,19 +150,19 @@ export default function HomeScreen(user : UserProps) {
             <CardContent className="p-6">
               <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                 <TrendingUp className="w-6 h-6 text-blue-500" />
-                Quick Stats 📊
+                {t("sections.quickStats")}
               </h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Study Time This Week</span>
+                  <span className="text-gray-600">{t("quickStats.studyTime")}</span>
                   <span className="font-bold text-blue-600">{mockData.weeklyStats.studyTime}h</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Favorite Category</span>
+                  <span className="text-gray-600">{t("quickStats.favoriteCategory")}</span>
                   <span className="font-bold text-green-600">{mockData.player.favoriteCategory}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Achievements Earned</span>
+                  <span className="text-gray-600">{t("quickStats.achievementsEarned")}</span>
                   <span className="font-bold text-yellow-600">
                     {mockData.achievements.filter((a) => a.earned).length}
                   </span>
@@ -174,7 +176,7 @@ export default function HomeScreen(user : UserProps) {
             <CardContent className="p-6">
               <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                 <Clock className="w-6 h-6 text-orange-500" />
-                Recent Activities 🎯
+                {t("sections.recentActivities")}
               </h3>
               <div className="space-y-3">
                 {mockData.recentActivities.map((activity) => (
@@ -206,20 +208,20 @@ export default function HomeScreen(user : UserProps) {
             <CardContent className="p-6">
               <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                 <Zap className="w-6 h-6 text-green-500" />
-                Quick Actions ⚡
+                {t("sections.quickActions")}
               </h3>
               <div className="space-y-3">
                 <Button className="w-full bg-purple-500 hover:bg-purple-600 justify-start">
                   <MessageCircle className="w-4 h-4 mr-2" />
-                  Message Parents
+                  {t("quickActions.messageParents")}
                 </Button>
                 <Button className="w-full bg-blue-500 hover:bg-blue-600 justify-start">
                   <Gift className="w-4 h-4 mr-2" />
-                  Visit Shop
+                  {t("quickActions.visitShop")}
                 </Button>
                 <Button className="w-full bg-yellow-500 hover:bg-yellow-600 justify-start">
                   <Trophy className="w-4 h-4 mr-2" />
-                  View Achievements
+                  {t("quickActions.viewAchievements")}
                 </Button>
               </div>
             </CardContent>

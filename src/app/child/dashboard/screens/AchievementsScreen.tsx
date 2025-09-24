@@ -5,14 +5,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { mockData } from "@/data/mockData";
 import { Crown, Star } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function AchievementScreen() {
+  const t = useTranslations("childDashboard.achievements")
     return (
         <div className="space-y-6 pb-24">
       <div className="text-center mb-6">
         <div className="text-6xl animate-pulse mb-2">🏆</div>
-        <h2 className="text-3xl font-bold text-gray-800">Trophy Collection</h2>
-        <p className="text-gray-600">Show off your amazing achievements!</p>
+        <h2 className="text-3xl font-bold text-gray-800">{t("title")}</h2>
+        <p className="text-gray-600">{t("subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -62,7 +64,7 @@ export default function AchievementScreen() {
               </Badge>
 
               {achievement.earned ? (
-                <Badge className="bg-green-500 text-white text-xs">✨ Unlocked!</Badge>
+                <Badge className="bg-green-500 text-white text-xs">{t("unlocked")}</Badge>
               ) : (
                 <div className="space-y-1">
                   <Progress value={((achievement.progress ?? 0) / (achievement.total ?? 1)) * 100} className="h-2" />
@@ -80,7 +82,7 @@ export default function AchievementScreen() {
       <div className="mt-8">
         <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center flex items-center justify-center gap-2">
           <Crown className="w-6 h-6 text-yellow-500" />
-          Leaderboard 👑
+          {t("leaderboard")}
         </h3>
         <div className="space-y-2">
           {mockData.leaderboard.map((player) => (
@@ -106,7 +108,7 @@ export default function AchievementScreen() {
                   <div className="text-2xl">{player.avatar}</div>
                   <div className="flex-1">
                     <p className={`font-bold ${player.isMe ? "text-purple-800" : "text-gray-800"}`}>
-                      {player.name} {player.isMe && "(You!)"}
+                      {player.name} {player.isMe && t("you")}
                     </p>
                   </div>
                   <div className="text-right">

@@ -4,15 +4,17 @@ import { MissionManagementCard } from "@/components/dashboard/parent/MissionMana
 import { Button } from "@/components/ui/button"
 import { mockData } from "@/data/mockData"
 import { Plus } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 export default function MissionScreen() {
+  const t = useTranslations("parentDashboard.missions")
     return (
       <div className="space-y-6">
         <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold text-gray-800">Mission Management</h2>
+            <h2 className="text-2xl font-bold text-gray-800">{t("title")}</h2>
             <Button className="bg-red-500 hover:bg-red-600 text-white">
                 <Plus className="w-4 h-4 mr-2" />
-                Create New Mission
+                {t("create")}
             </Button>
             </div>
 

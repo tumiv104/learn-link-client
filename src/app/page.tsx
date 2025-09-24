@@ -7,8 +7,10 @@ import Footer from "@/components/footer"
 import { Star, Gift, Gamepad2, Target, Zap, Users, CheckCircle, ArrowRight, Sparkles, Shield } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/context/AuthContext"
+import { useTranslations } from "next-intl"
 
 export default function HomePage() {
+  const t = useTranslations("home");
   const router = useRouter()
   const { isAuthenticated } = useAuth()
 
@@ -20,14 +22,13 @@ export default function HomePage() {
       <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-16">
           <h1 className="text-6xl font-black text-foreground mb-6 text-balance">
-            Connect Learning.{" "}
+            {t("heroTitle1")}{" "}
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Strengthen Bonds.
+              {t("heroTitle2")}
             </span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 text-pretty max-w-3xl mx-auto">
-            Learn Link helps parents guide children's learning with tasks, rewards, and fun challenges. Turn everyday
-            learning into an exciting adventure for the whole family!
+            {t("heroSubtitle")}
           </p>
 
           <div>
@@ -38,7 +39,7 @@ export default function HomePage() {
                   className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-lg px-8 py-6"
                   onClick={() => router.push("/auth/register")}
                 >
-                  Sign Up as Parent
+                  {t("signupParent")}
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
                 <Button
@@ -47,7 +48,7 @@ export default function HomePage() {
                   className="text-lg px-8 py-6 bg-transparent"
                   onClick={() => router.push("/auth/login")}
                 >
-                  Log In
+                  {t("login")}
                 </Button>
               </div>
             }
@@ -69,9 +70,9 @@ export default function HomePage() {
       {/* Key Features Section */}
       <section id="features" className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-4">Why Choose Learn Link?</h2>
+          <h2 className="text-4xl font-bold text-foreground mb-4">{t("whyChoose")}</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Designed for both parents and children with features that make learning fun and rewarding
+            {t("whyChooseDesc")}
           </p>
         </div>
 
@@ -82,25 +83,27 @@ export default function HomePage() {
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4">
                 <Users className="w-6 h-6 text-white" />
               </div>
-              <CardTitle className="text-blue-600">For Parents</CardTitle>
+              <CardTitle className="text-blue-600">{t("features.parents.title")}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-4">
-                Assign tasks, track progress, and reward your child's learning achievements.
+                {t("features.parents.desc")}
               </p>
               <ul className="text-sm space-y-2">
+                {t.raw("features.parents.list").map((item: string, i: number) => (
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-blue-500" />
-                  Create custom tasks
+                  {item}
                 </li>
-                <li className="flex items-center gap-2">
+                ))}
+                {/* <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-blue-500" />
                   Monitor progress
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-blue-500" />
                   Set up rewards
-                </li>
+                </li> */}
               </ul>
             </CardContent>
           </Card>
@@ -111,25 +114,27 @@ export default function HomePage() {
               <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-4">
                 <Star className="w-6 h-6 text-white" />
               </div>
-              <CardTitle className="text-green-600">For Children</CardTitle>
+              <CardTitle className="text-green-600">{t("features.children.title")}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-4">
-                Complete tasks, earn points, and redeem amazing rewards in a fun way.
+                {t("features.children.desc")}
               </p>
               <ul className="text-sm space-y-2">
+                {t.raw("features.children.list").map((item: string, i: number) => (
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500" />
-                  Fun task completion
+                  {item}
                 </li>
-                <li className="flex items-center gap-2">
+                ))}
+                {/* <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500" />
                   Earn points & badges
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500" />
                   Unlock rewards
-                </li>
+                </li> */}
               </ul>
             </CardContent>
           </Card>
@@ -140,25 +145,27 @@ export default function HomePage() {
               <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4">
                 <Gamepad2 className="w-6 h-6 text-white" />
               </div>
-              <CardTitle className="text-purple-600">Gamification</CardTitle>
+              <CardTitle className="text-purple-600">{t("features.gamification.title")}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-4">
-                Minigames, badges, and achievements make learning feel like play.
+                {t("features.gamification.desc")}
               </p>
               <ul className="text-sm space-y-2">
+                {t.raw("features.gamification.list").map((item: string, i: number) => (
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-purple-500" />
-                  Interactive minigames
+                  {item}
                 </li>
-                <li className="flex items-center gap-2">
+                ))}
+                {/* <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-purple-500" />
                   Achievement badges
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-purple-500" />
                   Progress tracking
-                </li>
+                </li> */}
               </ul>
             </CardContent>
           </Card>
@@ -169,25 +176,27 @@ export default function HomePage() {
               <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center mb-4">
                 <Shield className="w-6 h-6 text-white" />
               </div>
-              <CardTitle className="text-primary">Safe & Easy</CardTitle>
+              <CardTitle className="text-primary">{t("features.safe.title")}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-4">
-                Secure platform with kid-friendly design and parental controls.
+                {t("features.safe.desc")}
               </p>
               <ul className="text-sm space-y-2">
+                {t.raw("features.safe.list").map((item: string, i: number) => (
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-primary" />
-                  Secure & private
+                  {item}
                 </li>
-                <li className="flex items-center gap-2">
+                ))}
+                {/* <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-primary" />
                   Kid-friendly interface
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-primary" />
                   Parental controls
-                </li>
+                </li> */}
               </ul>
             </CardContent>
           </Card>
@@ -198,25 +207,31 @@ export default function HomePage() {
       <section id="how-it-works" className="bg-white py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">How It Works</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-4">{t("howItWorksTitle")}</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Simple 3-step process that brings families together through learning
+              {t("howItWorksDesc")}
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Step 1 */}
-            <div className="text-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Target className="w-10 h-10 text-white" />
+            {[1, 2, 3].map((step) => (
+            <div key={step} className="text-center">
+              <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${
+                    step === 1 ? "bg-gradient-to-br from-blue-500 to-blue-600" :
+                    step === 2 ? "bg-gradient-to-br from-green-500 to-green-600" :
+                    "bg-gradient-to-br from-purple-500 to-purple-600"
+                  }`}>
+                {step === 1 && <Target className="w-10 h-10 text-white" />}
+                {step === 2 && <Zap className="w-10 h-10 text-white" />}
+                {step === 3 && <Gift className="w-10 h-10 text-white" />}
               </div>
-              <h3 className="text-2xl font-bold text-foreground mb-4">1. Parents Assign Tasks</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-4">{t(`steps.${step}.title`)}</h3>
               <p className="text-muted-foreground">
-                Create learning tasks, homework assignments, or chores with clear instructions and point values.
+                {t(`steps.${step}.desc`)}
               </p>
             </div>
-
-            {/* Step 2 */}
+            ))}
+{/* 
             <div className="text-center">
               <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Zap className="w-10 h-10 text-white" />
@@ -227,7 +242,6 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* Step 3 */}
             <div className="text-center">
               <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Gift className="w-10 h-10 text-white" />
@@ -236,7 +250,7 @@ export default function HomePage() {
               <p className="text-muted-foreground">
                 Parents review submissions, award points, and children redeem rewards from the family store.
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -244,9 +258,9 @@ export default function HomePage() {
       {/* Screenshots Section */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-4">See Learn Link in Action</h2>
+          <h2 className="text-4xl font-bold text-foreground mb-4">{t("screenshotsTitle")}</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Discover how both parents and children experience the magic of gamified learning
+            {t("screenshotsDesc")}
           </p>
         </div>
 
@@ -256,7 +270,7 @@ export default function HomePage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-blue-600">
                 <Users className="w-5 h-5" />
-                Parent Dashboard
+                {t("screens.parent")}
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
@@ -273,7 +287,7 @@ export default function HomePage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-green-600">
                 <Star className="w-5 h-5" />
-                Child Interface
+                {t("screens.child")}
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
@@ -291,9 +305,9 @@ export default function HomePage() {
       <section className="bg-gradient-to-r from-orange-50 to-pink-50 py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">What Families Are Saying</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-4">{t("testimonialsTitle")}</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Real feedback from parents and children using Learn Link
+              {t("testimonialsDesc")}
             </p>
           </div>
 
@@ -315,8 +329,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <p className="text-muted-foreground italic">
-                  "My kid is excited to study every day with Learn Link! The gamification makes homework feel like play,
-                  and I love being able to track their progress and celebrate their achievements."
+                  "{t("parentTestimonial")}"
                 </p>
               </CardContent>
             </Card>
@@ -338,8 +351,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <p className="text-muted-foreground italic">
-                  "I love unlocking rewards after finishing my homework! The mini-games are super fun, and I can't wait
-                  to earn enough points for the new art supplies in the reward store!"
+                  "{t("childTestimonial")}"
                 </p>
               </CardContent>
             </Card>
@@ -353,9 +365,9 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/90"></div>
           <CardContent className="relative z-10 text-center py-16 px-8">
             <Sparkles className="w-16 h-16 mx-auto mb-6 text-white/80" />
-            <h2 className="text-4xl font-bold mb-4">Ready to Transform Learning?</h2>
+            <h2 className="text-4xl font-bold mb-4">{t("finalCtaTitle")}</h2>
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Join thousands of families who have made learning fun, rewarding, and meaningful with Learn Link.
+              {t("finalCtaDesc")}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -364,7 +376,7 @@ export default function HomePage() {
                 className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6"
                 onClick={() => router.push("/auth/register")}
               >
-                Start Free Trial
+                {t("finalCtaStart")}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button
@@ -373,7 +385,7 @@ export default function HomePage() {
                 className="border-white text-white hover:bg-white/10 text-lg px-8 py-6 bg-transparent"
                 onClick={() => router.push("/auth/demo")}
               >
-                Watch Demo
+                {t("finalCtaDemo")}
               </Button>
             </div>
           </CardContent>

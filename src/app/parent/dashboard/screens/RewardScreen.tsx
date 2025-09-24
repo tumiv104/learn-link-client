@@ -5,15 +5,18 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { mockData } from "@/data/mockData"
 import { AlertCircle, Plus, Star } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 export default function RewardScreen() {
+    const t = useTranslations("parentDashboard.rewards")
+
     return (
       <div className="space-y-6">
         <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold text-gray-800">Reward Management</h2>
+            <h2 className="text-2xl font-bold text-gray-800">{t("title")}</h2>
             <Button className="bg-amber-500 hover:bg-amber-600 text-white">
                 <Plus className="w-4 h-4 mr-2" />
-                Add New Reward
+                {t("add")}
             </Button>
             </div>
 
@@ -22,7 +25,7 @@ export default function RewardScreen() {
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                 <AlertCircle className="w-5 h-5 text-amber-500" />
-                Pending Redemptions
+                {t("pending")}
                 </CardTitle>
             </CardHeader>
             <CardContent>
@@ -37,7 +40,10 @@ export default function RewardScreen() {
                         <div>
                         <h4 className="font-semibold">{redemption.RewardName}</h4>
                         <p className="text-sm text-gray-600">
-                            Requested by {redemption.ChildName} • {redemption.Cost} points
+                            {t("requestedBy", {
+                                child: redemption.ChildName,
+                                points: redemption.Cost,
+                            })}
                         </p>
                         <p className="text-xs text-gray-500">
                             {new Date(redemption.RequestedAt).toLocaleDateString()}
@@ -45,10 +51,10 @@ export default function RewardScreen() {
                         </div>
                         <div className="flex gap-2">
                         <Button size="sm" className="bg-green-500 hover:bg-green-600">
-                            Approve
+                            {t("approve")}
                         </Button>
                         <Button variant="outline" size="sm">
-                            Reject
+                            {t("reject")}
                         </Button>
                         </div>
                     </div>
@@ -67,16 +73,16 @@ export default function RewardScreen() {
                     <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <Star className="w-4 h-4 text-amber-500" />
-                        <span className="font-medium text-amber-600">{reward.Cost} points</span>
+                        <span className="font-medium text-amber-600">{reward.Cost} {t("points")}</span>
                     </div>
-                    <Badge variant="outline">{reward.Stock} left</Badge>
+                    <Badge variant="outline">{reward.Stock} {t("left")}</Badge>
                     </div>
                     <div className="mt-3 flex gap-2">
                     <Button variant="outline" size="sm" className="flex-1 bg-transparent">
-                        Edit
+                        {t("edit")}
                     </Button>
                     <Button variant="outline" size="sm" className="flex-1 bg-transparent">
-                        Delete
+                        {t("delete")}
                     </Button>
                     </div>
                 </CardContent>

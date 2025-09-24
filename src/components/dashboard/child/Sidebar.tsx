@@ -2,6 +2,7 @@
 
 import { Home, Gamepad2, ShoppingBag, Award, User, Crown } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
+import { useTranslations } from "next-intl"
 
 interface SidebarProps {
   activeScreen: string
@@ -17,12 +18,13 @@ interface SidebarProps {
 }
 
 export function Sidebar({ activeScreen, setActiveScreen, name, player }: SidebarProps) {
+  const t = useTranslations("childDashboard.nav")
   const navigationItems = [
-    { id: "home", icon: Home, label: "Dashboard", color: "hover:bg-purple-500" },
-    { id: "missions", icon: Gamepad2, label: "Missions", color: "hover:bg-green-500" },
-    { id: "shop", icon: ShoppingBag, label: "Shop", color: "hover:bg-blue-500" },
-    { id: "achievements", icon: Award, label: "Achievements", color: "hover:bg-yellow-500" },
-    { id: "profile", icon: User, label: "Profile", color: "hover:bg-pink-500" },
+    { id: "home", icon: Home, label: t("home"), color: "hover:bg-purple-500" },
+    { id: "missions", icon: Gamepad2, label: t("missions"), color: "hover:bg-green-500" },
+    { id: "shop", icon: ShoppingBag, label: t("shop"), color: "hover:bg-blue-500" },
+    { id: "achievements", icon: Award, label: t("achievements"), color: "hover:bg-yellow-500" },
+    { id: "profile", icon: User, label: t("profile"), color: "hover:bg-pink-500" },
   ]
 
   return (

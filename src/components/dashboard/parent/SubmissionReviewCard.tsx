@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Clock } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 interface Submission {
   SubmissionId: number
@@ -18,21 +19,22 @@ interface SubmissionReviewCardProps {
 }
 
 export function SubmissionReviewCard({ submission }: SubmissionReviewCardProps) {
+  const t = useTranslations("parentDashboard.submissions")
   return (
     <Card className="hover:shadow-lg transition-shadow">
       <CardContent className="p-6">
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <h3 className="font-semibold text-lg">{submission.MissionTitle}</h3>
-            <p className="text-gray-600 mb-2">Submitted by: {submission.ChildName}</p>
+            <p className="text-gray-600 mb-2">{t("submittedBy")}: {submission.ChildName}</p>
             <div className="flex items-center gap-4 mb-3">
-              <Badge variant={submission.Status === "Reviewed" ? "default" : "secondary"}>{submission.Status}</Badge>
+              <Badge variant={submission.Status === "Approved" ? "default" : "secondary"}>{t(`submissionStatus.${submission.Status}`)}</Badge>
               <span className="text-sm text-gray-500">
                 <Clock className="w-4 h-4 inline mr-1" />
                 {new Date(submission.SubmittedAt).toLocaleDateString()}
               </span>
               {submission.Score && (
-                <span className="text-sm font-medium text-green-600">Score: {submission.Score}/100</span>
+                <span className="text-sm font-medium text-green-600">{t("score")}: {submission.Score}/100</span>
               )}
             </div>
             {submission.Feedback && (
@@ -43,11 +45,11 @@ export function SubmissionReviewCard({ submission }: SubmissionReviewCardProps) 
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm">
-              View File
+              {t("viewFile")}
             </Button>
             {submission.Status === "Pending Review" && (
               <Button size="sm" className="bg-green-500 hover:bg-green-600">
-                Review
+                {t("review")}
               </Button>
             )}
           </div>

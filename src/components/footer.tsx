@@ -1,6 +1,8 @@
 import { Star, Heart, Shield } from "lucide-react"
+import { useTranslations } from "next-intl";
 
 export default function Footer() {
+  const t = useTranslations("footer");
   return (
     <footer className="bg-gradient-to-r from-primary to-secondary text-white py-12 mt-16">
       <div className="container mx-auto px-4">
