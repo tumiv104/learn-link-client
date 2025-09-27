@@ -3,6 +3,11 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Star, Award } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
+import { MissionDialog } from "./MissionDialog"
+import { AlertPopup } from "@/components/ui/alert-popup"
+import { useAlert } from "@/hooks/useAlert"
+import { mockData } from "@/data/mockData"
 
 interface Mission {
   MissionId: number
@@ -32,9 +37,53 @@ export function MissionManagementCard({ mission }: MissionManagementCardProps) {
         return "outline"
     }
   }
+  const { alert, showSuccess, showError, hideAlert } = useAlert()
+  const [missionDialog, setMissionDialog] = useState({
+    open: false,
+    mode: "create" as "create" | "edit" | "view",
+    mission: undefined as any,
+  })
+
+  const handleEditMission = (mission: any) => {
+    setMissionDialog({
+      open: true,
+      mode: "edit",
+      mission,
+    })
+  }
+
+  const handleViewMission = (mission: any) => {
+    setMissionDialog({
+      open: true,
+      mode: "view",
+      mission,
+    })
+  }
+
+  const handleSaveMission = (mission: any) => {
+    // Simulate API call
+    setTimeout(() => {
+      if (missionDialog.mode === "create") {
+        showError("Mission Created", `"${mission.Title}" has been successfully created.`)
+      } else {
+        showSuccess("Mission Updated", `"${mission.Title}" has been successfully updated.`)
+      }
+    }, 500)
+  }
 
   return (
     <Card className="hover:shadow-lg transition-shadow">
+      {alert && <AlertPopup type={alert.type} title={alert.title} message={alert.message} onClose={hideAlert} />}
+      
+            <MissionDialog
+              open={missionDialog.open}
+              onOpenChange={(open) => setMissionDialog({ ...missionDialog, open })}
+              mode={missionDialog.mode}
+              mission={missionDialog.mission}
+              children={mockData.children}
+              onSave={handleSaveMission}
+            />
+      
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex-1">
@@ -61,10 +110,10 @@ export function MissionManagementCard({ mission }: MissionManagementCardProps) {
             )}
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={() => handleEditMission(mission)}>
               {t("edit")}
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={() => handleViewMission(mission)}>
               {t("view")}
             </Button>
           </div>

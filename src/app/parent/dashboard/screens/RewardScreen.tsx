@@ -3,15 +3,63 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog"
 import { mockData } from "@/data/mockData"
+import { useAlert } from "@/hooks/useAlert"
 import { AlertCircle, Plus, Star } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 export default function RewardScreen() {
     const t = useTranslations("parentDashboard.rewards")
 
+    const { alert, showSuccess, showError, hideAlert } = useAlert()
+    const [confirmDialog, setConfirmDialog] = useState({
+        open: false,
+        title: "",
+        description: "",
+        onConfirm: () => {},
+        variant: "destructive" as "destructive" | "success" | "warning",
+    })
+
+    const handleApproveRedemption = (redemption: any) => {
+        setConfirmDialog({
+        open: true,
+        title: "Approve Redemption",
+        description: `Approve ${redemption.ChildName}'s request for "${redemption.RewardName}"?`,
+        variant: "success",
+        onConfirm: () => {
+            setTimeout(() => {
+            showSuccess("Redemption Approved", `${redemption.ChildName}'s request has been approved.`)
+            }, 500)
+        },
+        })
+    }
+
+    const handleRejectRedemption = (redemption: any) => {
+        setConfirmDialog({
+        open: true,
+        title: "Reject Redemption",
+        description: `Reject ${redemption.ChildName}'s request for "${redemption.RewardName}"?`,
+        variant: "warning",
+        onConfirm: () => {
+            setTimeout(() => {
+            showError("Redemption Rejected", `${redemption.ChildName}'s request has been rejected.`)
+            }, 500)
+        },
+        })
+    }
+
     return (
       <div className="space-y-6">
+        <ConfirmationDialog
+            open={confirmDialog.open}
+            onOpenChange={(open) => setConfirmDialog({ ...confirmDialog, open })}
+            title={confirmDialog.title}
+            description={confirmDialog.description}
+            variant={confirmDialog.variant}
+            onConfirm={confirmDialog.onConfirm}
+        />
         <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold text-gray-800">{t("title")}</h2>
             <Button className="bg-amber-500 hover:bg-amber-600 text-white">
@@ -50,10 +98,12 @@ export default function RewardScreen() {
                         </p>
                         </div>
                         <div className="flex gap-2">
-                        <Button size="sm" className="bg-green-500 hover:bg-green-600">
+                        <Button size="sm" className="bg-green-500 hover:bg-green-600"
+                            onClick={() => handleApproveRedemption(redemption)}>
                             {t("approve")}
                         </Button>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm"
+                            onClick={() => handleRejectRedemption(redemption)}>
                             {t("reject")}
                         </Button>
                         </div>
