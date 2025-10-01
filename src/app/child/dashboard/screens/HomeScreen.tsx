@@ -22,11 +22,12 @@ import { QuestCard } from "@/components/dashboard/child/QuestCard"
 import { MissionCard } from "@/components/dashboard/child/MissionCard"
 import { useTranslations } from "next-intl"
 
-interface UserProps {
+interface HomeProps {
   user: UserDto | null
+  points: number
 }
 
-export default function HomeScreen(user : UserProps) {
+export default function HomeScreen({ user, points} : HomeProps) {
   const t = useTranslations("childDashboard.childHome");
   return (
     <div className="space-y-6">
@@ -36,13 +37,13 @@ export default function HomeScreen(user : UserProps) {
         <div className="flex items-center gap-6 mb-6">
           <div className="text-8xl animate-bounce">{mockData.player.avatar}</div>
           <div className="flex-1">
-            <h1 className="text-4xl font-bold mb-2">{t("welcome.greeting")} {user.user?.name}! 🎉</h1>
+            <h1 className="text-4xl font-bold mb-2">{t("welcome.greeting")} {user?.name}! 🎉</h1>
             <p className="text-xl text-purple-100 mb-2">{mockData.player.title}</p>
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <Crown className="w-6 h-6 text-yellow-300" />
                 <span className="text-xl font-bold">{t("welcome.level", { level: mockData.player.level })}</span>
-              </div>
+              </div> */}
               <div className="flex items-center gap-2">
                 <Flame className="w-6 h-6 text-orange-300" />
                 <span className="text-xl font-bold">{t("welcome.streak", { days: mockData.player.streak })}</span>
@@ -51,17 +52,17 @@ export default function HomeScreen(user : UserProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-3 gap-4 mb-6">
           <div className="text-center bg-white/20 rounded-2xl p-4">
-            <div className="text-3xl font-bold">{mockData.player.coins}</div>
+            <div className="text-3xl font-bold">{points}</div>
             <div className="text-sm text-purple-100 flex items-center justify-center gap-1">
-              <Star className="w-4 h-4" /> {t("welcome.coins")}
+              <Star className="w-4 h-4" /> {t("welcome.points")}
             </div>
           </div>
-          <div className="text-center bg-white/20 rounded-2xl p-4">
+          {/* <div className="text-center bg-white/20 rounded-2xl p-4">
             <div className="text-3xl font-bold">{mockData.player.gems}</div>
             <div className="text-sm text-purple-100 flex items-center justify-center gap-1">💎 {t("welcome.gems")}</div>
-          </div>
+          </div> */}
           <div className="text-center bg-white/20 rounded-2xl p-4">
             <div className="text-3xl font-bold">{mockData.player.energy}%</div>
             <div className="text-sm text-purple-100 flex items-center justify-center gap-1">
@@ -74,12 +75,12 @@ export default function HomeScreen(user : UserProps) {
           </div>
         </div>
 
-        <ProgressBar
+        {/* <ProgressBar
           current={mockData.player.xp}
           total={mockData.player.nextLevelXp}
           label={t("welcome.progress")}
           className="text-white"
-        />
+        /> */}
       </div>
 
       {/* Main Dashboard Grid */}

@@ -10,9 +10,10 @@ interface HeaderProps {
     gems: number
     streak: number
   }
+  points: number
 }
 
-export function Header({ activeScreen, player }: HeaderProps) {
+export function Header({ activeScreen, player, points }: HeaderProps) {
   const t = useTranslations("childDashboard.header")
   const getScreenTitle = () => {
     return t(activeScreen as any)
@@ -30,9 +31,9 @@ export function Header({ activeScreen, player }: HeaderProps) {
           <div className="flex items-center gap-4 bg-gray-100 rounded-full px-4 py-2">
             <div className="flex items-center gap-1 text-yellow-600 font-bold">
               <Star className="w-5 h-5" />
-              {player.coins}
+              {points}
             </div>
-            <div className="flex items-center gap-1 text-purple-600 font-bold">💎 {player.gems}</div>
+            {/* <div className="flex items-center gap-1 text-purple-600 font-bold">💎 {player.gems}</div> */}
             <div className="flex items-center gap-1 text-orange-600 font-bold">
               <Flame className="w-5 h-5" />
               {player.streak}

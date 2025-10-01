@@ -3,21 +3,10 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Star, Award } from "lucide-react"
 import { useTranslations } from "next-intl"
-
-interface Mission {
-  MissionId: number
-  Title: string
-  Description: string
-  ChildName: string
-  Status: string
-  Points: number
-  BonusPoints?: number | null
-  Deadline: string
-  Promise?: string | null
-}
+import { MissionResponse } from "@/services/mission/missionService"
 
 interface MissionManagementCardProps {
-  mission: Mission
+  mission: MissionResponse
 }
 
 export function MissionManagementCard({ mission }: MissionManagementCardProps) {
@@ -50,7 +39,6 @@ export function MissionManagementCard({ mission }: MissionManagementCardProps) {
               <span className="text-sm font-medium text-amber-600">
                 <Star className="w-4 h-4 inline mr-1" />
                 {mission.Points} {t("points")}
-                {mission.BonusPoints && ` (+${mission.BonusPoints} bonus)`}
               </span>
             </div>
             {mission.Promise && (
