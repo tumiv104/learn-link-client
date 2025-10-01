@@ -4,9 +4,9 @@ import { MissionDialog } from "@/components/dashboard/parent/MissionDialog"
 import { MissionManagementCard } from "@/components/dashboard/parent/MissionManagementCard"
 import { AlertPopup } from "@/components/ui/alert-popup"
 import { Button } from "@/components/ui/button"
-import { ConfirmationDialog } from "@/components/ui/confirmation-dialog"
 import { mockData } from "@/data/mockData"
 import { useAlert } from "@/hooks/useAlert"
+import { assignMission } from "@/services/mission/missionService"
 import { Plus } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
@@ -20,13 +20,7 @@ export default function MissionScreen() {
     mode: "create" as "create" | "edit" | "view",
     mission: undefined as any,
   })
-  const [confirmDialog, setConfirmDialog] = useState({
-    open: false,
-    title: "",
-    description: "",
-    onConfirm: () => {},
-    variant: "destructive" as "destructive" | "success" | "warning",
-  })
+
   const handleCreateMission = () => {
     setMissionDialog({
       open: true,
@@ -35,36 +29,43 @@ export default function MissionScreen() {
     })
   }
 
-
-
-  const handleDeleteMission = (mission: any) => {
-    setConfirmDialog({
+  const handleOpenDialog = (mode: "view" | "edit", mission: any) => {
+    setMissionDialog({
       open: true,
-      title: "Delete Mission",
-      description: `Are you sure you want to delete "${mission.Title}"? This action cannot be undone.`,
-      variant: "destructive",
-      onConfirm: () => {
-        // Simulate API call
-        setTimeout(() => {
-          showSuccess("Mission Deleted", `"${mission.Title}" has been successfully deleted.`)
-        }, 500)
-      },
+      mode,
+      mission,
     })
-  }
+}
 
-  const handleSaveMission = (mission: any) => {
-    // Simulate API call
-    setTimeout(() => {
-      if (missionDialog.mode === "create") {
-        if (mission.Title.trim() === "") {
-          showError("Error", "Mission title is required")
-        } else {
-          showSuccess("Mission Created", `"${mission.Title}" has been successfully created.`)
-          setMissionDialog({ ...missionDialog, open: false }) // close dialog when success
+  const handleSaveMission = async (formData: FormData) => {
+    //API call
+    let success = false;
+    if (missionDialog.mode === "create") {
+        try {
+          const createRes = await assignMission(formData);
+          success = createRes.success;
+        } catch (err) {
         }
       } else {
-        showSuccess("Mission Updated", `"${mission.Title}" has been successfully updated.`)
-        setMissionDialog({ ...missionDialog, open: false })
+        //call api edit
+        success = true;
+      }
+    setTimeout(async () => {
+      const title = formData.get("Title")?.toString() ?? "";
+      if (missionDialog.mode === "create") {
+        if (success) {
+          showSuccess( t("alerts.created.title"),
+          t("alerts.created.success", { title }))
+          setMissionDialog({ ...missionDialog, open: false })
+        } else {
+          showError(t("alerts.created.title"),
+          t("alerts.created.error", { title }))
+          setMissionDialog({ ...missionDialog, open: false })
+        }
+      } else {
+        showSuccess(t("alerts.updated.title"),
+        t("alerts.updated.success", { title }));
+        setMissionDialog({ ...missionDialog, open: false });
       }
     }, 500)
   }
@@ -80,15 +81,6 @@ export default function MissionScreen() {
         children={mockData.children}
         onSave={handleSaveMission}
       />
-
-      {/* <ConfirmationDialog
-        open={confirmDialog.open}
-        onOpenChange={(open) => setConfirmDialog({ ...confirmDialog, open })}
-        title={confirmDialog.title}
-        description={confirmDialog.description}
-        variant={confirmDialog.variant}
-        onConfirm={confirmDialog.onConfirm}
-      /> */}
         <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold text-gray-800">{t("title")}</h2>
             <Button onClick={handleCreateMission} className="bg-red-500 hover:bg-red-600 text-white">
@@ -99,7 +91,7 @@ export default function MissionScreen() {
 
             <div className="grid gap-4">
             {mockData.parent_missions.map((mission) => (
-                <MissionManagementCard key={mission.MissionId} mission={mission} />
+                <MissionManagementCard key={mission.MissionId} mission={mission} onOpenDialog={handleOpenDialog}/>
             ))}
         </div>
       </div>

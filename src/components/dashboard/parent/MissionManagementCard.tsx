@@ -4,85 +4,35 @@ import { Badge } from "@/components/ui/badge"
 import { Calendar, Star, Award } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
-import { MissionDialog } from "./MissionDialog"
-import { AlertPopup } from "@/components/ui/alert-popup"
-import { useAlert } from "@/hooks/useAlert"
-import { mockData } from "@/data/mockData"
-
-interface Mission {
-  MissionId: number
-  Title: string
-  Description: string
-  ChildName: string
-  Status: string
-  Points: number
-  BonusPoints?: number | null
-  Deadline: string
-  Promise?: string | null
-}
+import { Mission } from "@/data/mission"
 
 interface MissionManagementCardProps {
   mission: Mission
+  onOpenDialog: (mode: "view" | "edit", mission: any) => void
 }
 
-export function MissionManagementCard({ mission }: MissionManagementCardProps) {
+export function MissionManagementCard({ mission, onOpenDialog }: MissionManagementCardProps) {
   const t = useTranslations("parentDashboard.missions")
   const getStatusVariant = () => {
     switch (mission.Status) {
       case "Completed":
-        return "default"
-      case "In Progress":
+        return "outline"
+      case "Submitted":
+        return "destructive"
+      case "Processing":
         return "secondary"
       default:
-        return "outline"
+        return "default"
     }
   }
-  const { alert, showSuccess, showError, hideAlert } = useAlert()
   const [missionDialog, setMissionDialog] = useState({
     open: false,
     mode: "create" as "create" | "edit" | "view",
     mission: undefined as any,
   })
 
-  const handleEditMission = (mission: any) => {
-    setMissionDialog({
-      open: true,
-      mode: "edit",
-      mission,
-    })
-  }
-
-  const handleViewMission = (mission: any) => {
-    setMissionDialog({
-      open: true,
-      mode: "view",
-      mission,
-    })
-  }
-
-  const handleSaveMission = (mission: any) => {
-    // Simulate API call
-    setTimeout(() => {
-      if (missionDialog.mode === "create") {
-        showError("Mission Created", `"${mission.Title}" has been successfully created.`)
-      } else {
-        showSuccess("Mission Updated", `"${mission.Title}" has been successfully updated.`)
-      }
-    }, 500)
-  }
-
   return (
     <Card className="hover:shadow-lg transition-shadow">
-      {alert && <AlertPopup type={alert.type} title={alert.title} message={alert.message} onClose={hideAlert} />}
-      
-            <MissionDialog
-              open={missionDialog.open}
-              onOpenChange={(open) => setMissionDialog({ ...missionDialog, open })}
-              mode={missionDialog.mode}
-              mission={missionDialog.mission}
-              children={mockData.children}
-              onSave={handleSaveMission}
-            />
       
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
@@ -99,7 +49,6 @@ export function MissionManagementCard({ mission }: MissionManagementCardProps) {
               <span className="text-sm font-medium text-amber-600">
                 <Star className="w-4 h-4 inline mr-1" />
                 {mission.Points} {t("points")}
-                {mission.BonusPoints && ` (+${mission.BonusPoints} bonus)`}
               </span>
             </div>
             {mission.Promise && (
@@ -110,10 +59,12 @@ export function MissionManagementCard({ mission }: MissionManagementCardProps) {
             )}
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={() => handleEditMission(mission)}>
-              {t("edit")}
-            </Button>
-            <Button variant="outline" size="sm" onClick={() => handleViewMission(mission)}>
+            {mission.Status == "Assigned" && 
+              <Button variant="outline" size="sm" onClick={() => onOpenDialog("edit", mission)}>
+                {t("edit")}
+              </Button>
+            }
+            <Button variant="outline" size="sm" onClick={() => onOpenDialog("view", mission)}>
               {t("view")}
             </Button>
           </div>

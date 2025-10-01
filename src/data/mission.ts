@@ -7,6 +7,7 @@ export interface Mission {
   Deadline: string
   Status: "Assigned" | "Submitted" | "Processing" | "Completed"
   ChildId: number
-  createdAt: string
-  childName?: string
+  CreatedAt: string
+  ChildName?: string
+  AttachmentUrl?: string
 }
