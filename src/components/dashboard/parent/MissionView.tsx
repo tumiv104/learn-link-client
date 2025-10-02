@@ -86,10 +86,11 @@ export function MissionView({ mission }: MissionViewProps) {
                 <div className="flex-1">
                   <p className="font-medium text-slate-800">Mission Attachment</p>
                   <a
-                    href={mission.AttachmentUrl}
+                    href={`${process.env.NEXT_PUBLIC_API_URL}${mission.AttachmentUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm text-blue-600 hover:text-blue-800 underline break-all"
+                    
                   >
                     {mission.AttachmentUrl}
                   </a>

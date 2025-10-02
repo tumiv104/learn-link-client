@@ -1,5 +1,7 @@
 "use client"
 
+import type React from "react"
+
 import { useEffect, useState } from "react"
 import {
   Dialog,
@@ -15,53 +17,54 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, Star, Target, User, Clock, Gift, Paperclip, Link, Upload, File } from "lucide-react"
+import { Calendar, Star, Target, User, Gift, Paperclip, Link, Upload, File } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Mission } from "@/data/mission"
+import type { Mission } from "@/data/mission"
 import { MissionView } from "./MissionView"
 import { useTranslations } from "next-intl"
+import type { ChildBasicInfoDTO } from "@/data/ChildBasicInfoDTO"
 
 interface MissionDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   mode: "create" | "view" | "edit"
-  mission: Mission // Replace 'any' with the actual type of your mission object
-  children: any[] // Replace 'any[]' with the actual type of your children array
-  onSave: (data: any) => void // Replace 'any' with the actual type of your mission data
+  mission: Mission
+  children: ChildBasicInfoDTO[]
+  onSave: (data: any) => void
 }
 
 export function MissionDialog({ open, onOpenChange, mode, mission, children, onSave }: MissionDialogProps) {
   const t = useTranslations("parentDashboard.missions")
-  
+
   const [formData, setFormData] = useState({
     Title: mission?.Title || "",
     Description: mission?.Description || "",
-    ChildId: mission?.ChildId || (children.length > 0 ? children[0].userId : null),
+    ChildId: mission?.ChildId || (children.length > 0 ? Number(children[0].childId) : null),
     Deadline: mission?.Deadline || new Date().toISOString().split("T")[0],
     Points: mission?.Points || 10,
     Promise: mission?.Promise || "",
     Status: mission?.Status || "Assigned",
-    ChildName: mission?.ChildName || (children.length > 0 ? children[0].Name : null),
+    ChildName: mission?.ChildName || (children.length > 0 ? children[0].name : null),
     CreatedAt: mission?.CreatedAt || new Date(),
     AttachmentUrl: mission?.AttachmentUrl || "",
   })
 
   useEffect(() => {
-  if (mission) {
-    setFormData({
-      Title: mission.Title || "",
-      Description: mission.Description || "",
-      ChildId: mission.ChildId || (children.length > 0 ? children[0].userId : null),
-      Deadline: mission.Deadline || new Date().toISOString().split("T")[0],
-      Points: mission.Points || 10,
-      Promise: mission.Promise || "",
-      Status: mission.Status || "Assigned",
-      ChildName: mission.ChildName || (children.length > 0 ? children[0].Name : null),
-      CreatedAt: mission.CreatedAt || new Date(),
-      AttachmentUrl: mission.AttachmentUrl || "",
-    })
-  }
-}, [mission, mode, children])
+    if (mission) {
+      setFormData({
+        Title: mission.Title || "",
+        Description: mission.Description || "",
+        ChildId: mission.ChildId || (children.length > 0 ? Number(children[0].childId) : null),
+        Deadline: mission.Deadline || new Date().toISOString().split("T")[0],
+        Points: mission.Points || 10,
+        Promise: mission.Promise || "",
+        Status: mission.Status || "Assigned",
+        ChildName: mission.ChildName || (children.length > 0 ? children[0].name : null),
+        CreatedAt: mission.CreatedAt || new Date(),
+        AttachmentUrl: mission.AttachmentUrl || "",
+      })
+    }
+  }, [mission, mode, children])
 
   const [attachmentType, setAttachmentType] = useState<"file" | "url">("url")
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -80,14 +83,19 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
   }
 
   const handleSave = () => {
+    if (!formData.ChildId) {
+      console.error("ChildId is required")
+      return
+    }
+
     const fd = new FormData()
 
-    fd.append("ChildId", formData.ChildId.toString());
-    fd.append("Title", formData.Title);
-    fd.append("Description", formData.Description ?? "");
-    fd.append("Points", formData.Points.toString());
-    if (formData.Promise) fd.append("Promise", formData.Promise);
-    fd.append("Deadline", new Date(formData.Deadline).toISOString()); // chuẩn ISO
+    fd.append("ChildId", formData.ChildId.toString())
+    fd.append("Title", formData.Title)
+    fd.append("Description", formData.Description ?? "")
+    fd.append("Points", formData.Points.toString())
+    if (formData.Promise) fd.append("Promise", formData.Promise)
+    fd.append("Deadline", new Date(formData.Deadline).toISOString()) // chuẩn ISO
 
     if (selectedFile) {
       fd.append("attachmentFile", selectedFile) // match với [FromForm] trong BE
@@ -180,7 +188,6 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
               />
             </div>
 
-            {/* <div className="grid gap-4 p-6 bg-gradient-to-r from-slate-50 to-gray-50 rounded-xl border border-slate-200"> */}
             <div className="grid gap-3">
               <Label className="text-sm font-semibold text-slate-700 flex items-center gap-2">
                 <Paperclip className="w-4 h-4" />
@@ -188,32 +195,32 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
               </Label>
 
               <div className="flex gap-2">
-              <Button
+                <Button
                   type="button"
                   variant={attachmentType === "url" ? "default" : "outline"}
                   size="sm"
                   onClick={() => {
-                  setAttachmentType("url")
-                  setSelectedFile(null)
+                    setAttachmentType("url")
+                    setSelectedFile(null)
                   }}
                   className="flex items-center gap-2"
-              >
+                >
                   <Link className="w-4 h-4" />
                   {t("form.url")}
-              </Button>
-              <Button
+                </Button>
+                <Button
                   type="button"
                   variant={attachmentType === "file" ? "default" : "outline"}
                   size="sm"
                   onClick={() => {
-                  setAttachmentType("file")
-                  setFormData({ ...formData, AttachmentUrl: "" })
+                    setAttachmentType("file")
+                    setFormData({ ...formData, AttachmentUrl: "" })
                   }}
                   className="flex items-center gap-2"
-              >
+                >
                   <Upload className="w-4 h-4" />
                   {t("form.file")}
-              </Button>
+                </Button>
               </div>
 
               {attachmentType === "url" ? (
@@ -224,9 +231,7 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
                     placeholder={t("form.urlPlaceholder")}
                     className="h-12 border-slate-300 focus:border-blue-500 focus:ring-blue-500/20"
                   />
-                  <p className="text-xs text-slate-500">
-                    {t("form.urlHelp")}
-                  </p>
+                  <p className="text-xs text-slate-500">{t("form.urlHelp")}</p>
                 </div>
               ) : (
                 <div className="grid gap-2">
@@ -238,9 +243,7 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
                       className="h-12 border-slate-300 focus:border-blue-500 focus:ring-blue-500/20 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                     />
                   </div>
-                  <p className="text-xs text-slate-500">
-                    {t("form.fileHelp")}
-                  </p>
+                  <p className="text-xs text-slate-500">{t("form.fileHelp")}</p>
                   {selectedFile && (
                     <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
                       <File className="w-4 h-4 text-blue-600" />
@@ -259,7 +262,7 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
                   {t("form.child")}
                 </Label>
                 <Select
-                  value={formData.ChildId.toString()}
+                  value={formData.ChildId != null ? formData.ChildId.toString() : ""}
                   onValueChange={(value) => setFormData({ ...formData, ChildId: Number.parseInt(value) })}
                 >
                   <SelectTrigger className="h-12 border-slate-300 focus:border-blue-500 focus:ring-blue-500/20">
@@ -267,10 +270,10 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
                   </SelectTrigger>
                   <SelectContent>
                     {children.map((child) => (
-                      <SelectItem key={child.userId} value={child.userId.toString()}>
+                      <SelectItem key={child.childId} value={child.childId != null ? child.childId.toString() : ""}>
                         <div className="flex items-center gap-3">
-                          <span className="text-lg">{child.AvatarUrl}</span>
-                          <span className="font-medium">{child.Name}</span>
+                          {child.avatarUrl && <span className="text-lg">{child.avatarUrl}</span>}
+                          <span className="font-medium">{child.name}</span>
                         </div>
                       </SelectItem>
                     ))}
