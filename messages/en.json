@@ -163,11 +163,23 @@
       }
     },
     "profile": {
-      "title": "Profile & Account Management",
-      "desc": "Manage your account and children's profiles",
-      "settingsTitle": "Profile settings",
-      "settingsDesc": "Account management features will be available here"
-    },
+        "title": "Profile & Account Management",
+        "desc": "Manage your account and children's profiles",
+        "settingsTitle": "Profile settings",
+        "settingsDesc": "Account management features will be available here",
+        "subtitle": "Manage your account information",
+        "editButton": "Edit",
+        "loadingProfile": "Loading profile...",
+        "errorLoading": "Error loading profile",
+        "noProfileData": "No profile data available",
+        "dob": "Date of Birth",
+        "joinedDate": "Joined Date",
+        "points": "Accumulated Points",
+        "childrenCount": "Number of Children",
+        "parent": "Parent",
+        "notUpdated": "Not updated",
+        "notAvailable": "Not available"
+      },
     "reports": {
       "title": "Learning Reports",
       "desc": "Track your children's progress and achievements",
