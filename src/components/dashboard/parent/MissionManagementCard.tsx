@@ -3,27 +3,37 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Star, Award } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { MissionResponse } from "@/services/mission/missionService"
+import { useState } from "react"
+import { Mission } from "@/data/mission"
 
 interface MissionManagementCardProps {
-  mission: MissionResponse
+  mission: Mission
+  onOpenDialog: (mode: "view" | "edit", mission: any) => void
 }
 
-export function MissionManagementCard({ mission }: MissionManagementCardProps) {
+export function MissionManagementCard({ mission, onOpenDialog }: MissionManagementCardProps) {
   const t = useTranslations("parentDashboard.missions")
   const getStatusVariant = () => {
     switch (mission.Status) {
       case "Completed":
-        return "default"
-      case "In Progress":
+        return "outline"
+      case "Submitted":
+        return "destructive"
+      case "Processing":
         return "secondary"
       default:
-        return "outline"
+        return "default"
     }
   }
+  const [missionDialog, setMissionDialog] = useState({
+    open: false,
+    mode: "create" as "create" | "edit" | "view",
+    mission: undefined as any,
+  })
 
   return (
     <Card className="hover:shadow-lg transition-shadow">
+      
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex-1">
@@ -49,10 +59,12 @@ export function MissionManagementCard({ mission }: MissionManagementCardProps) {
             )}
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm">
-              {t("edit")}
-            </Button>
-            <Button variant="outline" size="sm">
+            {mission.Status == "Assigned" && 
+              <Button variant="outline" size="sm" onClick={() => onOpenDialog("edit", mission)}>
+                {t("edit")}
+              </Button>
+            }
+            <Button variant="outline" size="sm" onClick={() => onOpenDialog("view", mission)}>
               {t("view")}
             </Button>
           </div>

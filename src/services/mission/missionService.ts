@@ -1,14 +1,12 @@
 import api from "@/lib/api";
 
-export interface MissionResponse {
-  missionId: number
-  title: string
-  description: string
-  childName: string
-  status: string
-  points: number
-  deadline: string
-  promise?: string | null
+export async function assignMission(fd: FormData) {
+  const res = await api.post("/mission/assign", fd, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return res.data;
 }
 
 export async function getAllMission() {

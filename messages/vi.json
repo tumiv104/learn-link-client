@@ -101,8 +101,37 @@
       "missionStatus": {
         "Assigned": "Đã giao",
         "Submitted": "Đã nộp",
-        "Reviewed": "Đã duyệt",
+        "Processing": "Đang làm",
         "Completed": "Hoàn thành"
+      },
+      "form": {
+        "title": "Tiêu đề nhiệm vụ",
+        "titlePlaceholder": "Nhập tiêu đề nhiệm vụ",
+        "description": "Mô tả",
+        "descriptionPlaceholder": "Mô tả chi tiết công việc cần làm",
+        "attachment": "Tệp đính kèm",
+        "url": "Đường dẫn URL",
+        "file": "Tải tệp lên",
+        "urlPlaceholder": "Dán liên kết vào đây",
+        "urlHelp": "Thêm liên kết tới hướng dẫn, tài liệu tham khảo hoặc bất kỳ nguồn trực tuyến nào",
+        "fileHelp": "Tải lên hình ảnh, PDF, Word, ZIP hoặc bất kỳ loại tệp nào khác",
+        "child": "Giao cho bé",
+        "selectChild": "Chọn bé",
+        "deadline": "Hạn hoàn thành",
+        "points": "Điểm thưởng",
+        "promise": "Lời hứa đặc biệt",
+        "promisePlaceholder": "Ví dụ: Kể thêm một câu chuyện nếu hoàn thành sớm"
+      },
+      "alerts": {
+        "created": {
+          "title": "Tạo nhiệm vụ",
+          "success": "Nhiệm vụ \"{title}\" đã được tạo thành công.",
+          "error": "Tạo nhiệm vụ \"{title}\" thất bại."
+        },
+        "updated": {
+          "title": "Cập nhật nhiệm vụ",
+          "success": "Nhiệm vụ \"{title}\" đã được cập nhật thành công."
+        }
       }
     },
     "overview": {
@@ -162,12 +191,58 @@
       "pending": "{count} bài chờ duyệt",
       "submittedBy": "Nộp bởi",
       "score": "Điểm",
-      "viewFile": "Xem tệp",
+      "viewDetail": "Xem chi tiết",
       "review": "Duyệt",
       "submissionStatus": {
         "Pending": "Chờ duyệt",
         "Approved": "Đã chấp nhận",
         "Rejected": "Bị từ chối"
+      },
+      "detailTitle": "Chi tiết bài nộp",
+      "missionInfo": "Thông tin nhiệm vụ",
+      "points": "Điểm thưởng",
+      "deadline": "Hạn chót",
+      "child": "Trẻ em",
+      "submissionInfo": "Thông tin bài nộp",
+      "status": "Trạng thái",
+      "submitted": "Ngày nộp",
+      "reviewed": "Ngày chấm",
+      "yourFeedback": "Phản hồi của bạn",
+      "downloadFile": "Tải tệp bài nộp",
+      "reviewDialog": {
+        "title": "Đánh giá bài nộp",
+        "viewFile": "Xem tệp bài nộp",
+        "scoreLabel": "Điểm (0-100)",
+        "scorePlaceholder": "Nhập điểm từ 0 đến 100",
+        "feedbackLabel": "Nhận xét",
+        "feedbackPlaceholder": "Viết nhận xét cho bé... Hãy khuyến khích và cụ thể!",
+        "feedbackTip": "Mẹo: Hãy chỉ ra cụ thể bé làm tốt điểm nào và cần cải thiện ở đâu"
+      },
+      "actions": {
+        "cancel": "Hủy",
+        "approve": "Chấp nhận",
+        "reject": "Từ chối"
+      },
+      "alerts": {
+        "approved": {
+          "title": "Bài nộp đã được duyệt",
+          "message": "Bài nộp đã được chấp nhận với số điểm {score}/100."
+        },
+        "rejected": {
+          "title": "Bài nộp bị từ chối",
+          "message": "Bài nộp đã bị từ chối."
+        },
+        "validation": {
+          "feedbackRequired": {
+            "title": "Thiếu phản hồi",
+            "messageApprove": "Vui lòng nhập phản hồi trước khi duyệt.",
+            "messageReject": "Vui lòng nhập phản hồi trước khi từ chối."
+          },
+          "invalidScore": {
+            "title": "Điểm không hợp lệ",
+            "message": "Điểm phải nằm trong khoảng từ 0 đến 100."
+          }
+        }
       }
     }
   },

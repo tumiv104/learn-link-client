@@ -101,8 +101,37 @@
       "missionStatus": {
         "Assigned": "Assigned",
         "Submitted": "Submitted",
-        "Reviewed": "Reviewed",
+        "Processing": "Processing",
         "Completed": "Completed"
+      },
+      "form": {
+        "title": "Mission Title",
+        "titlePlaceholder": "Enter mission title",
+        "description": "Description",
+        "descriptionPlaceholder": "Describe what needs to be done",
+        "attachment": "Attachment",
+        "url": "URL",
+        "file": "Upload File",
+        "urlPlaceholder": "Paste a link here",
+        "urlHelp": "Add a link to instructions, reference materials, or any online resource",
+        "fileHelp": "Upload images, PDFs, Word docs, ZIP files, or any other file type",
+        "child": "Assign to Child",
+        "selectChild": "Select a child",
+        "deadline": "Deadline",
+        "points": "Points Reward",
+        "promise": "Special Promise",
+        "promisePlaceholder": "e.g., Extra story time if completed early"
+      },
+      "alerts": {
+        "created": {
+          "title": "Mission Created",
+          "success": "\"{title}\" has been successfully created.",
+          "error": "Failed to create \"{title}\"."
+        },
+        "updated": {
+          "title": "Mission Updated",
+          "success": "\"{title}\" has been successfully updated."
+        }
       }
     },
     "overview": {
@@ -162,12 +191,58 @@
       "pending": "{count} pending reviews",
       "submittedBy": "Submitted by",
       "score": "Score",
-      "viewFile": "View File",
+      "viewDetail": "View Detail",
       "review": "Review",
       "submissionStatus": {
         "Pending": "Pending Review",
         "Approved": "Approved",
         "Rejected": "Rejected"
+      },
+      "detailTitle": "Submission Details",
+      "missionInfo": "Mission Information",
+      "points": "Points",
+      "deadline": "Deadline",
+      "child": "Child",
+      "submissionInfo": "Submission Information",
+      "status": "Status",
+      "submitted": "Submitted",
+      "reviewed": "Reviewed",
+      "yourFeedback": "Your Feedback",
+      "downloadFile": "Download Submission File",
+      "reviewDialog": {
+        "title": "Review Submission",
+        "viewFile": "View Submission File",
+        "scoreLabel": "Score (0-100)",
+        "scorePlaceholder": "Enter score between 0 and 100",
+        "feedbackLabel": "Feedback",
+        "feedbackPlaceholder": "Write your feedback for the child... Be encouraging and specific!",
+        "feedbackTip": "Tip: Be specific about what they did well and what they can improve"
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "approve": "Approve",
+        "reject": "Reject"
+      },
+      "alerts": {
+        "approved": {
+          "title": "Submission Approved",
+          "message": "The submission has been approved with a score of {score}/100."
+        },
+        "rejected": {
+          "title": "Submission Rejected",
+          "message": "The submission has been rejected."
+        },
+        "validation": {
+          "feedbackRequired": {
+            "title": "Feedback Required",
+            "messageApprove": "Please provide feedback before approving.",
+            "messageReject": "Please provide feedback before rejecting."
+          },
+          "invalidScore": {
+            "title": "Invalid Score",
+            "message": "Score must be between 0 and 100."
+          }
+        }
       }
     }
   },
