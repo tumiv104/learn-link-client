@@ -15,6 +15,7 @@ import type { PageResult } from "@/data/pagination"
 import type { MissionResponse } from "@/data/missionResponse"
 import type { ChildBasicInfoDTO } from "@/data/ChildBasicInfoDTO"
 import api from "@/lib/api"
+import { getChildren } from "@/services/parent/parentService"
 
 
 export default function MissionScreen() {
@@ -66,8 +67,8 @@ export default function MissionScreen() {
   const fetchChildren = async () => {
     try {
       setLoadingChildren(true)
-      const res = await api.get("/children")
-      const data: ChildBasicInfoDTO[] = res.data.data.map((c: any) => ({
+      const res = await getChildren()
+      const data: ChildBasicInfoDTO[] = res.map((c: any) => ({
         childId: c.childId != null ? c.childId.toString() : "",
         name: c.name ?? "",
         email: c.email ?? "",
