@@ -98,6 +98,11 @@
       "promise": "Promise",
       "edit": "Edit",
       "view": "View",
+      "description": "Description",
+      "created": "Created",
+      "totalReward": "Total Reward",
+      "deadline": "Deadline",
+      "attachment": "Mission Attachment",
       "missionStatus": {
         "Assigned": "Assigned",
         "Submitted": "Submitted",
@@ -360,6 +365,13 @@
       }
     }
 
+  },
+  "component": {
+    "paginationBar": {
+      "pageSize": "Items per page",
+      "previous": "Previous",
+      "next": "Next"
+    }
   }
 
 }

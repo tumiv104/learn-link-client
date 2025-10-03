@@ -9,23 +9,29 @@ import { mockData } from "@/data/mockData"
 import { useAlert } from "@/hooks/useAlert"
 import { assignMission, getParentMissions } from "@/services/mission/missionService"
 import { Plus } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import type { Mission } from "@/data/mission"
 import type { PageResult } from "@/data/pagination"
 import type { MissionResponse } from "@/data/missionResponse"
 import type { ChildBasicInfoDTO } from "@/data/ChildBasicInfoDTO"
 import api from "@/lib/api"
 import { getChildren } from "@/services/parent/parentService"
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { usePagination } from "@/hooks/usePagination"
+import { PaginationBar } from "@/components/dashboard/PaginationBar"
 
 
 export default function MissionScreen() {
   const t = useTranslations("parentDashboard.missions")
   const { alert, showSuccess, showError, hideAlert } = useAlert()
-
+  const locale = useLocale()
   const [missions, setMissions] = useState<Mission[]>([])
   const [loading, setLoading] = useState(false)
-  const [page, setPage] = useState(1)
-  const pageSize = 5
+
+  const [totalPages, setTotalPages] = useState(1)
+  const { page, setPage, pageSize, setPageSize, getPageNumbers } = usePagination(totalPages, 1, 5)
+  
   const [children, setChildren] = useState<ChildBasicInfoDTO[]>([])
   const [loadingChildren, setLoadingChildren] = useState(true)
 
@@ -37,10 +43,10 @@ export default function MissionScreen() {
   })
 
   // Fetch missions
-  const fetchMissions = async () => {
+  const fetchMissions = async (pageNumber: number, size: number) => {
     try {
       setLoading(true)
-      const data: PageResult<MissionResponse> = await getParentMissions(page, pageSize)
+      const data: PageResult<MissionResponse> = await getParentMissions(pageNumber, size)
       const mapped = data.items.map(m => ({
         MissionId: m.missionId,
         Title: m.title,
@@ -56,6 +62,7 @@ export default function MissionScreen() {
         CreatedAt: m.createdAt,
       }))
       setMissions(mapped)
+      setTotalPages(data.totalPages)
     } catch (err) {
       console.error(err)
     } finally {
@@ -88,8 +95,8 @@ export default function MissionScreen() {
 
 
   useEffect(() => {
-    fetchMissions()
-  }, [page])
+    fetchMissions(page, pageSize)
+  }, [page, pageSize])
 
   const handleCreateMission = () => {
     setMissionDialog({
@@ -129,7 +136,7 @@ export default function MissionScreen() {
             t("alerts.created.success", { title })
           )
           setMissionDialog({ ...missionDialog, open: false })
-          await fetchMissions() // refresh list
+          await fetchMissions(page, pageSize) // refresh list
         } else {
           showError(
             t("alerts.created.title"),
@@ -143,12 +150,10 @@ export default function MissionScreen() {
           t("alerts.updated.success", { title })
         )
         setMissionDialog({ ...missionDialog, open: false })
-        await fetchMissions() // refresh list
+        await fetchMissions(page, pageSize) // refresh list
       }
     }, 500)
   }
-{console.log("MissionDialog children:", children)}
-      {console.log("MissionDialog state:", missionDialog)}
   return (
     <div className="space-y-6">
       {alert && (
@@ -167,6 +172,7 @@ export default function MissionScreen() {
         mission={missionDialog.mission}
         children={children || []}   
         onSave={handleSaveMission}
+        locale={locale}
       />
 
       <div className="flex justify-between items-center">
@@ -191,10 +197,21 @@ export default function MissionScreen() {
               key={mission.MissionId}
               mission={mission}
               onOpenDialog={handleOpenDialog}
+              locale={locale}
             />
           ))
         )}
       </div>
+
+      {/* Pagination + PageSize */}
+      <PaginationBar
+        page={page}
+        setPage={setPage}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        totalPages={totalPages}
+        getPageNumbers={getPageNumbers}
+      />
     </div>
   )
 }

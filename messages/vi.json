@@ -98,6 +98,11 @@
       "promise": "Lời hứa",
       "edit": "Chỉnh sửa",
       "view": "Xem",
+      "description": "Mô tả", 
+      "created": "Ngày tạo", 
+      "totalReward": "Phần thưởng", 
+      "deadline": "Hạn chót", 
+      "attachment": "Tệp đính kèm",
       "missionStatus": {
         "Assigned": "Đã giao",
         "Submitted": "Đã nộp",
@@ -161,12 +166,6 @@
       "activity": {
         "title": "Hoạt động gần đây"
       }
-    },
-    "profile": {
-      "title": "Quản lý hồ sơ & tài khoản",
-      "desc": "Quản lý tài khoản và hồ sơ của con bạn",
-      "settingsTitle": "Cài đặt hồ sơ",
-      "settingsDesc": "Tính năng quản lý tài khoản sẽ xuất hiện tại đây"
     },
     "reports": {
       "title": "Báo cáo học tập",
@@ -362,6 +361,13 @@
         "hard": "Khó"
       }
 
+    }
+  },
+  "component": {
+    "paginationBar": {
+      "pageSize": "Số mục mỗi trang",
+      "previous": "Trước",
+      "next": "Sau"
     }
   }
 }
