@@ -168,11 +168,56 @@
       "settingsTitle": "Cài đặt hồ sơ",
       "settingsDesc": "Tính năng quản lý tài khoản sẽ xuất hiện tại đây"
     },
-    "reports": {
+        "reports": {
       "title": "Báo cáo học tập",
       "desc": "Theo dõi tiến độ và thành tích của con bạn",
       "comingTitle": "Báo cáo sắp ra mắt",
-      "comingDesc": "Phân tích chi tiết và báo cáo tiến độ sẽ có tại đây"
+      "comingDesc": "Phân tích chi tiết và báo cáo tiến độ sẽ có tại đây",
+      "selectChild": "Chọn một bé",
+      "allChildren": "Tất cả con",
+      "period": "Khoảng thời gian",
+      "periodLabels": {
+        "day": "Hôm nay",
+        "week": "Tuần này",
+        "month": "Tháng này",
+        "year": "Năm nay",
+        "all": "Toàn bộ"
+      },
+      "loading": "Đang tải báo cáo...",
+      "noData": "Không có dữ liệu",
+      "stats": {
+        "totalMissions": "Tổng nhiệm vụ",
+        "completedMissions": "Hoàn thành",
+        "processingMissions": "Đang làm",
+        "submittedMissions": "Đã nộp",
+        "completionRate": "Tỷ lệ hoàn thành",
+        "totalPointsEarned": "Điểm tích lũy",
+        "avgPointsPerMission": "Điểm trung bình mỗi nhiệm vụ",
+        "lastSubmission": "Bài nộp gần nhất"
+      },
+      "charts": {
+        "missionStatus": "Phân bố trạng thái nhiệm vụ",
+        "completionTrend": "Xu hướng hoàn thành"
+      },
+      "missionStatusLabels": {
+        "Assigned": "Đã giao",
+        "Processing": "Đang làm",
+        "Submitted": "Đã nộp",
+        "Completed": "Hoàn thành"
+      },
+      "summary": {
+        "title": "Tổng quan tiến độ",
+        "reportFor": "Báo cáo của {child} • {period}",
+        "completionRate": "Tỷ lệ hoàn thành",
+        "avgPoints": "Điểm trung bình mỗi nhiệm vụ",
+        "lastSubmission": "Bài nộp gần nhất",
+        "noSubmissionsYet": "Chưa có bài nộp"
+      },
+      "noChildren": {
+        "title": "Chưa có trẻ nào",
+        "desc": "Thêm trẻ vào tài khoản để xem báo cáo tiến độ."
+      },
+      "errorLoading": "Tải báo cáo thất bại"
     },
     "rewards": {
       "title": "Quản lý phần thưởng",
@@ -198,6 +243,10 @@
         "Approved": "Đã chấp nhận",
         "Rejected": "Bị từ chối"
       },
+      "noSubmissions": "Không tìm thấy bài nộp",
+      "loadMore": "Tải thêm",
+      "loading": "Đang tải bài nộp...",
+      "page": "Trang {current} / {total}",
       "detailTitle": "Chi tiết bài nộp",
       "missionInfo": "Thông tin nhiệm vụ",
       "points": "Điểm thưởng",
@@ -245,7 +294,7 @@
         }
       }
     },
-     "profile": {
+    "profile": {
           "title": "Quản lý hồ sơ & tài khoản",
           "subtitle": "Quản lý thông tin tài khoản của bạn",
           "editButton": "Chỉnh sửa",
@@ -349,7 +398,7 @@
       "days": "ngày",
       "coins": "Tổng xu",
       "gems": "Ngọc",
-      "achievements": "Thành tựu",
+      "achievements": "Thành tích",
       "energy": "Năng lượng",
       "editProfile": "Chỉnh sửa hồ sơ",
       "messageParents": "Gửi tin cho phụ huynh",
@@ -361,7 +410,6 @@
         "medium": "Trung bình",
         "hard": "Khó"
       }
-
     }
   }
 }
