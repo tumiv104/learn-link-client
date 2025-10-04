@@ -18,11 +18,23 @@ import ReportScreen from "./screens/ReportScreen"
 import ProfileScreen from "./screens/ProfileScreen"
 import OverviewScreen from "./screens/OverviewScreen"
 import { useTranslations } from "next-intl"
+import { useMissionHub } from "@/hooks/useMissionHub"
 
 export default function ParentDashboard() {
   const t = useTranslations("parentDashboard")
   const { user, loading, ready } = useRequireAuth("/auth/login", ["Parent"])
   const [activeTab, setActiveTab] = useState("overview")
+
+  useMissionHub(user?.id, {
+    onMissionStarted: ({ missionId }) => {
+      console.log("Parent - Mission Started:", missionId);
+      // TODO: show notification
+    },
+    onMissionSubmitted: ({ missionId }) => {
+      console.log("Parent - Mission Submitted:", missionId);
+      // TODO: update mission list
+    },
+  });
 
   if (loading)
     return (

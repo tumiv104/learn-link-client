@@ -31,16 +31,17 @@ interface MissionDialogProps {
   mission: Mission
   children: ChildBasicInfoDTO[]
   onSave: (data: any) => void
+  locale: string
 }
 
-export function MissionDialog({ open, onOpenChange, mode, mission, children, onSave }: MissionDialogProps) {
+export function MissionDialog({ open, onOpenChange, mode, mission, children, onSave, locale }: MissionDialogProps) {
   const t = useTranslations("parentDashboard.missions")
 
   const [formData, setFormData] = useState({
     Title: mission?.Title || "",
     Description: mission?.Description || "",
     ChildId: mission?.ChildId || (children.length > 0 ? Number(children[0].childId) : null),
-    Deadline: mission?.Deadline || new Date().toISOString().split("T")[0],
+    Deadline: mission?.Deadline || new Date().toISOString().slice(0, 16),
     Points: mission?.Points || 10,
     Promise: mission?.Promise || "",
     Status: mission?.Status || "Assigned",
@@ -55,7 +56,7 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
         Title: mission.Title || "",
         Description: mission.Description || "",
         ChildId: mission.ChildId || (children.length > 0 ? Number(children[0].childId) : null),
-        Deadline: mission.Deadline || new Date().toISOString().split("T")[0],
+        Deadline: mission.Deadline || new Date().toISOString().slice(0, 16),
         Points: mission.Points || 10,
         Promise: mission.Promise || "",
         Status: mission.Status || "Assigned",
@@ -95,7 +96,7 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
     fd.append("Description", formData.Description ?? "")
     fd.append("Points", formData.Points.toString())
     if (formData.Promise) fd.append("Promise", formData.Promise)
-    fd.append("Deadline", new Date(formData.Deadline).toISOString()) // chuẩn ISO
+    fd.append("Deadline", formData.Deadline)
 
     if (selectedFile) {
       fd.append("attachmentFile", selectedFile) // match với [FromForm] trong BE
@@ -157,7 +158,7 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
         </DialogHeader>
 
         {mode === "view" ? (
-          <MissionView mission={mission} />
+          <MissionView mission={mission} locale={locale}/>
         ) : (
           <div className="grid gap-8 py-6">
             <div className="grid gap-3">
@@ -288,7 +289,7 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
                 </Label>
                 <Input
                   id="deadline"
-                  type="date"
+                  type="datetime-local"
                   value={formData.Deadline}
                   onChange={(e) => setFormData({ ...formData, Deadline: e.target.value })}
                   className="h-12 border-slate-300 focus:border-blue-500 focus:ring-blue-500/20"
