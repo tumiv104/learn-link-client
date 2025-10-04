@@ -5,13 +5,15 @@ import { Calendar, Star, Award } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { Mission } from "@/data/mission"
+import { formatDateTime } from "@/utils/formatDateTime"
 
 interface MissionManagementCardProps {
   mission: Mission
   onOpenDialog: (mode: "view" | "edit", mission: any) => void
+  locale: string
 }
 
-export function MissionManagementCard({ mission, onOpenDialog }: MissionManagementCardProps) {
+export function MissionManagementCard({ mission, onOpenDialog, locale }: MissionManagementCardProps) {
   const t = useTranslations("parentDashboard.missions")
   const getStatusVariant = () => {
     switch (mission.Status) {
@@ -44,7 +46,7 @@ export function MissionManagementCard({ mission, onOpenDialog }: MissionManageme
               <Badge variant={getStatusVariant()}>{t(`missionStatus.${mission.Status}`)}</Badge>
               <span className="text-sm text-gray-500">
                 <Calendar className="w-4 h-4 inline mr-1" />
-                {t("due")}: {mission.Deadline}
+                {t("due")}: {formatDateTime(mission.Deadline, locale)}
               </span>
               <span className="text-sm font-medium text-amber-600">
                 <Star className="w-4 h-4 inline mr-1" />

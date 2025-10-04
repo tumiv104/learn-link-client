@@ -10,6 +10,7 @@ import ShopScreen from "./screens/ShopScreen"
 import AchievementsScreen from "./screens/AchievementsScreen"
 import ProfileScreen from "./screens/ProfileScreen"
 import { mockData } from "@/data/mockData"
+import { useMissionHub } from "@/hooks/useMissionHub"
 import { getPointDetailByUserId } from "@/services/points/pointService"
 import { useAlert } from "@/hooks/useAlert"
 
@@ -36,6 +37,17 @@ export default function ChildDashboard() {
       fetchBalance();
   }, [user, fetchBalance]);
 
+  useMissionHub(user?.id, {
+    onMissionCreated: (mission) => {
+      console.log("Child - Mission Created:", mission);
+      // TODO: show notification
+    },
+    onMissionReviewed: ({ missionId, status }) => {
+      console.log("Child - Mission Reviewed:", missionId, status);
+      // TODO: update mission status in UI
+    },
+  });
+  
   if (loading)
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 flex items-center justify-center">

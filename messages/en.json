@@ -98,6 +98,11 @@
       "promise": "Promise",
       "edit": "Edit",
       "view": "View",
+      "description": "Description",
+      "created": "Created",
+      "totalReward": "Total Reward",
+      "deadline": "Deadline",
+      "attachment": "Mission Attachment",
       "missionStatus": {
         "Assigned": "Assigned",
         "Submitted": "Submitted",
@@ -166,13 +171,71 @@
       "title": "Profile & Account Management",
       "desc": "Manage your account and children's profiles",
       "settingsTitle": "Profile settings",
-      "settingsDesc": "Account management features will be available here"
+      "settingsDesc": "Account management features will be available here",
+      "subtitle": "Manage your account information",
+      "editButton": "Edit",
+      "loadingProfile": "Loading profile...",
+      "errorLoading": "Error loading profile",
+      "noProfileData": "No profile data available",
+      "dob": "Date of Birth",
+      "joinedDate": "Joined Date",
+      "points": "Accumulated Points",
+      "childrenCount": "Number of Children",
+      "parent": "Parent",
+      "notUpdated": "Not updated",
+      "notAvailable": "Not available"
     },
-    "reports": {
+   "reports": {
       "title": "Learning Reports",
       "desc": "Track your children's progress and achievements",
       "comingTitle": "Reports coming soon",
-      "comingDesc": "Detailed analytics and progress reports will be available here"
+      "comingDesc": "Detailed analytics and progress reports will be available here",
+      "selectChild": "Select a child",
+      "selectChildPlaceholder": "Select a child",
+      "allChildren": "All Children",
+      "period": "Time Period",
+      "periodLabels": {
+        "day": "Today",
+        "week": "This Week",
+        "month": "This Month",
+        "year": "This Year",
+        "all": "All Time"
+      },
+      "loading": "Loading report...",
+      "noData": "No data available",
+      "stats": {
+        "totalMissions": "Total Missions",
+        "completedMissions": "Completed",
+        "processingMissions": "In Progress",
+        "submittedMissions": "Submitted",
+        "completionRate": "Completion Rate",
+        "totalPointsEarned": "Points Earned",
+        "avgPointsPerMission": "Average Points per Mission",
+        "lastSubmission": "Last Submission"
+      },
+      "charts": {
+        "missionStatus": "Mission Status Distribution",
+        "completionTrend": "Completion Trend"
+      },
+      "missionStatusLabels": {
+        "Assigned": "Assigned",
+        "Processing": "In Progress",
+        "Submitted": "Submitted",
+        "Completed": "Completed"
+      },
+      "summary": {
+        "title": "Progress Summary",
+        "reportFor": "Report for {child} • {period}",
+        "completionRate": "Completion Rate",
+        "avgPoints": "Average Points per Mission",
+        "lastSubmission": "Last Submission",
+        "noSubmissionsYet": "No submissions yet"
+      },
+      "noChildren": {
+        "title": "No Children Found",
+        "desc": "Add children to your account to view their progress reports."
+      },
+      "errorLoading": "Failed to load report"
     },
     "rewards": {
       "title": "Reward Management",
@@ -198,6 +261,10 @@
         "Approved": "Approved",
         "Rejected": "Rejected"
       },
+      "noSubmissions": "No submissions found",
+      "loadMore": "Load More",
+      "loading": "Loading submissions...",
+      "page": "Page {current} of {total}",
       "detailTitle": "Submission Details",
       "missionInfo": "Mission Information",
       "points": "Points",
@@ -348,6 +415,12 @@
       }
     }
 
+  },
+  "component": {
+    "paginationBar": {
+      "pageSize": "Items per page",
+      "previous": "Previous",
+      "next": "Next"
+    }
   }
-
 }

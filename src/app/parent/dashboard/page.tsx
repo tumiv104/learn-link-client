@@ -20,6 +20,7 @@ import ReportScreen from "./screens/ReportScreen"
 import ProfileScreen from "./screens/ProfileScreen"
 import OverviewScreen from "./screens/OverviewScreen"
 import { useTranslations } from "next-intl"
+import { useMissionHub } from "@/hooks/useMissionHub"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { BuyPointsDialog } from "@/components/dashboard/parent/BuyPointsDialog"
@@ -76,6 +77,17 @@ export default function ParentDashboard() {
 
     handlePaymentCallback();
   }, [searchParams, callbackHandled, router, pathname, fetchBalance]);
+
+  useMissionHub(user?.id, {
+    onMissionStarted: ({ missionId }) => {
+      console.log("Parent - Mission Started:", missionId);
+      // TODO: show notification
+    },
+    onMissionSubmitted: ({ missionId }) => {
+      console.log("Parent - Mission Submitted:", missionId);
+      // TODO: update mission list
+    },
+  });
 
   if (loading)
   return (
