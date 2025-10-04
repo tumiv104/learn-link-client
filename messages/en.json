@@ -366,23 +366,72 @@
     "missions": {
       "title": "Mission Control",
       "subtitle": "Choose your next adventure!",
-      "feedback": "Parent's Feedback:",
-      "actions": {
-        "start": "Start Mission",
-        "complete": "Complete",
-        "addPhoto": "Add Photo",
-        "completed": "Completed!"
+      "tabs": {
+        "all": "All",
+        "assigned": "Assigned",
+        "processing": "Processing",
+        "submitted": "Submitted",
+        "completed": "Completed"
       },
-      "difficulty": {
-        "easy": "Easy",
-        "medium": "Medium",
-        "hard": "Hard"
+      "dialog": {
+        "startTitle": "Start Mission",
+        "startDescription": "Confirm start mission {title} ?",
+        "startSuccessTitle": "Mission Started",
+        "startSuccessMessage": "Mission {title} has been started. Good luck!",
+        "startError": "Failed to start mission. Please try again.",
+        "submitSuccessTitle": "Mission Submitted",
+        "submitSuccessMessage": "Mission submit successful!",
+        "submitError": "Failed to submit mission. Please try again."
+      },
+      "status": {
+        "new": "New Mission",
+        "assigned": "Assigned",
+        "processing": "In Progress",
+        "submitted": "Submitted",
+        "completed": "Completed",
+        "default": "Unknown"
+      },
+      "reward": "Reward",
+      "expired": "Expired!",
+      "scoreTitle": "Your Score",
+      "feedbackTitle": "Message from Parents",
+      "buttons": {
+        "viewDetail": "View Details",
+        "startNow": "Start Now!",
+        "submitWork": "Submit Work"
+      },
+      "detail": {
+        "title": "Mission Details",
+        "reward": "Reward",
+        "createdAt": "Created:",
+        "specialReward": "Special Reward",
+        "importantNote": "Important Note",
+        "downloadMissionFiles": "Download Mission Files",
+        "yourSubmission": "Your Submission",
+        "status": "Status",
+        "submitted": "Submitted",
+        "yourScore": "Your Score",
+        "reviewed": "Reviewed",
+        "messageFromParents": "Message from Parents",
+        "downloadSubmission": "Download Your Submission"
+      },
+      "time": {
+        "expired": "Expired!",
+        "daysLeft": "{count} day(s) left",
+        "hoursLeft": "{count} hour(s) left",
+        "minutesLeft": "{count} minute(s) left",
+        "daysLate": "{count} day(s) late",
+        "hoursLate": "{count} hour(s) late",
+        "minutesLate": "{count} minute(s) late",
+        "daysEarly": "{count} day(s) early",
+        "hoursEarly": "{count} hour(s) early",
+        "minutesEarly": "{count} minute(s) early"
       }
     },
     "shop": {
       "title": "Power-Up Shop",
-      "subtitle": "Spend your coins on awesome rewards!",
-      "coins": "coins",
+      "subtitle": "Spend your points on awesome rewards!",
+      "coins": "points",
       "gems": "gems",
       "stock": "Stock",
       "needMore": "💰 Need More",
