@@ -333,7 +333,7 @@
         "greeting": "Hey",
         "level": "Level {level}",
         "streak": "{days} day streak!",
-        "coins": "Coins",
+        "points": "Points",
         "gems": "Gems",
         "energy": "Energy",
         "totalMissions": "Total Missions",

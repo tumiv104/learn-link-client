@@ -1,6 +1,6 @@
 "use client"
 import useRequireAuth from "@/hooks/useRequireAuth"
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Sidebar } from "@/components/dashboard/child/Sidebar"
 import { Header } from "@/components/dashboard/child/Header"
 import { useAuth } from "@/context/AuthContext"
@@ -11,11 +11,31 @@ import AchievementsScreen from "./screens/AchievementsScreen"
 import ProfileScreen from "./screens/ProfileScreen"
 import { mockData } from "@/data/mockData"
 import { useMissionHub } from "@/hooks/useMissionHub"
+import { getPointDetailByUserId } from "@/services/points/pointService"
+import { useAlert } from "@/hooks/useAlert"
 
 export default function ChildDashboard() {
   const { user, loading, ready } = useRequireAuth("/auth/login", ["Child"])
   const [activeScreen, setActiveScreen] = useState("home")
   const { logout } = useAuth()
+  const [selectedMission, setSelectedMission] = useState<any>(null)
+  const [detailModalOpen, setDetailModalOpen] = useState(false)
+  const [submitModalOpen, setSubmitModalOpen] = useState(false)
+  const { alert, showAlert, hideAlert } = useAlert()
+  const [balance, setBalance] = useState<number>(0)
+
+  const fetchBalance = useCallback(async () => {
+      if (user) {
+        const res = await getPointDetailByUserId(user.id);
+        if (res.data) {
+          setBalance(res.data.balance);
+        }
+      }
+    }, [user]);
+  
+  useEffect(() => {
+      fetchBalance();
+  }, [user, fetchBalance]);
 
   useMissionHub(user?.id, {
     onMissionCreated: (mission) => {
@@ -51,11 +71,11 @@ export default function ChildDashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100">
       <Sidebar activeScreen={activeScreen} setActiveScreen={setActiveScreen} name={user?.name} player={mockData.player} />
-      <Header activeScreen={activeScreen} player={mockData.player} />
+      <Header activeScreen={activeScreen} player={mockData.player} points={balance}/>
 
       <div className="ml-64 pt-16 p-8">
         <div className="max-w-7xl mx-auto pt-8">
-          {activeScreen === "home" && <HomeScreen user={user}/>}
+          {activeScreen === "home" && <HomeScreen user={user} points={balance}/>}
           {activeScreen === "missions" && <MissionScreen/>}
           {activeScreen === "shop" && <ShopScreen/>}
           {activeScreen === "achievements" && <AchievementsScreen/>}
