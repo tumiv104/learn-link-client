@@ -8,15 +8,13 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Upload, FileText } from "lucide-react"
 import { useState } from "react"
+import { MissionSubmission } from "@/data/mission"
 
 interface SubmitMissionModalProps {
   open: boolean
   onClose: () => void
-  mission: {
-    missionId: number
-    title: string
-  }
-  onSubmit: (file: File) => Promise<void>
+  mission: MissionSubmission
+  onSubmit: (missionId: number, file: File) => Promise<void>
 }
 
 export function SubmitMissionModal({ open, onClose, mission, onSubmit }: SubmitMissionModalProps) {
@@ -34,7 +32,7 @@ export function SubmitMissionModal({ open, onClose, mission, onSubmit }: SubmitM
 
     setIsSubmitting(true)
     try {
-      await onSubmit(selectedFile)
+      await onSubmit(mission.missionId, selectedFile)
       setSelectedFile(null)
       onClose()
     } catch (error) {

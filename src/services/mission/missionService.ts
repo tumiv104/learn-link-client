@@ -23,3 +23,8 @@ export async function getAllMission() {
     const res = await api.get(`/mission/child-missions`);
     return res.data;
 }
+
+export async function getAllMissionByStatus(status: string) {
+  const res = await api.get(`/mission/child/status?status=${status}`);
+  return res.data;
+}

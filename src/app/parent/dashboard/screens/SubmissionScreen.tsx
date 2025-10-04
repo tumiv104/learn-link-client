@@ -9,10 +9,12 @@ import { ReviewSubmissionDialog } from "@/components/dashboard/parent/ReviewSubm
 import { useEffect, useState } from "react"
 import { useAlert } from "@/hooks/useAlert"
 import { AlertPopup } from "@/components/ui/alert-popup"
-import { getParentSubmissions, reviewSubmission } from "@/services/submission/submissionService"
+import { approveSubmission, getParentSubmissions, rejectSubmission, reviewSubmission } from "@/services/submission/submissionService"
 import type { SubmissionDetailDTO } from "@/data/submissionDetail"
 import type { PageResult } from "@/data/pagination"
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react"
+import { PaginationBar } from "@/components/dashboard/PaginationBar"
+import { usePagination } from "@/hooks/usePagination"
 
 export default function SubmissionScreen() {
   const t = useTranslations("parentDashboard.submissions")
@@ -20,10 +22,9 @@ export default function SubmissionScreen() {
 
   const [submissions, setSubmissions] = useState<SubmissionDetailDTO[]>([])
   const [loading, setLoading] = useState(false)
-  const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  const { page, setPage, pageSize, setPageSize, getPageNumbers } = usePagination(totalPages, 1, 5)
   const [totalCount, setTotalCount] = useState(0)
-  const pageSize = 5
 
   const [submissionDetailModal, setSubmissionDetailModal] = useState({
     open: false,
@@ -68,19 +69,24 @@ export default function SubmissionScreen() {
     })
   }
 
-  const handleSubmitReview = async (submissionId: string, feedback: string, score: number, approved: boolean) => {
+  const handleSubmitReview = async (submissionId: number, feedback: string, score: number, approved: boolean) => {
     try {
-      await reviewSubmission(Number(submissionId), feedback, score, approved)
-
-      setTimeout(() => {
+      let success = false;
+      if (approved) {
+        const res = await approveSubmission(submissionId, score, feedback);
+        success = res.success
+      } else {
+        const res = await rejectSubmission(submissionId, score, feedback);
+        success = res.success
+      }
+      if (success) {
         if (approved) {
           showSuccess(t("alerts.approved.title"), t("alerts.approved.message", { score }))
         } else {
           showError(t("alerts.rejected.title"), t("alerts.rejected.message"))
         }
-        // Refresh submissions after review
         fetchSubmissions()
-      }, 500)
+      }
     } catch (err) {
       showError("Error", "Failed to submit review")
     }
@@ -123,7 +129,6 @@ export default function SubmissionScreen() {
       ) : submissions.length === 0 ? (
         <div className="text-center py-12 text-gray-500">No submissions yet</div>
       ) : (
-        <>
           <div className="grid gap-4">
             {submissions.map((submission) => (
               <SubmissionReviewCard
@@ -149,37 +154,15 @@ export default function SubmissionScreen() {
               />
             ))}
           </div>
-
-          {totalPages > 1 && (
-            <div className="flex items-center justify-between">
-              <p className="text-sm text-gray-600">
-                Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, totalCount)} of {totalCount}{" "}
-                submissions
-              </p>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  disabled={page === 1}
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                  Previous
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  disabled={page === totalPages}
-                >
-                  Next
-                  <ChevronRight className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-          )}
-        </>
-      )}
+        )}
+        <PaginationBar
+          page={page}
+          setPage={setPage}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          totalPages={totalPages}
+          getPageNumbers={getPageNumbers}
+        />
     </div>
   )
 }

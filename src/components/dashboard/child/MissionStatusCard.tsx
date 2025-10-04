@@ -5,63 +5,73 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Calendar, Star, Trophy, AlertCircle, Clock, Rocket, Send, CheckCircle2 } from "lucide-react"
+import { MissionSubmission } from "@/data/mission"
+import { useTranslations } from "next-intl"
 
 interface MissionStatusCardProps {
-  mission: {
-    missionId: number
-    title: string
-    description: string
-    points: number
-    deadline?: string
-    status: string
-    attachmentUrl?: string
-    score?: number
-    feedback?: string
-  }
+  mission: MissionSubmission
   onViewDetail: () => void
   onStart?: () => void
   onSubmit?: () => void
 }
 
-function getTimeRemaining(deadline: string) {
-  const now = new Date()
-  const end = new Date(deadline)
-  const diff = end.getTime() - now.getTime()
-
-  if (diff < 0) {
-    return { text: "Expired!", urgent: true, expired: true, progress: 100 }
+function getTimeRemaining(deadline: string, createdAt: string, t: ReturnType<typeof useTranslations>, submittedAt?: string) {
+  const start = new Date(createdAt);
+  const end = new Date(deadline);
+  let now: Date
+  if (submittedAt !== undefined) {
+    now = new Date(submittedAt)
+  } else {
+    now = new Date()
   }
+  const diff = end.getTime() - now.getTime()
+  const progress = Math.floor(((now.getTime() - start.getTime()) / (end.getTime() - start.getTime())) * 100)
+  if (diff < 0) {
+    if (submittedAt === undefined)
+      return { text: t("time.expired"), urgent: true, expired: true, progress: 100 }
+    return getDiff(Math.abs(diff), true, "Late", t, progress)
+  } else {
+    if (submittedAt === undefined)
+      return getDiff(diff, false, "Left", t, progress)
+    return getDiff(diff, false, "Early", t, progress)
+  }
+  
+}
 
+function getDiff(diff: number, late: boolean, txt: string, t: ReturnType<typeof useTranslations>, process: number) {
   const days = Math.floor(diff / (1000 * 60 * 60 * 24))
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
 
   let text = ""
   let urgent = false
-  let progress = 0
 
   if (days > 0) {
-    text = `${days} day${days > 1 ? "s" : ""} left`
+    text = t(`time.days${txt}`, { count: days })
     urgent = days <= 1
-    progress = days <= 1 ? 70 : days <= 3 ? 40 : 20
   } else if (hours > 0) {
-    text = `${hours} hour${hours > 1 ? "s" : ""} left`
+    text = t(`time.hours${txt}`, { count: hours })
     urgent = true
-    progress = 85
   } else {
-    text = `${minutes} minute${minutes > 1 ? "s" : ""} left`
+    text = t(`time.minutes${txt}`, { count: minutes })
     urgent = true
-    progress = 95
   }
+  if (process > 100) process = 100
 
-  return { text, urgent, expired: false, progress }
+  return { text, urgent, expired: late, progress: process }
 }
 
 export function MissionStatusCard({ mission, onViewDetail, onStart, onSubmit }: MissionStatusCardProps) {
-  const timeInfo = mission.deadline ? getTimeRemaining(mission.deadline) : null
+  const t = useTranslations("childDashboard.missions")
+
+  let submittedTime = undefined
+  if (mission.submission) {
+    submittedTime = mission.submission.submittedAt ? mission.submission.submittedAt : undefined;
+  }
+  const timeInfo = mission.deadline ? getTimeRemaining(mission.deadline, mission.createdAt, t, submittedTime) : null
 
   const getStatusConfig = () => {
-    switch (mission.status) {
+    switch (mission.missionStatus) {
       case "Assigned":
         return {
           color: "bg-blue-500",
@@ -69,7 +79,7 @@ export function MissionStatusCard({ mission, onViewDetail, onStart, onSubmit }: 
           border: "border-blue-200",
           text: "text-blue-700",
           icon: <Rocket className="w-5 h-5" />,
-          label: "New Mission",
+          label: t("status.new"),
         }
       case "Processing":
         return {
@@ -78,7 +88,7 @@ export function MissionStatusCard({ mission, onViewDetail, onStart, onSubmit }: 
           border: "border-orange-200",
           text: "text-orange-700",
           icon: <Clock className="w-5 h-5 animate-pulse" />,
-          label: "In Progress",
+          label: t("status.processing"),
         }
       case "Submitted":
         return {
@@ -87,7 +97,7 @@ export function MissionStatusCard({ mission, onViewDetail, onStart, onSubmit }: 
           border: "border-purple-200",
           text: "text-purple-700",
           icon: <Send className="w-5 h-5" />,
-          label: "Submitted",
+          label: t("status.submitted"),
         }
       case "Completed":
         return {
@@ -96,7 +106,7 @@ export function MissionStatusCard({ mission, onViewDetail, onStart, onSubmit }: 
           border: "border-green-200",
           text: "text-green-700",
           icon: <CheckCircle2 className="w-5 h-5" />,
-          label: "Completed",
+          label: t("status.completed"),
         }
       default:
         return {
@@ -105,7 +115,7 @@ export function MissionStatusCard({ mission, onViewDetail, onStart, onSubmit }: 
           border: "border-gray-200",
           text: "text-gray-700",
           icon: <Star className="w-5 h-5" />,
-          label: "Mission",
+          label: t("status.default"),
         }
     }
   }
@@ -114,12 +124,12 @@ export function MissionStatusCard({ mission, onViewDetail, onStart, onSubmit }: 
 
   return (
     <Card className={`border-2 ${config.border} hover:shadow-lg transition-all bg-white`}>
-      <div className={`${config.color} px-4 py-2.5 flex items-center justify-between`}>
+      <div className={`${config.color} px-4 py-5 flex items-center justify-between`}>
         <div className="flex items-center gap-2">
           <div className="text-white">{config.icon}</div>
-          <h3 className="text-base font-bold text-white">{mission.title}</h3>
+          <h3 className="text-lg font-bold text-white">{mission.title}</h3>
         </div>
-        <Badge className="bg-white/20 text-white border-0 text-xs flex items-center gap-1">
+        <Badge className="bg-white/20 text-white border-0 text-base flex items-center gap-1">
           {config.icon}
           {config.label}
         </Badge>
@@ -132,7 +142,7 @@ export function MissionStatusCard({ mission, onViewDetail, onStart, onSubmit }: 
           <div className={`${config.lightBg} ${config.border} border rounded-lg p-2.5 flex items-center gap-2`}>
             <Star className={`w-5 h-5 ${config.text} fill-current`} />
             <div>
-              <p className="text-xs text-gray-500 font-medium">Reward</p>
+              <p className="text-xs text-gray-500 font-medium">{t("reward")}</p>
               <p className={`text-xl font-bold ${config.text}`}>{mission.points}</p>
             </div>
           </div>
@@ -163,25 +173,25 @@ export function MissionStatusCard({ mission, onViewDetail, onStart, onSubmit }: 
           )}
         </div>
 
-        {mission.status === "Completed" && (
+        {mission.missionStatus === "Completed" && (
           <div className="space-y-2">
-            {mission.score !== undefined && (
+            {mission.submission !== null && mission.submission.score !== undefined && (
               <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-lg p-2.5 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Trophy className="w-5 h-5 text-green-600" />
-                  <span className="text-sm font-bold text-green-700">Your Score</span>
+                  <span className="text-sm font-bold text-green-700">{t("scoreTitle")}</span>
                 </div>
-                <span className="text-2xl font-black text-green-700">{mission.score}/100</span>
+                <span className="text-2xl font-black text-green-700">{mission.submission.score}/100</span>
               </div>
             )}
-            {mission.feedback && (
+            {mission.submission !== null && mission.submission.feedback && (
               <div className="bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-300 rounded-lg p-3 shadow-sm">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xl">💬</span>
-                  <p className="text-sm font-bold text-yellow-800">Message from Parents</p>
+                  <p className="text-sm font-bold text-yellow-800">{t("feedbackTitle")}</p>
                   <span className="text-xl">❤️</span>
                 </div>
-                <p className="text-sm text-gray-800 leading-relaxed font-medium">{mission.feedback}</p>
+                <p className="text-sm text-gray-800 leading-relaxed font-medium">{mission.submission.feedback}</p>
               </div>
             )}
           </div>
@@ -191,29 +201,29 @@ export function MissionStatusCard({ mission, onViewDetail, onStart, onSubmit }: 
           <Button
             variant="outline"
             onClick={onViewDetail}
-            size="sm"
-            className="flex-1 text-sm font-bold border-2 hover:bg-gray-50 bg-white"
+            size="lg"
+            className="flex-1 text-lg font-bold border-2 hover:bg-gray-50 bg-white"
           >
-            👁️ View Details
+            👁️ {t("buttons.viewDetail")}
           </Button>
 
-          {mission.status === "Assigned" && onStart && (
+          {mission.missionStatus === "Assigned" && onStart && (
             <Button
               onClick={onStart}
-              size="sm"
-              className={`flex-1 text-sm font-bold ${config.color} hover:opacity-90 shadow-md hover:shadow-lg transition-all text-white`}
+              size="lg"
+              className={`flex-1 text-lg font-bold ${config.color} hover:opacity-90 shadow-md hover:shadow-lg transition-all text-white`}
             >
-              🚀 Start Now!
+              🚀 {t("buttons.startNow")}
             </Button>
           )}
 
-          {mission.status === "Processing" && onSubmit && (
+          {mission.missionStatus === "Processing" && onSubmit && (
             <Button
               onClick={onSubmit}
-              size="sm"
-              className={`flex-1 text-sm font-bold ${config.color} hover:opacity-90 shadow-md hover:shadow-lg transition-all text-white animate-pulse`}
+              size="lg"
+              className={`flex-1 text-lg font-bold ${config.color} hover:opacity-90 shadow-md hover:shadow-lg transition-all text-white animate-pulse`}
             >
-              📤 Submit Work
+              📤 {t("buttons.submitWork")}
             </Button>
           )}
         </div>
