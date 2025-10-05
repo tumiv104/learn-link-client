@@ -99,7 +99,7 @@ export default function ProfileScreen() {
               <AvatarImage
                 src={
                   profile.avatarUrl
-                    ? `${process.env.NEXT_PUBLIC_API_URL}/avatars/${profile.avatarUrl}`
+                    ? `${process.env.NEXT_PUBLIC_API_URL}${profile.avatarUrl}`
                     : "/default-avatar.png"
                 }
                 alt={profile.name}
