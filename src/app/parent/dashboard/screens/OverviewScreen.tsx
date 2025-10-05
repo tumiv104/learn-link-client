@@ -145,7 +145,7 @@ export default function OverviewScreen() {
                 >
                   <div className="flex items-center gap-3">
                     <img
-                      src={`${process.env.NEXT_PUBLIC_API_URL}/avatars/${child.avatarUrl}`}
+                      src={`${process.env.NEXT_PUBLIC_API_URL}${child.avatarUrl}`}
                       alt={child.name}
                       className="w-12 h-12 rounded-full object-cover border"
                       onError={(e) => {
