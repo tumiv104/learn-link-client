@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useEffect, useState } from "react"
 import { getParentOverview } from "@/services/dashboard/dashboardService"
@@ -7,8 +7,12 @@ import { NotificationItem } from "@/components/dashboard/NotificationItem"
 import { StatCard } from "@/components/dashboard/StatCard"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Bell, Users, Loader2 } from "lucide-react"
+import { Bell, Users, Loader2, UserPlus } from "lucide-react"
 import { useTranslations } from "next-intl"
+import CreateChildDialog from "@/components/dashboard/parent/CreateChildDialog"
+import ChildProfileDialog from "@/components/dashboard/parent/ChildProfileDialog"
+import { createChild, getChildProfile } from "@/services/parent/parentService"
+import { UserProfileDTO } from "@/data/UserProfileDTO"
 
 export default function OverviewScreen() {
   const t = useTranslations("parentDashboard.overview")
@@ -16,20 +20,51 @@ export default function OverviewScreen() {
   const [overview, setOverview] = useState<ParentOverview | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [createDialogOpen, setCreateDialogOpen] = useState(false)
+  const [selectedChildId, setSelectedChildId] = useState<number | null>(null)
+  const [profileDialogOpen, setProfileDialogOpen] = useState(false)
+  const [childProfile, setChildProfile] = useState<UserProfileDTO | null>(null)
+  const [profileLoading, setProfileLoading] = useState(false)
+
+  const fetchData = async () => {
+    try {
+      setLoading(true)
+      const data = await getParentOverview()
+      setOverview(data)
+    } catch (err: any) {
+      setError(err.message || t("error"))
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getParentOverview()
-        setOverview(data)
-      } catch (err: any) {
-        setError(err.message || t("error"))
-      } finally {
-        setLoading(false)
-      }
-    }
     fetchData()
   }, [])
+
+  const handleCreateChild = async (formData: FormData) => {
+    await createChild(formData)
+  }
+
+  const handleCreateSuccess = () => {
+    fetchData()
+  }
+
+  // 🟩 Hàm lấy thông tin chi tiết của con
+  const handleViewChildProfile = async (childId: number) => {
+    setSelectedChildId(childId)
+    setProfileLoading(true)
+    setProfileDialogOpen(true)
+    try {
+      const data = await getChildProfile(childId)
+      setChildProfile(data)
+    } catch (err) {
+      console.error("Failed to fetch child profile:", err)
+      setChildProfile(null)
+    } finally {
+      setProfileLoading(false)
+    }
+  }
 
   if (loading) {
     return (
@@ -48,11 +83,7 @@ export default function OverviewScreen() {
   }
 
   if (!overview) {
-    return (
-      <div className="text-center py-12 text-gray-500">
-        {t("noData")}
-      </div>
-    )
+    return <div className="text-center py-12 text-gray-500">{t("noData")}</div>
   }
 
   return (
@@ -90,10 +121,20 @@ export default function OverviewScreen() {
         {/* Children */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-blue-500" />
-              {t("children.title")}
-            </CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-blue-500" />
+                {t("children.title")}
+              </CardTitle>
+              <Button
+                onClick={() => setCreateDialogOpen(true)}
+                className="bg-blue-500 hover:bg-blue-600 text-white"
+                size="sm"
+              >
+                <UserPlus className="w-4 h-4 mr-2" />
+                {t("children.createButton")}
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -103,7 +144,14 @@ export default function OverviewScreen() {
                   className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl">{child.avatarUrl}</div>
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_API_URL}/avatars/${child.avatarUrl}`}
+                      alt={child.name}
+                      className="w-12 h-12 rounded-full object-cover border"
+                      onError={(e) => {
+                        e.currentTarget.src = "/default-avatar.png"
+                      }}
+                    />
                     <div>
                       <h4 className="font-semibold">{child.name}</h4>
                       <p className="text-sm text-gray-600">
@@ -111,7 +159,12 @@ export default function OverviewScreen() {
                       </p>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm">
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleViewChildProfile(child.userId)} // ✅ gọi API khi click
+                  >
                     {t("children.viewDetails")}
                   </Button>
                 </div>
@@ -135,7 +188,10 @@ export default function OverviewScreen() {
                   key={notification.notificationId}
                   message={notification.message}
                   time={notification.createdAt}
-                  type={notification.type as "completion" | "reward" | "submission"}
+                  type={notification.type as
+                    | "completion"
+                    | "reward"
+                    | "submission"}
                   isRead={notification.isRead}
                 />
               ))}
@@ -143,6 +199,21 @@ export default function OverviewScreen() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Dialogs */}
+      <CreateChildDialog
+        open={createDialogOpen}
+        onClose={() => setCreateDialogOpen(false)}
+        onSuccess={handleCreateSuccess}
+        onCreateChild={handleCreateChild}
+      />
+
+      <ChildProfileDialog
+        open={profileDialogOpen}
+        onClose={() => setProfileDialogOpen(false)}
+        child={childProfile}
+        loading={profileLoading}
+      />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useEffect, useState } from "react"
 import { getUserProfile } from "@/services/user/userService"
@@ -8,28 +8,40 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Loader2, User, Star, Users, Calendar, Award, Edit3, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
+import { EditProfileDialog } from "@/components/dashboard/parent/EditProfileDialog"
+import { updateUserProfile } from "@/services/user/userService"
 
 export default function ProfileScreen() {
-  const t = useTranslations("parentDashboard.profile") // <--- thêm đây
+  const t = useTranslations("parentDashboard.profile")
 
   const [profile, setProfile] = useState<UserProfileDTO | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [editDialogOpen, setEditDialogOpen] = useState(false)
+
+  const fetchProfile = async () => {
+    try {
+      setLoading(true)
+      const data = await getUserProfile()
+      setProfile(data)
+    } catch (err: any) {
+      setError(err.message || t("errorLoading"))
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        setLoading(true)
-        const data = await getUserProfile()
-        setProfile(data)
-      } catch (err: any) {
-        setError(err.message || t("errorLoading")) // dùng t()
-      } finally {
-        setLoading(false)
-      }
-    }
     fetchProfile()
   }, [])
+
+  const handleUpdateProfile = async (formData: FormData) => {
+    await updateUserProfile(formData)
+  }
+
+  const handleUpdateSuccess = () => {
+    fetchProfile() // Refresh the profile data
+  }
 
   if (loading) {
     return (
@@ -74,7 +86,7 @@ export default function ProfileScreen() {
             <p className="text-gray-600">{t("subtitle")}</p>
           </div>
         </div>
-        <Button className="bg-blue-500 hover:bg-blue-600 text-white">
+        <Button onClick={() => setEditDialogOpen(true)} className="bg-blue-500 hover:bg-blue-600 text-white">
           <Edit3 className="w-4 h-4 mr-2" />
           {t("editButton")}
         </Button>
@@ -84,12 +96,18 @@ export default function ProfileScreen() {
         <CardHeader className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
           <div className="flex items-center gap-4">
             <Avatar className="w-20 h-20 border-4 border-white">
-              {profile.avatarUrl ? (
-                <AvatarImage src={profile.avatarUrl || "/placeholder.svg"} alt={profile.name} />
-              ) : (
-                <AvatarFallback className="text-xl font-bold bg-white text-blue-600">{profile.name[0]}</AvatarFallback>
-              )}
+              <AvatarImage
+                src={
+                  profile.avatarUrl
+                    ? `${process.env.NEXT_PUBLIC_API_URL}/avatars/${profile.avatarUrl}`
+                    : "/default-avatar.png"
+                }
+                alt={profile.name}
+                onError={(e) => (e.currentTarget.src = "/default-avatar.png")}
+              />
+              <AvatarFallback className="text-xl font-bold bg-white text-blue-600">{profile.name[0]}</AvatarFallback>
             </Avatar>
+
             <div className="flex-1">
               <CardTitle className="text-2xl font-bold mb-1">{profile.name}</CardTitle>
               <div className="flex items-center gap-2 mb-2">
@@ -156,6 +174,14 @@ export default function ProfileScreen() {
           </div>
         </CardContent>
       </Card>
+
+      <EditProfileDialog
+        open={editDialogOpen}
+        onClose={() => setEditDialogOpen(false)}
+        profile={profile}
+        onSuccess={handleUpdateSuccess}
+        onUpdateProfile={handleUpdateProfile}
+      />
     </div>
   )
 }
