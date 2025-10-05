@@ -98,10 +98,10 @@
       "promise": "Lời hứa",
       "edit": "Chỉnh sửa",
       "view": "Xem",
-      "description": "Mô tả", 
-      "created": "Ngày tạo", 
-      "totalReward": "Phần thưởng", 
-      "deadline": "Hạn chót", 
+      "description": "Mô tả",
+      "created": "Ngày tạo",
+      "totalReward": "Phần thưởng",
+      "deadline": "Hạn chót",
       "attachment": "Tệp đính kèm",
       "missionStatus": {
         "Assigned": "Đã giao",
@@ -137,6 +137,12 @@
           "title": "Cập nhật nhiệm vụ",
           "success": "Nhiệm vụ \"{title}\" đã được cập nhật thành công."
         }
+      },
+      "deleteDialog": {
+        "title": "Xóa nhiệm vụ",
+        "description": "Bạn có chắc chắn muốn xóa nhiệm vụ này? Hành động này không thể hoàn tác.",
+        "cancel": "Hủy",
+        "delete": "Xóa"
       }
     },
     "overview": {
@@ -161,7 +167,22 @@
       "children": {
         "title": "Tổng quan con cái",
         "points": "{points} điểm tích lũy",
-        "viewDetails": "Xem chi tiết"
+        "viewDetails": "Xem chi tiết",
+        "createButton": "Tạo tài khoản con mới",
+        "createDialog": {
+          "title": "Tạo tài khoản cho con",
+          "avatarHelp": "Nhấn để tải ảnh đại diện",
+          "nameLabel": "Họ và tên",
+          "namePlaceholder": "Nhập tên của bé",
+          "emailLabel": "Địa chỉ Email",
+          "emailPlaceholder": "Nhập địa chỉ email",
+          "passwordLabel": "Mật khẩu",
+          "passwordPlaceholder": "Tạo mật khẩu",
+          "passwordHelp": "Mật khẩu phải có ít nhất 6 ký tự",
+          "dobLabel": "Ngày sinh",
+          "cancel": "Hủy",
+          "create": "Tạo tài khoản"
+        }
       },
       "activity": {
         "title": "Hoạt động gần đây"
@@ -228,7 +249,28 @@
       "points": "điểm",
       "left": "còn lại",
       "edit": "Sửa",
-      "delete": "Xóa"
+      "delete": "Xóa",
+      "form": {
+        "createTitle": "Tạo phần thưởng mới",
+        "editTitle": "Chỉnh sửa phần thưởng",
+        "name": "Tên phần thưởng",
+        "namePlaceholder": "Nhập tên phần thưởng",
+        "description": "Mô tả",
+        "descriptionPlaceholder": "Mô tả phần thưởng",
+        "points": "Giá điểm",
+        "pointsPlaceholder": "Nhập số điểm cần thiết",
+        "stock": "Số lượng",
+        "stockPlaceholder": "Nhập số lượng có sẵn",
+        "cancel": "Hủy",
+        "create": "Tạo phần thưởng",
+        "save": "Lưu thay đổi"
+      },
+      "deleteDialog": {
+        "title": "Xóa phần thưởng",
+        "description": "Bạn có chắc chắn muốn xóa phần thưởng này? Hành động này không thể hoàn tác.",
+        "cancel": "Hủy",
+        "delete": "Xóa"
+      }
     },
     "submissions": {
       "title": "Duyệt bài nộp",
@@ -294,20 +336,32 @@
       }
     },
     "profile": {
-          "title": "Quản lý hồ sơ & tài khoản",
-          "subtitle": "Quản lý thông tin tài khoản của bạn",
-          "editButton": "Chỉnh sửa",
-          "loadingProfile": "Đang tải hồ sơ...",
-          "errorLoading": "Lỗi khi tải hồ sơ",
-          "noProfileData": "Không có dữ liệu hồ sơ",
-          "dob": "Ngày sinh",
-          "joinedDate": "Ngày tham gia",
-          "points": "Điểm tích lũy",
-          "childrenCount": "Số con",
-          "parent": "Phụ huynh",
-          "notUpdated": "Chưa cập nhật",
-          "notAvailable": "Chưa có thông tin"
-        }
+      "title": "Quản lý hồ sơ & tài khoản",
+      "subtitle": "Quản lý thông tin tài khoản của bạn",
+      "editButton": "Chỉnh sửa",
+      "loadingProfile": "Đang tải hồ sơ...",
+      "errorLoading": "Lỗi khi tải hồ sơ",
+      "noProfileData": "Không có dữ liệu hồ sơ",
+      "dob": "Ngày sinh",
+      "joinedDate": "Ngày tham gia",
+      "points": "Điểm tích lũy",
+      "childrenCount": "Số con",
+      "parent": "Phụ huynh",
+      "notUpdated": "Chưa cập nhật",
+      "notAvailable": "Chưa có thông tin",
+      "editDialog": {
+        "title": "Chỉnh sửa hồ sơ",
+        "avatarHelp": "Nhấn để thay đổi ảnh đại diện",
+        "emailLabel": "Địa chỉ Email",
+        "emailHelp": "Email không thể thay đổi",
+        "nameLabel": "Họ và tên",
+        "namePlaceholder": "Nhập tên của bạn",
+        "dobLabel": "Ngày sinh",
+        "roleLabel": "Vai trò",
+        "cancel": "Hủy",
+        "save": "Lưu thay đổi"
+      }
+    }
   },
   "childDashboard": {
     "nav": {
