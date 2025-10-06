@@ -188,8 +188,8 @@ export default function ChildDashboard() {
           {activeScreen === "home" && <HomeScreen user={user} points={balance} missions={missionList} streak={streak}/>}
           {activeScreen === "missions" && <MissionScreen/>}
           {activeScreen === "shop" && <ShopScreen user={user} points={balance}/>}
-          {activeScreen === "achievements" && <AchievementsScreen/>}
-          {activeScreen === "profile" && <ProfileScreen user={user} onLogout={handleLogout}/>}
+          {/* {activeScreen === "achievements" && <AchievementsScreen/>}
+          {activeScreen === "profile" && <ProfileScreen user={user} onLogout={handleLogout}/>} */}
         </div>
       </div>
     </div>

@@ -1,6 +1,5 @@
 "use client"
 import useRequireAuth from "@/hooks/useRequireAuth"
-import Header from "@/components/header"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   Users,
@@ -29,6 +28,9 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { getPointDetailByUserId } from "@/services/points/pointService"
 import { CustomToast } from "@/components/ui/custom-toast"
 import { toast } from "sonner"
+import Header from "@/components/dashboard/parent/Header"
+import { NotificationResponse } from "@/data/notification"
+import { getNotificationByUserId, markAllAsRead, markAsRead } from "@/services/notification/notificationService"
 
 export default function ParentDashboard() {
   const t = useTranslations("parentDashboard")
@@ -37,10 +39,43 @@ export default function ParentDashboard() {
   const [buyPointsDialog, setBuyPointsDialog] = useState(false)
   const [balance, setBalance] = useState<number>(0)
   const [callbackHandled, setCallbackHandled] = useState(false);
+  const [notifications, setNotifications] = useState<NotificationResponse[]>([])
 
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const handleMarkNotificationAsRead = useCallback(async (id: number) => {
+      const res = await markAsRead(id);
+      if (res.success) {
+        setNotifications((prev) => prev.map((n) => (n.notificationId === id ? { ...n, isRead: true } : n)))
+      }
+    }, [])
+  
+    const handleMarkAllNotificationsAsRead = useCallback(async () => {
+      if (user) {
+        const res = await markAllAsRead(user?.id);
+        if (res.success) {
+          setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })))
+        }
+      }
+      
+    }, [user])
+  
+    const addNotification = (notification: NotificationResponse) => {
+      setNotifications(prev => [notification, ...prev])
+    }
+  
+    const fetchNoti = async () => {
+      if (user) {
+        const res = await getNotificationByUserId(user.id);
+        const notifications: NotificationResponse[] = res.data.map((n: any) => ({
+          ...n,
+          payload: JSON.parse(n.payload),
+        }))
+        setNotifications(notifications);
+      }
+    }
 
   const fetchBalance = useCallback(async () => {
     if (user) {
@@ -53,6 +88,7 @@ export default function ParentDashboard() {
 
   useEffect(() => {
       fetchBalance();
+      fetchNoti();
   }, [user, fetchBalance]);
 
   useEffect(() => {
@@ -89,6 +125,17 @@ export default function ParentDashboard() {
           description={`${data.childName} started mission ${data.title}!`}
         />
       ))
+      addNotification({
+        notificationId: Date.now(), 
+        userId: data.parentId,
+        type: "MissionStarted",
+        payload: {
+          missionId: data.missionId,
+          title: data.title,
+        },
+        isRead: false,
+        createdAt: new Date().toISOString(),
+      })
       // TODO: show notification
     },
     onMissionSubmitted: (data) => {
@@ -99,6 +146,17 @@ export default function ParentDashboard() {
           description={`${data.childName} has submitted for mission ${data.title}!`}
         />
       ))
+      addNotification({
+        notificationId: Date.now(), 
+        userId: data.parentId,
+        type: "MissionSubmitted",
+        payload: {
+          missionId: data.missionId,
+          title: data.title,
+        },
+        isRead: false,
+        createdAt: new Date().toISOString(),
+      })
       // TODO: update mission list
     },
   });
@@ -143,7 +201,9 @@ export default function ParentDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-amber-50">
-      <Header />
+      <Header notifications={notifications}
+        onMarkNotificationAsRead={handleMarkNotificationAsRead}
+        onMarkAllNotificationsAsRead={handleMarkAllNotificationsAsRead}/>
       <BuyPointsDialog open={buyPointsDialog} onOpenChange={setBuyPointsDialog} onPurchase={handleBuyPoints} />
       <div className="p-4 pt-20">
         <div className="max-w-7xl mx-auto">

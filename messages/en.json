@@ -11,6 +11,7 @@
     "heroSubtitle": "Learn Link helps parents guide children's learning with tasks, rewards, and fun challenges. Turn everyday learning into an exciting adventure for the whole family!",
     "signupParent": "Sign Up as Parent",
     "login": "Log In",
+    "parentPage": "Go to Parent Page",
     "whyChoose": "Why Choose Learn Link?",
     "whyChooseDesc": "Designed for both parents and children with features that make learning fun and rewarding",
     "features": {
@@ -354,7 +355,8 @@
       "missions": "🚀 Mission Control",
       "shop": "🏪 Power-Up Shop",
       "achievements": "🏆 Trophy Collection",
-      "profile": "👤 My Profile"
+      "profile": "👤 My Profile",
+      "logout": "Logout"
     },
     "childHome": {
       "welcome": {

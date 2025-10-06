@@ -11,6 +11,7 @@
     "heroSubtitle": "Learn Link giúp phụ huynh hướng dẫn con học tập thông qua nhiệm vụ, phần thưởng và thử thách vui nhộn. Biến việc học thành cuộc phiêu lưu thú vị cho cả gia đình!",
     "signupParent": "Đăng ký cho phụ huynh",
     "login": "Đăng nhập",
+    "parentPage": "Đi tới trang dành cho phụ huynh",
     "whyChoose": "Tại sao chọn Learn Link?",
     "whyChooseDesc": "Thiết kế cho cả phụ huynh và trẻ em với những tính năng giúp việc học trở nên thú vị và bổ ích",
     "features": {
@@ -376,7 +377,8 @@
       "missions": "🚀 Trung tâm nhiệm vụ",
       "shop": "🏪 Cửa hàng sức mạnh",
       "achievements": "🏆 Bộ sưu tập cúp",
-      "profile": "👤 Hồ sơ của tôi"
+      "profile": "👤 Hồ sơ của tôi",
+      "logout": "Đăng xuất"
     },
     "childHome": {
       "welcome": {

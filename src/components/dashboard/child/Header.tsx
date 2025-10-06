@@ -1,9 +1,11 @@
 import LanguageSwitcher from "@/components/LanguageSwitcher"
 import { Button } from "@/components/ui/button"
-import { Star, Flame, Bell, Settings } from "lucide-react"
+import { Star, Flame, Bell, Settings, LogOut } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { NotificationDropdown } from "./NotificationDropdown"
 import { NotificationResponse } from "@/data/notification"
+import { logout } from "@/services/auth/authService"
+import router from "next/router"
 
 interface HeaderProps {
   activeScreen: string
@@ -32,6 +34,15 @@ export function Header({
   const getScreenTitle = () => {
     return t(activeScreen as any)
   }
+  
+  const handleLogout = async () => {
+    try {
+      await logout()
+      router.push("/")
+    } catch (error) {
+      console.error("Logout failed:", error)
+    }
+  }
 
   return (
     <div className="fixed top-0 left-64 right-0 h-16 bg-white border-b-2 border-gray-200 shadow-lg z-30">
@@ -59,8 +70,9 @@ export function Header({
             onMarkAsRead={onMarkNotificationAsRead}
             onMarkAllAsRead={onMarkAllNotificationsAsRead}
           />
-          <Button variant="outline" size="sm" className="bg-transparent">
-            <Settings className="w-4 h-4" />
+          <Button variant="ghost" size="sm" onClick={handleLogout} className="flex items-center gap-2">
+            <LogOut className="w-4 h-4" />
+            {t("logout")}
           </Button>
         </div>
       </div>
