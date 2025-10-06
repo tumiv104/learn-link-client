@@ -161,6 +161,10 @@ export default function ParentDashboard() {
     },
   });
 
+  const onApproveSubmission = useCallback(async () => {
+    fetchBalance();
+  }, [user])
+
   if (loading)
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -271,7 +275,7 @@ export default function ParentDashboard() {
 
             <TabsContent value="missions"><MissionScreen/></TabsContent>
 
-            <TabsContent value="submissions"><SubmissionScreen/></TabsContent>
+            <TabsContent value="submissions"><SubmissionScreen onApprove={onApproveSubmission}/></TabsContent>
 
             <TabsContent value="rewards"><RewardScreen/></TabsContent>
 

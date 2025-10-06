@@ -56,7 +56,7 @@ export default function HomeScreen({ user, points, missions, streak } : HomeProp
     isWithinInterval(new Date(m.createdAt), { start: weekStart, end: weekEnd })
   )
 
-  const missionsCompleted = weeklyMissions.filter((m) => m.missionStatus === "Approved")
+  const missionsCompleted = weeklyMissions.filter((m) => m.missionStatus === "Completed")
   const totalMissions = weeklyMissions.length
   const coinsEarned = missionsCompleted.reduce((sum, m) => sum + (m.points || 0), 0)
   const totalMissionsCompleted = missions.filter(m => m.missionStatus === "Completed").length

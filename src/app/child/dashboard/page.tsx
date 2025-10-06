@@ -146,6 +146,10 @@ export default function ChildDashboard() {
         isRead: false,
         createdAt: new Date().toISOString(),
       })
+      if (data.status == "Approved") {
+        console.log("fetch balance")
+        fetchBalance();
+      }
       // TODO: update mission status in UI
     },
   });

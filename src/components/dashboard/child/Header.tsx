@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { NotificationDropdown } from "./NotificationDropdown"
 import { NotificationResponse } from "@/data/notification"
 import { logout } from "@/services/auth/authService"
-import router from "next/router"
+import { useRouter } from "next/navigation"
 
 interface HeaderProps {
   activeScreen: string
@@ -34,6 +34,7 @@ export function Header({
   const getScreenTitle = () => {
     return t(activeScreen as any)
   }
+  const router = useRouter()
   
   const handleLogout = async () => {
     try {

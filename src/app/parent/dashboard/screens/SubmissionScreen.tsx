@@ -16,7 +16,11 @@ import { Loader2, ChevronLeft, ChevronRight } from "lucide-react"
 import { PaginationBar } from "@/components/dashboard/PaginationBar"
 import { usePagination } from "@/hooks/usePagination"
 
-export default function SubmissionScreen() {
+interface SubmissionProps {
+  onApprove: () => void
+}
+
+export default function SubmissionScreen({onApprove} : SubmissionProps) {
   const t = useTranslations("parentDashboard.submissions")
   const { alert, showSuccess, showError, hideAlert } = useAlert()
 
