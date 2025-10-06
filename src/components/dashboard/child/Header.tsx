@@ -2,6 +2,8 @@ import LanguageSwitcher from "@/components/LanguageSwitcher"
 import { Button } from "@/components/ui/button"
 import { Star, Flame, Bell, Settings } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { NotificationDropdown } from "./NotificationDropdown"
+import { NotificationResponse } from "@/data/notification"
 
 interface HeaderProps {
   activeScreen: string
@@ -11,9 +13,21 @@ interface HeaderProps {
     streak: number
   }
   points: number
+  streak: number
+  notifications: NotificationResponse[]
+  onMarkNotificationAsRead: (id: number) => void
+  onMarkAllNotificationsAsRead: () => void
 }
 
-export function Header({ activeScreen, player, points }: HeaderProps) {
+export function Header({ 
+  activeScreen, 
+  player, 
+  points,
+  streak,
+  notifications,
+  onMarkNotificationAsRead,
+  onMarkAllNotificationsAsRead,
+}: HeaderProps) {
   const t = useTranslations("childDashboard.header")
   const getScreenTitle = () => {
     return t(activeScreen as any)
@@ -36,13 +50,15 @@ export function Header({ activeScreen, player, points }: HeaderProps) {
             {/* <div className="flex items-center gap-1 text-purple-600 font-bold">💎 {player.gems}</div> */}
             <div className="flex items-center gap-1 text-orange-600 font-bold">
               <Flame className="w-5 h-5" />
-              {player.streak}
+              {streak}
             </div>
           </div>
 
-          <Button variant="outline" size="sm" className="bg-transparent">
-            <Bell className="w-4 h-4" />
-          </Button>
+          <NotificationDropdown
+            notifications={notifications}
+            onMarkAsRead={onMarkNotificationAsRead}
+            onMarkAllAsRead={onMarkAllNotificationsAsRead}
+          />
           <Button variant="outline" size="sm" className="bg-transparent">
             <Settings className="w-4 h-4" />
           </Button>

@@ -337,6 +337,7 @@
         "gems": "Gems",
         "energy": "Energy",
         "totalMissions": "Total Missions",
+        "totalMissionsCompleted": "Total Missions Completed",
         "progress": "Level Progress"
       },
       "sections": {
@@ -366,6 +367,7 @@
     "missions": {
       "title": "Mission Control",
       "subtitle": "Choose your next adventure!",
+      "deadline": "Deadline",
       "tabs": {
         "all": "All",
         "assigned": "Assigned",
@@ -436,7 +438,34 @@
       "stock": "Stock",
       "needMore": "💰 Need More",
       "soldOut": "❌ Sold Out",
-      "buyNow": "🛒 Buy Now"
+      "buyNow": "🛒 Buy Now",
+      "header": {
+        "title": "Awesome Rewards Shop!",
+        "subtitle": "Use your points to get cool stuff!",
+        "pointsLabel": "Your Points"
+      },
+      "tabs": {
+        "shop": "🛍️ Shop",
+        "orders": "📦 My Orders"
+      },
+      "orders": {
+        "emptyTitle": "No orders yet!",
+        "emptyDescription": "Start shopping to see your orders here!",
+        "emptyButton": "Go Shopping! 🛍️"
+      },
+      "dialog": {
+        "buyTitle": "Buy This Product?",
+        "buyDescription": "Do you want to spend {points} points to get {name}?",
+        "success": "Yay! You got {name}! 🎉",
+        "startError": "Something went wrong. Please try again."
+      },
+      "product": {
+        "onlyLeft": "Only {count} left! 🔥",
+        "soldOut": "Sold Out 😢",
+        "points": "points",
+        "buyNow": "Buy Now! 🎉",
+        "needMore": "Need {count} more points"
+      }
     },
     "achievements": {
       "title": "Trophy Collection",
@@ -471,5 +500,23 @@
       "previous": "Previous",
       "next": "Next"
     }
+  },
+  "NotificationDropdown": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "noNotifications": "No notifications yet!",
+    "time": {
+      "justNow": "Just now",
+      "minutesAgo": "{count}m ago",
+      "hoursAgo": "{count}h ago",
+      "daysAgo": "{count}d ago"
+    },
+    "message": {
+      "missionAssigned": "Mission \"{title}\" has been assigned to you.",
+      "missionReviewed": "Your mission \"{title}\" was reviewed.",
+      "missionStarted": "\"{childName}\" started mission \"{title}\".",
+      "missionSubmitted": "\"{childName}\" has submitted mission \"{title}\"."
+    }
   }
+
 }

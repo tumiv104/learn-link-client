@@ -4,7 +4,6 @@ import { Badge } from "@/components/ui/badge"
 import { Star, CheckCircle, Camera, Trophy, Gamepad2, Heart, Sparkles } from "lucide-react"
 import { ProgressBar } from "../ProgressBar"
 import { useTranslations } from "next-intl"
-import { MissionResponse } from "@/services/mission/missionService"
 
 interface MissionCardProps {
   id: number

@@ -27,6 +27,8 @@ import { BuyPointsDialog } from "@/components/dashboard/parent/BuyPointsDialog"
 import { createMomoPayment, updatePaymentStatus } from "@/services/payment/paymentService"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { getPointDetailByUserId } from "@/services/points/pointService"
+import { CustomToast } from "@/components/ui/custom-toast"
+import { toast } from "sonner"
 
 export default function ParentDashboard() {
   const t = useTranslations("parentDashboard")
@@ -79,12 +81,24 @@ export default function ParentDashboard() {
   }, [searchParams, callbackHandled, router, pathname, fetchBalance]);
 
   useMissionHub(user?.id, {
-    onMissionStarted: ({ missionId }) => {
-      console.log("Parent - Mission Started:", missionId);
+    onMissionStarted: (data) => {
+      toast.custom(() => (
+        <CustomToast 
+          type="started"
+          title="Mission Started!"
+          description={`${data.childName} started mission ${data.title}!`}
+        />
+      ))
       // TODO: show notification
     },
-    onMissionSubmitted: ({ missionId }) => {
-      console.log("Parent - Mission Submitted:", missionId);
+    onMissionSubmitted: (data) => {
+      toast.custom(() => (
+        <CustomToast 
+          type="submitted"
+          title="Mission Submitted!"
+          description={`${data.childName} has submitted for mission ${data.title}!`}
+        />
+      ))
       // TODO: update mission list
     },
   });

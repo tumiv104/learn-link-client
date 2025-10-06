@@ -333,6 +333,7 @@
         "gems": "Ngọc",
         "energy": "Năng lượng",
         "totalMissions": "Tổng số nhiệm vụ",
+        "totalMissionsCompleted": "Tổng số nhiệm vụ đã hoàn thành",
         "progress": "Tiến trình cấp độ"
       },
       "sections": {
@@ -362,6 +363,7 @@
     "missions": {
       "title": "Trung tâm Nhiệm vụ",
       "subtitle": "Hãy chọn cuộc phiêu lưu tiếp theo!",
+      "deadline": "Hạn chót",
       "tabs": {
         "all": "Tất cả",
         "assigned": "Được giao",
@@ -432,7 +434,37 @@
       "stock": "Kho",
       "needMore": "💰 Cần thêm xu",
       "soldOut": "❌ Hết hàng",
-      "buyNow": "🛒 Mua ngay"
+      "buyNow": "🛒 Mua ngay",
+      "header": {
+        "title": "Cửa Hàng Phần Thưởng Tuyệt Vời!",
+        "subtitle": "Dùng điểm của bạn để đổi lấy những món quà hấp dẫn!",
+        "pointsLabel": "Điểm của bạn"
+      },
+      "tabs": {
+        "shop": "🛍️ Cửa Hàng",
+        "orders": "📦 Đơn Hàng Của Tôi"
+      },
+      "orders": {
+        "emptyTitle": "Chưa có đơn hàng nào!",
+        "emptyDescription": "Hãy bắt đầu mua sắm để thấy đơn hàng của bạn tại đây!",
+        "goShopping": "Đi Mua Sắm! 🛍️"
+      },
+      "dialog": {
+        "buyTitle": "Mua sản phẩm này?",
+        "buyDescription": "Bạn có muốn dùng {points} điểm để nhận {name}?",
+        "startError": "Có lỗi xảy ra, vui lòng thử lại!"
+      },
+      "alerts": {
+        "purchaseSuccess": "Thành công! Bạn đã nhận được {product}! 🎉",
+        "purchaseError": "Không thể mua sản phẩm: {message}"
+      },
+      "product": {
+        "onlyLeft": "Chỉ còn {count} sản phẩm! 🔥",
+        "soldOut": "Hết hàng 😢",
+        "points": "điểm",
+        "buyNow": "Mua ngay! 🎉",
+        "needMore": "Cần thêm {count} điểm"
+      }
     },
     "achievements": {
       "title": "Bộ sưu tập Cúp",
@@ -466,5 +498,23 @@
       "previous": "Trước",
       "next": "Sau"
     }
+  },
+  "NotificationDropdown": {
+    "title": "Thông báo",
+    "markAllRead": "Đánh dấu tất cả đã đọc",
+    "noNotifications": "Chưa có thông báo nào!",
+    "time": {
+      "justNow": "Vừa xong",
+      "minutesAgo": "{count} phút trước",
+      "hoursAgo": "{count} giờ trước",
+      "daysAgo": "{count} ngày trước"
+    },
+    "message": {
+      "missionAssigned": "Nhiệm vụ \"{title}\" đã được giao cho bạn.",
+      "missionReviewed": "Nhiệm vụ \"{title}\" của bạn đã được xem xét.",
+      "missionStarted": "\"{childName}\" đã bắt đầu nhiệm vụ \"{title}\".",
+      "missionSubmitted": "\"{childName}\" đã nộp nhiệm vụ \"{title}\"."
+    }
   }
+
 }

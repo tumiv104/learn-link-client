@@ -26,5 +26,6 @@ export interface MissionSubmission {
   punishment?: string | null
   attachmentUrl?: string
   createdAt: string
+  updateAt: string
   submission: SubmissionResponse
 }
