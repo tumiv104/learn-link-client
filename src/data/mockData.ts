@@ -260,29 +260,6 @@ export const mockData = {
       ReviewedAt: "2024-01-14T15:45:00"
     },
   ],
-  redemptions: [
-    {
-      RedemptionId: 1,
-      RewardId: 1,
-      RewardName: "Extra Screen Time",
-      Cost: 50,
-      Status: "Pending",
-      ChildId: 3,
-      ChildName: "Alex",
-      RequestedAt: "2024-01-15T09:00:00",
-    },
-    {
-      RedemptionId: 2,
-      RewardId: 2,
-      RewardName: "Ice Cream Trip",
-      Cost: 100,
-      Status: "Approved",
-      ChildId: 2,
-      ChildName: "Emma",
-      RequestedAt: "2024-01-14T14:30:00",
-      ApprovedAt: "2024-01-14T16:00:00",
-    },
-  ],
   rewards: [
     {
       RewardId: 1,
@@ -306,5 +283,34 @@ export const mockData = {
   children: [
     { userId: 2, Name: "Emma", AvatarUrl: "👧", totalPoints: 280 },
     { userId: 3, Name: "Alex", AvatarUrl: "👦", totalPoints: 170 },
+  ],
+  redemptions: [
+    {
+      redemptionId: 1,
+      productName: "Art Supply Kit",
+      productImage: "/art-supplies-still-life.png",
+      pointsSpent: 300,
+      status: "Delivered" as const,
+      createdAt: "2024-12-15T10:00:00",
+      shopName: "Creative Corner",
+    },
+    {
+      redemptionId: 2,
+      productName: "Science Experiment Kit",
+      productImage: "/science-kit.jpg",
+      pointsSpent: 400,
+      status: "Confirmed" as const,
+      createdAt: "2024-12-20T14:30:00",
+      shopName: "Learning Lab",
+    },
+    {
+      redemptionId: 3,
+      productName: "Bluetooth Headphones",
+      productImage: "/bluetooth-headphones.png",
+      pointsSpent: 600,
+      status: "Pending" as const,
+      createdAt: "2024-12-22T09:15:00",
+      shopName: "Tech Hub",
+    },
   ],
 }

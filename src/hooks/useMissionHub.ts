@@ -4,16 +4,16 @@ import { getAccessToken } from "@/lib/api";
 
 type MissionEventHandlers = {
   onMissionCreated?: (mission: any) => void;
-  onMissionReviewed?: (data: { missionId: number; status: string }) => void;
-  onMissionStarted?: (data: { missionId: number }) => void;
-  onMissionSubmitted?: (data: { missionId: number }) => void;
+  onMissionReviewed?: (data: any) => void;
+  onMissionStarted?: (data: any) => void;
+  onMissionSubmitted?: (data: any) => void;
 };
 
 export function useMissionHub(userId: number | undefined, handlers: MissionEventHandlers) {
   const BACKEND = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userId) return; 
 
     const conn = new signalR.HubConnectionBuilder()
       .withUrl(`${BACKEND}/hubs/mission`, {

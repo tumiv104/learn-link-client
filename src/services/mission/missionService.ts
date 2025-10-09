@@ -18,3 +18,13 @@ export async function getParentMissions(
   const res = await api.get(`/mission/parent-missions?page=${page}&pageSize=${pageSize}`)
   return res.data.data as PageResult<MissionResponse>
 }
+
+export async function getAllMission() {
+    const res = await api.get(`/mission/child-missions`);
+    return res.data;
+}
+
+export async function getAllMissionByStatus(status: string) {
+  const res = await api.get(`/mission/child/status?status=${status}`);
+  return res.data;
+}

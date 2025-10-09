@@ -11,6 +11,7 @@
     "heroSubtitle": "Learn Link giúp phụ huynh hướng dẫn con học tập thông qua nhiệm vụ, phần thưởng và thử thách vui nhộn. Biến việc học thành cuộc phiêu lưu thú vị cho cả gia đình!",
     "signupParent": "Đăng ký cho phụ huynh",
     "login": "Đăng nhập",
+    "parentPage": "Đi tới trang dành cho phụ huynh",
     "whyChoose": "Tại sao chọn Learn Link?",
     "whyChooseDesc": "Thiết kế cho cả phụ huynh và trẻ em với những tính năng giúp việc học trở nên thú vị và bổ ích",
     "features": {
@@ -376,17 +377,19 @@
       "missions": "🚀 Trung tâm nhiệm vụ",
       "shop": "🏪 Cửa hàng sức mạnh",
       "achievements": "🏆 Bộ sưu tập cúp",
-      "profile": "👤 Hồ sơ của tôi"
+      "profile": "👤 Hồ sơ của tôi",
+      "logout": "Đăng xuất"
     },
     "childHome": {
       "welcome": {
         "greeting": "Chào",
         "level": "Cấp {level}",
         "streak": "Chuỗi {days} ngày!",
-        "coins": "Xu",
+        "points": "Điểm",
         "gems": "Ngọc",
         "energy": "Năng lượng",
         "totalMissions": "Tổng số nhiệm vụ",
+        "totalMissionsCompleted": "Tổng số nhiệm vụ đã hoàn thành",
         "progress": "Tiến trình cấp độ"
       },
       "sections": {
@@ -416,28 +419,108 @@
     "missions": {
       "title": "Trung tâm Nhiệm vụ",
       "subtitle": "Hãy chọn cuộc phiêu lưu tiếp theo!",
-      "feedback": "Phản hồi từ phụ huynh:",
-      "actions": {
-        "start": "Bắt đầu nhiệm vụ",
-        "complete": "Hoàn thành",
-        "addPhoto": "Thêm ảnh",
-        "completed": "Đã hoàn thành!"
+      "deadline": "Hạn chót",
+      "tabs": {
+        "all": "Tất cả",
+        "assigned": "Được giao",
+        "processing": "Đang làm",
+        "submitted": "Đã nộp",
+        "completed": "Hoàn thành"
       },
-      "difficulty": {
-        "easy": "Dễ",
-        "medium": "Trung bình",
-        "hard": "Khó"
+      "dialog": {
+        "startTitle": "Bắt đầu nhiệm vụ",
+        "startDescription": "Xác nhận bắt đầu nhiệm vụ {title} ?",
+        "startSuccessTitle": "Đã bắt đầu nhiệm vụ",
+        "startSuccessMessage": "Nhiệm vụ {title} đã được bắt đầu. Chúc may mắn!",
+        "startError": "Không thể bắt đầu nhiệm vụ. Vui lòng thử lại.",
+        "submitSuccessTitle": "Đã nộp nhiệm vụ",
+        "submitSuccessMessage": "Nộp nhiệm vụ thành công!",
+        "submitError": "Không thể nộp nhiệm vụ. Vui lòng thử lại."
+      },
+      "status": {
+        "new": "Nhiệm vụ mới",
+        "assigned": "Được giao",
+        "processing": "Đang làm",
+        "submitted": "Đã nộp",
+        "completed": "Hoàn thành",
+        "default": "Không rõ"
+      },
+      "reward": "Phần thưởng",
+      "expired": "Hết hạn!",
+      "scoreTitle": "Điểm số của bạn",
+      "feedbackTitle": "Lời nhắn từ cha mẹ",
+      "buttons": {
+        "viewDetail": "Xem chi tiết",
+        "startNow": "Bắt đầu ngay!",
+        "submitWork": "Nộp bài"
+      },
+      "detail": {
+        "title": "Chi tiết nhiệm vụ",
+        "reward": "Phần thưởng",
+        "createdAt": "Ngày tạo:",
+        "specialReward": "Phần thưởng đặc biệt",
+        "importantNote": "Lưu ý quan trọng",
+        "downloadMissionFiles": "Tải tệp nhiệm vụ",
+        "yourSubmission": "Bài nộp của bạn",
+        "status": "Trạng thái",
+        "submitted": "Đã nộp",
+        "yourScore": "Điểm của bạn",
+        "reviewed": "Ngày chấm",
+        "messageFromParents": "Lời nhắn từ cha mẹ",
+        "downloadSubmission": "Tải bài nộp"
+      },
+      "time": {
+        "expired": "Đã quá hạn!",
+        "daysLeft": "Còn {count} ngày",
+        "hoursLeft": "Còn {count} giờ",
+        "minutesLeft": "Còn {count} phút",
+        "daysLate": "Muộn {count} ngày",
+        "hoursLate": "Muộn {count} giờ",
+        "minutesLate": "Muộn {count} phút",
+        "daysEarly": "Sớm {count} ngày",
+        "hoursEarly": "Sớm {count} giờ",
+        "minutesEarly": "Sớm {count} phút"
       }
     },
     "shop": {
       "title": "Cửa hàng Sức mạnh",
-      "subtitle": "Dùng xu của bạn để đổi phần thưởng hấp dẫn!",
-      "coins": "xu",
+      "subtitle": "Dùng điểm của bạn để đổi phần thưởng hấp dẫn!",
+      "coins": "điểm",
       "gems": "ngọc",
       "stock": "Kho",
       "needMore": "💰 Cần thêm xu",
       "soldOut": "❌ Hết hàng",
-      "buyNow": "🛒 Mua ngay"
+      "buyNow": "🛒 Mua ngay",
+      "header": {
+        "title": "Cửa Hàng Phần Thưởng Tuyệt Vời!",
+        "subtitle": "Dùng điểm của bạn để đổi lấy những món quà hấp dẫn!",
+        "pointsLabel": "Điểm của bạn"
+      },
+      "tabs": {
+        "shop": "🛍️ Cửa Hàng",
+        "orders": "📦 Đơn Hàng Của Tôi"
+      },
+      "orders": {
+        "emptyTitle": "Chưa có đơn hàng nào!",
+        "emptyDescription": "Hãy bắt đầu mua sắm để thấy đơn hàng của bạn tại đây!",
+        "goShopping": "Đi Mua Sắm! 🛍️"
+      },
+      "dialog": {
+        "buyTitle": "Mua sản phẩm này?",
+        "buyDescription": "Bạn có muốn dùng {points} điểm để nhận {name}?",
+        "startError": "Có lỗi xảy ra, vui lòng thử lại!"
+      },
+      "alerts": {
+        "purchaseSuccess": "Thành công! Bạn đã nhận được {product}! 🎉",
+        "purchaseError": "Không thể mua sản phẩm: {message}"
+      },
+      "product": {
+        "onlyLeft": "Chỉ còn {count} sản phẩm! 🔥",
+        "soldOut": "Hết hàng 😢",
+        "points": "điểm",
+        "buyNow": "Mua ngay! 🎉",
+        "needMore": "Cần thêm {count} điểm"
+      }
     },
     "achievements": {
       "title": "Bộ sưu tập Cúp",
@@ -471,5 +554,23 @@
       "previous": "Trước",
       "next": "Sau"
     }
+  },
+  "NotificationDropdown": {
+    "title": "Thông báo",
+    "markAllRead": "Đánh dấu tất cả đã đọc",
+    "noNotifications": "Chưa có thông báo nào!",
+    "time": {
+      "justNow": "Vừa xong",
+      "minutesAgo": "{count} phút trước",
+      "hoursAgo": "{count} giờ trước",
+      "daysAgo": "{count} ngày trước"
+    },
+    "message": {
+      "missionAssigned": "Nhiệm vụ \"{title}\" đã được giao cho bạn.",
+      "missionReviewed": "Nhiệm vụ \"{title}\" của bạn đã được xem xét.",
+      "missionStarted": "\"{childName}\" đã bắt đầu nhiệm vụ \"{title}\".",
+      "missionSubmitted": "\"{childName}\" đã nộp nhiệm vụ \"{title}\"."
+    }
   }
+
 }

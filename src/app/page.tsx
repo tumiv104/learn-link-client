@@ -32,7 +32,7 @@ export default function HomePage() {
           </p>
 
           <div>
-            {!isAuthenticated && 
+            {!isAuthenticated ? (
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                 <Button
                   size="lg"
@@ -51,6 +51,18 @@ export default function HomePage() {
                   {t("login")}
                 </Button>
               </div>
+              ) : (
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-lg px-8 py-6"
+                    onClick={() => router.push("/parent/dashboard")}
+                  >
+                    {t("parentPage")}
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </div>
+              )
             }
           </div>
           

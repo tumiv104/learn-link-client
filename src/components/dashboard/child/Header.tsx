@@ -1,7 +1,11 @@
 import LanguageSwitcher from "@/components/LanguageSwitcher"
 import { Button } from "@/components/ui/button"
-import { Star, Flame, Bell, Settings } from "lucide-react"
+import { Star, Flame, Bell, Settings, LogOut } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { NotificationDropdown } from "./NotificationDropdown"
+import { NotificationResponse } from "@/data/notification"
+import { logout } from "@/services/auth/authService"
+import { useRouter } from "next/navigation"
 
 interface HeaderProps {
   activeScreen: string
@@ -10,12 +14,35 @@ interface HeaderProps {
     gems: number
     streak: number
   }
+  points: number
+  streak: number
+  notifications: NotificationResponse[]
+  onMarkNotificationAsRead: (id: number) => void
+  onMarkAllNotificationsAsRead: () => void
 }
 
-export function Header({ activeScreen, player }: HeaderProps) {
+export function Header({ 
+  activeScreen, 
+  player, 
+  points,
+  streak,
+  notifications,
+  onMarkNotificationAsRead,
+  onMarkAllNotificationsAsRead,
+}: HeaderProps) {
   const t = useTranslations("childDashboard.header")
   const getScreenTitle = () => {
     return t(activeScreen as any)
+  }
+  const router = useRouter()
+  
+  const handleLogout = async () => {
+    try {
+      await logout()
+      router.push("/")
+    } catch (error) {
+      console.error("Logout failed:", error)
+    }
   }
 
   return (
@@ -30,20 +57,23 @@ export function Header({ activeScreen, player }: HeaderProps) {
           <div className="flex items-center gap-4 bg-gray-100 rounded-full px-4 py-2">
             <div className="flex items-center gap-1 text-yellow-600 font-bold">
               <Star className="w-5 h-5" />
-              {player.coins}
+              {points}
             </div>
-            <div className="flex items-center gap-1 text-purple-600 font-bold">💎 {player.gems}</div>
+            {/* <div className="flex items-center gap-1 text-purple-600 font-bold">💎 {player.gems}</div> */}
             <div className="flex items-center gap-1 text-orange-600 font-bold">
               <Flame className="w-5 h-5" />
-              {player.streak}
+              {streak}
             </div>
           </div>
 
-          <Button variant="outline" size="sm" className="bg-transparent">
-            <Bell className="w-4 h-4" />
-          </Button>
-          <Button variant="outline" size="sm" className="bg-transparent">
-            <Settings className="w-4 h-4" />
+          <NotificationDropdown
+            notifications={notifications}
+            onMarkAsRead={onMarkNotificationAsRead}
+            onMarkAllAsRead={onMarkAllNotificationsAsRead}
+          />
+          <Button variant="ghost" size="sm" onClick={handleLogout} className="flex items-center gap-2">
+            <LogOut className="w-4 h-4" />
+            {t("logout")}
           </Button>
         </div>
       </div>

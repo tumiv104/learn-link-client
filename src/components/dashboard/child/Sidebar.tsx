@@ -23,8 +23,8 @@ export function Sidebar({ activeScreen, setActiveScreen, name, player }: Sidebar
     { id: "home", icon: Home, label: t("home"), color: "hover:bg-purple-500" },
     { id: "missions", icon: Gamepad2, label: t("missions"), color: "hover:bg-green-500" },
     { id: "shop", icon: ShoppingBag, label: t("shop"), color: "hover:bg-blue-500" },
-    { id: "achievements", icon: Award, label: t("achievements"), color: "hover:bg-yellow-500" },
-    { id: "profile", icon: User, label: t("profile"), color: "hover:bg-pink-500" },
+    // { id: "achievements", icon: Award, label: t("achievements"), color: "hover:bg-yellow-500" },
+    // { id: "profile", icon: User, label: t("profile"), color: "hover:bg-pink-500" },
   ]
 
   return (
@@ -55,7 +55,7 @@ export function Sidebar({ activeScreen, setActiveScreen, name, player }: Sidebar
           ))}
         </nav>
 
-        <div className="mt-8 p-4 bg-white/10 rounded-lg">
+        {/* <div className="mt-8 p-4 bg-white/10 rounded-lg">
           <div className="flex items-center gap-2 mb-2">
             <Crown className="w-5 h-5 text-yellow-300" />
             <span className="font-bold">Level {player.level}</span>
@@ -64,7 +64,7 @@ export function Sidebar({ activeScreen, setActiveScreen, name, player }: Sidebar
           <div className="text-xs text-purple-200 mt-1">
             {player.xp}/{player.nextLevelXp} XP
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

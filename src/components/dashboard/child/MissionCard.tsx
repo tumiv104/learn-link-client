@@ -9,7 +9,7 @@ interface MissionCardProps {
   id: number
   title: string
   description: string
-  status: "new" | "active" | "completed"
+  status: string
   progress: number
   total: number
   reward: number
@@ -38,9 +38,9 @@ export function MissionCard({
 
   const getCardStyle = () => {
     switch (status) {
-      case "completed":
+      case "Completed":
         return "bg-gradient-to-r from-green-50 to-emerald-50 border-green-300"
-      case "active":
+      case "Submitted":
         return "bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-300"
       default:
         return "bg-gradient-to-r from-purple-50 to-pink-50 border-purple-300"

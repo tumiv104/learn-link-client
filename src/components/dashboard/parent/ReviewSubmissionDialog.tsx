@@ -15,12 +15,12 @@ interface ReviewSubmissionDialogProps {
   open: boolean
   onClose: () => void
   submission: {
-    SubmissionId: string
-    MissionTitle: string
+    SubmissionId: number
+    Title: string
     ChildName: string
     FileUrl?: string
   }
-  onReview: (submissionId: string, feedback: string, score: number, approved: boolean) => void
+  onReview: (submissionId: number, feedback: string, score: number, approved: boolean) => void
 }
 
 export function ReviewSubmissionDialog({ open, onClose, submission, onReview }: ReviewSubmissionDialogProps) {
@@ -80,11 +80,11 @@ export function ReviewSubmissionDialog({ open, onClose, submission, onReview }: 
         <div className="space-y-4">
           {/* Submission Info */}
           <div className="bg-blue-50 border-2 border-blue-200 p-4 rounded-lg">
-            <h3 className="font-bold text-gray-800 mb-1">{submission.MissionTitle}</h3>
+            <h3 className="font-bold text-gray-800 mb-1">{submission.Title}</h3>
             <p className="text-sm text-gray-600">{t("submittedBy")}: {submission.ChildName}</p>
             {submission.FileUrl && (
               <Button variant="link" size="sm" className="p-0 h-auto mt-2" asChild>
-                <a href={submission.FileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600">
+                <a href={`${process.env.NEXT_PUBLIC_API_URL}${submission.FileUrl}`} target="_blank" rel="noopener noreferrer" className="text-blue-600">
                   {t("reviewDialog.viewFile")} →
                 </a>
               </Button>

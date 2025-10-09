@@ -1,3 +1,5 @@
+import { SubmissionResponse } from "./submission"
+
 export interface Mission {
   MissionId: number
   Title: string
@@ -11,4 +13,19 @@ export interface Mission {
   CreatedAt: string
   ChildName?: string
   AttachmentUrl?: string
+}
+
+export interface MissionSubmission {
+  missionId: number
+  title: string
+  description: string
+  points: number
+  deadline: string
+  missionStatus: string
+  promise?: string | null
+  punishment?: string | null
+  attachmentUrl?: string
+  createdAt: string
+  updateAt: string
+  submission: SubmissionResponse
 }

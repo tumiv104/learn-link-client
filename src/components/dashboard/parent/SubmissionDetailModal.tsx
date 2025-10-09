@@ -5,7 +5,8 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar, Star, FileText, CheckCircle, Download, Gift, AlertTriangle, Trophy, User } from "lucide-react"
 import { Submission } from "@/data/submission"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { formatDateTime } from "@/utils/formatDateTime"
 
 interface SubmissionDetailModalProps {
   open: boolean
@@ -15,7 +16,7 @@ interface SubmissionDetailModalProps {
 
 export function SubmissionDetailModal({ open, onClose, submission }: SubmissionDetailModalProps) {
     const t = useTranslations("parentDashboard.submissions")
-
+    const locale = useLocale()
     const getStatusColor = (status: string) => {
     switch (status) {
         case "Approved":
@@ -73,7 +74,8 @@ export function SubmissionDetailModal({ open, onClose, submission }: SubmissionD
                       <span className="text-xs text-gray-600 font-bold">{t("deadline")}</span>
                     </div>
                     <p className="text-sm font-bold text-gray-700">
-                      {new Date(submission.Deadline).toLocaleDateString()}
+                      {/* {new Date(submission.Deadline).toLocaleDateString()} */}
+                      {formatDateTime(submission.Deadline, locale)}
                     </p>
                   </div>
                 )}
@@ -108,7 +110,8 @@ export function SubmissionDetailModal({ open, onClose, submission }: SubmissionD
                 <div className="bg-white rounded-lg p-3 border-2 border-purple-200">
                   <p className="text-xs text-gray-600 font-bold mb-1">{t("submitted")}</p>
                   <p className="text-sm font-bold text-gray-700">
-                    {new Date(submission.SubmittedAt).toLocaleDateString()}
+                    {/* {new Date(submission.SubmittedAt).toLocaleDateString()} */}
+                    {formatDateTime(submission.SubmittedAt, locale)}
                   </p>
                 </div>
 
@@ -146,7 +149,7 @@ export function SubmissionDetailModal({ open, onClose, submission }: SubmissionD
 
               {submission.FileUrl && (
                 <Button variant="outline" size="sm" className="w-full bg-white border-2 font-bold" asChild>
-                  <a href={submission.FileUrl} target="_blank" rel="noopener noreferrer">
+                  <a href={`${process.env.NEXT_PUBLIC_API_URL}${submission.FileUrl}`} target="_blank" rel="noopener noreferrer">
                     <Download className="w-4 h-4 mr-2" />
                     {t("downloadFile")}
                   </a>

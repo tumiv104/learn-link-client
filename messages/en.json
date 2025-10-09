@@ -11,6 +11,7 @@
     "heroSubtitle": "Learn Link helps parents guide children's learning with tasks, rewards, and fun challenges. Turn everyday learning into an exciting adventure for the whole family!",
     "signupParent": "Sign Up as Parent",
     "login": "Log In",
+    "parentPage": "Go to Parent Page",
     "whyChoose": "Why Choose Learn Link?",
     "whyChooseDesc": "Designed for both parents and children with features that make learning fun and rewarding",
     "features": {
@@ -354,17 +355,19 @@
       "missions": "🚀 Mission Control",
       "shop": "🏪 Power-Up Shop",
       "achievements": "🏆 Trophy Collection",
-      "profile": "👤 My Profile"
+      "profile": "👤 My Profile",
+      "logout": "Logout"
     },
     "childHome": {
       "welcome": {
         "greeting": "Hey",
         "level": "Level {level}",
         "streak": "{days} day streak!",
-        "coins": "Coins",
+        "points": "Points",
         "gems": "Gems",
         "energy": "Energy",
         "totalMissions": "Total Missions",
+        "totalMissionsCompleted": "Total Missions Completed",
         "progress": "Level Progress"
       },
       "sections": {
@@ -394,28 +397,105 @@
     "missions": {
       "title": "Mission Control",
       "subtitle": "Choose your next adventure!",
-      "feedback": "Parent's Feedback:",
-      "actions": {
-        "start": "Start Mission",
-        "complete": "Complete",
-        "addPhoto": "Add Photo",
-        "completed": "Completed!"
+      "deadline": "Deadline",
+      "tabs": {
+        "all": "All",
+        "assigned": "Assigned",
+        "processing": "Processing",
+        "submitted": "Submitted",
+        "completed": "Completed"
       },
-      "difficulty": {
-        "easy": "Easy",
-        "medium": "Medium",
-        "hard": "Hard"
+      "dialog": {
+        "startTitle": "Start Mission",
+        "startDescription": "Confirm start mission {title} ?",
+        "startSuccessTitle": "Mission Started",
+        "startSuccessMessage": "Mission {title} has been started. Good luck!",
+        "startError": "Failed to start mission. Please try again.",
+        "submitSuccessTitle": "Mission Submitted",
+        "submitSuccessMessage": "Mission submit successful!",
+        "submitError": "Failed to submit mission. Please try again."
+      },
+      "status": {
+        "new": "New Mission",
+        "assigned": "Assigned",
+        "processing": "In Progress",
+        "submitted": "Submitted",
+        "completed": "Completed",
+        "default": "Unknown"
+      },
+      "reward": "Reward",
+      "expired": "Expired!",
+      "scoreTitle": "Your Score",
+      "feedbackTitle": "Message from Parents",
+      "buttons": {
+        "viewDetail": "View Details",
+        "startNow": "Start Now!",
+        "submitWork": "Submit Work"
+      },
+      "detail": {
+        "title": "Mission Details",
+        "reward": "Reward",
+        "createdAt": "Created:",
+        "specialReward": "Special Reward",
+        "importantNote": "Important Note",
+        "downloadMissionFiles": "Download Mission Files",
+        "yourSubmission": "Your Submission",
+        "status": "Status",
+        "submitted": "Submitted",
+        "yourScore": "Your Score",
+        "reviewed": "Reviewed",
+        "messageFromParents": "Message from Parents",
+        "downloadSubmission": "Download Your Submission"
+      },
+      "time": {
+        "expired": "Expired!",
+        "daysLeft": "{count} day(s) left",
+        "hoursLeft": "{count} hour(s) left",
+        "minutesLeft": "{count} minute(s) left",
+        "daysLate": "{count} day(s) late",
+        "hoursLate": "{count} hour(s) late",
+        "minutesLate": "{count} minute(s) late",
+        "daysEarly": "{count} day(s) early",
+        "hoursEarly": "{count} hour(s) early",
+        "minutesEarly": "{count} minute(s) early"
       }
     },
     "shop": {
       "title": "Power-Up Shop",
-      "subtitle": "Spend your coins on awesome rewards!",
-      "coins": "coins",
+      "subtitle": "Spend your points on awesome rewards!",
+      "coins": "points",
       "gems": "gems",
       "stock": "Stock",
       "needMore": "💰 Need More",
       "soldOut": "❌ Sold Out",
-      "buyNow": "🛒 Buy Now"
+      "buyNow": "🛒 Buy Now",
+      "header": {
+        "title": "Awesome Rewards Shop!",
+        "subtitle": "Use your points to get cool stuff!",
+        "pointsLabel": "Your Points"
+      },
+      "tabs": {
+        "shop": "🛍️ Shop",
+        "orders": "📦 My Orders"
+      },
+      "orders": {
+        "emptyTitle": "No orders yet!",
+        "emptyDescription": "Start shopping to see your orders here!",
+        "emptyButton": "Go Shopping! 🛍️"
+      },
+      "dialog": {
+        "buyTitle": "Buy This Product?",
+        "buyDescription": "Do you want to spend {points} points to get {name}?",
+        "success": "Yay! You got {name}! 🎉",
+        "startError": "Something went wrong. Please try again."
+      },
+      "product": {
+        "onlyLeft": "Only {count} left! 🔥",
+        "soldOut": "Sold Out 😢",
+        "points": "points",
+        "buyNow": "Buy Now! 🎉",
+        "needMore": "Need {count} more points"
+      }
     },
     "achievements": {
       "title": "Trophy Collection",
@@ -449,5 +529,23 @@
       "previous": "Previous",
       "next": "Next"
     }
+  },
+  "NotificationDropdown": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "noNotifications": "No notifications yet!",
+    "time": {
+      "justNow": "Just now",
+      "minutesAgo": "{count}m ago",
+      "hoursAgo": "{count}h ago",
+      "daysAgo": "{count}d ago"
+    },
+    "message": {
+      "missionAssigned": "Mission \"{title}\" has been assigned to you.",
+      "missionReviewed": "Your mission \"{title}\" was reviewed.",
+      "missionStarted": "\"{childName}\" started mission \"{title}\".",
+      "missionSubmitted": "\"{childName}\" has submitted mission \"{title}\"."
+    }
   }
+
 }

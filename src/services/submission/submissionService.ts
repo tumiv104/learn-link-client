@@ -9,9 +9,6 @@ export async function getParentSubmissions(page = 1, pageSize = 5): Promise<Page
   return res.data.data as PageResult<SubmissionDetailDTO>
 }
 
-
-
-
 export async function reviewSubmission(
   submissionId: number,
   feedback: string,
@@ -22,6 +19,38 @@ export async function reviewSubmission(
     feedback,
     score,
     approved,
+  })
+  return res.data
+}
+
+export async function acceptMission(missionId: number) {
+  const res = await api.post("/submission/accept", {missionId});
+  return res.data;
+}
+
+export async function submitMission(missionId: number, fd: FormData) {
+  const res = await api.post(`/submission/missions/${missionId}/submit`, fd, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return res.data;
+}
+
+export async function approveSubmission(submissionId: number, score: number, feedback: string) {
+  const res = await api.post("/submission/approve", {
+    submissionId,
+    score,
+    feedback
+  })
+  return res.data
+}
+
+export async function rejectSubmission(submissionId: number, score: number, feedback: string) {
+  const res = await api.post("/submission/reject", {
+    submissionId,
+    score,
+    feedback
   })
   return res.data
 }

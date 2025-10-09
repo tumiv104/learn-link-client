@@ -14,3 +14,15 @@ export interface Submission {
     Score?: number | null
     ReviewedAt?: string
 }
+
+export interface SubmissionResponse {
+    submissionId: number
+    missionId: number
+    childId: number
+    fileUrl?: string
+    submittedAt: string
+    status: string
+    feedback?: string
+    score?: number | null
+    reviewedAt?: string
+}
