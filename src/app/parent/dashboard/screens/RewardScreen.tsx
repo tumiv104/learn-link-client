@@ -1,0 +1,144 @@
+// 'use client'
+
+// import { Badge } from "@/components/ui/badge"
+// import { Button } from "@/components/ui/button"
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+// import { ConfirmationDialog } from "@/components/ui/confirmation-dialog"
+// import { mockData } from "@/data/mockData"
+// import { useAlert } from "@/hooks/useAlert"
+// import { AlertCircle, Plus, Star } from "lucide-react"
+// import { useTranslations } from "next-intl"
+// import { useState } from "react"
+
+// export default function RewardScreen() {
+//     const t = useTranslations("parentDashboard.rewards")
+
+//     const { alert, showSuccess, showError, hideAlert } = useAlert()
+//     const [confirmDialog, setConfirmDialog] = useState({
+//         open: false,
+//         title: "",
+//         description: "",
+//         onConfirm: () => {},
+//         variant: "destructive" as "destructive" | "success" | "warning",
+//     })
+
+//     const handleApproveRedemption = (redemption: any) => {
+//         setConfirmDialog({
+//         open: true,
+//         title: "Approve Redemption",
+//         description: `Approve ${redemption.ChildName}'s request for "${redemption.RewardName}"?`,
+//         variant: "success",
+//         onConfirm: () => {
+//             setTimeout(() => {
+//             showSuccess("Redemption Approved", `${redemption.ChildName}'s request has been approved.`)
+//             }, 500)
+//         },
+//         })
+//     }
+
+//     const handleRejectRedemption = (redemption: any) => {
+//         setConfirmDialog({
+//         open: true,
+//         title: "Reject Redemption",
+//         description: `Reject ${redemption.ChildName}'s request for "${redemption.RewardName}"?`,
+//         variant: "warning",
+//         onConfirm: () => {
+//             setTimeout(() => {
+//             showError("Redemption Rejected", `${redemption.ChildName}'s request has been rejected.`)
+//             }, 500)
+//         },
+//         })
+//     }
+
+//     return (
+//       <div className="space-y-6">
+//         <ConfirmationDialog
+//             open={confirmDialog.open}
+//             onOpenChange={(open) => setConfirmDialog({ ...confirmDialog, open })}
+//             title={confirmDialog.title}
+//             description={confirmDialog.description}
+//             variant={confirmDialog.variant}
+//             onConfirm={confirmDialog.onConfirm}
+//         />
+//         <div className="flex justify-between items-center">
+//             <h2 className="text-2xl font-bold text-gray-800">{t("title")}</h2>
+//             <Button className="bg-amber-500 hover:bg-amber-600 text-white">
+//                 <Plus className="w-4 h-4 mr-2" />
+//                 {t("add")}
+//             </Button>
+//             </div>
+
+//             {/* Pending Redemptions */}
+//             <Card>
+//             <CardHeader>
+//                 <CardTitle className="flex items-center gap-2">
+//                 <AlertCircle className="w-5 h-5 text-amber-500" />
+//                 {t("pending")}
+//                 </CardTitle>
+//             </CardHeader>
+//             <CardContent>
+//                 <div className="space-y-3">
+//                 {mockData.redemptions
+//                     .filter((r) => r.Status === "Pending")
+//                     .map((redemption) => (
+//                     <div
+//                         key={redemption.RedemptionId}
+//                         className="flex items-center justify-between p-4 bg-amber-50 rounded-lg"
+//                     >
+//                         <div>
+//                         <h4 className="font-semibold">{redemption.RewardName}</h4>
+//                         <p className="text-sm text-gray-600">
+//                             {t("requestedBy", {
+//                                 child: redemption.ChildName,
+//                                 points: redemption.Cost,
+//                             })}
+//                         </p>
+//                         <p className="text-xs text-gray-500">
+//                             {new Date(redemption.RequestedAt).toLocaleDateString()}
+//                         </p>
+//                         </div>
+//                         <div className="flex gap-2">
+//                         <Button size="sm" className="bg-green-500 hover:bg-green-600"
+//                             onClick={() => handleApproveRedemption(redemption)}>
+//                             {t("approve")}
+//                         </Button>
+//                         <Button variant="outline" size="sm"
+//                             onClick={() => handleRejectRedemption(redemption)}>
+//                             {t("reject")}
+//                         </Button>
+//                         </div>
+//                     </div>
+//                     ))}
+//                 </div>
+//             </CardContent>
+//             </Card>
+
+//             {/* Available Rewards */}
+//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+//             {mockData.rewards.map((reward) => (
+//                 <Card key={reward.RewardId} className="hover:shadow-lg transition-shadow">
+//                 <CardContent className="p-6">
+//                     <h3 className="font-semibold text-lg mb-2">{reward.Name}</h3>
+//                     <p className="text-gray-600 text-sm mb-3">{reward.Description}</p>
+//                     <div className="flex items-center justify-between">
+//                     <div className="flex items-center gap-2">
+//                         <Star className="w-4 h-4 text-amber-500" />
+//                         <span className="font-medium text-amber-600">{reward.Cost} {t("points")}</span>
+//                     </div>
+//                     <Badge variant="outline">{reward.Stock} {t("left")}</Badge>
+//                     </div>
+//                     <div className="mt-3 flex gap-2">
+//                     <Button variant="outline" size="sm" className="flex-1 bg-transparent">
+//                         {t("edit")}
+//                     </Button>
+//                     <Button variant="outline" size="sm" className="flex-1 bg-transparent">
+//                         {t("delete")}
+//                     </Button>
+//                     </div>
+//                 </CardContent>
+//                 </Card>
+//             ))}
+//             </div>
+//       </div>
+//     )
+// }

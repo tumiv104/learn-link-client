@@ -1,0 +1,252 @@
+'use client'
+
+import { Card, CardContent } from "@/components/ui/card"
+import {
+  Star,
+  Target,
+  Flame,
+  Calendar,
+  Clock
+} from "lucide-react"
+import { mockData } from "@/data/mockData"
+import { UserDto } from "@/services/auth/authService"
+import { ProgressBar } from "@/components/dashboard/ProgressBar"
+import { QuestCard } from "@/components/dashboard/child/QuestCard"
+import { useTranslations } from "next-intl"
+import { MissionSubmission } from "@/data/mission"
+import { endOfWeek, isToday, isWithinInterval, startOfWeek} from "date-fns"
+
+interface HomeProps {
+  user: UserDto | null
+  points: number
+  missions: MissionSubmission[],
+  streak: number
+}
+
+export default function HomeScreen({ user, points, missions, streak } : HomeProps) {
+  const t = useTranslations("childDashboard.childHome");
+
+  const today = new Date()
+  const weekStart = startOfWeek(today, { weekStartsOn: 1 }) // thứ 2
+  const weekEnd = endOfWeek(today, { weekStartsOn: 1 })
+
+  // Daily Quest
+  const dailyQuests = missions.filter(
+    (m) =>
+      (m.missionStatus === "Assigned" || m.missionStatus === "Processing") &&
+      isToday(new Date(m.deadline)) // hoặc m.createdAt nếu muốn ngày giao
+  )
+
+  // Active Missions
+  const activeMissions = missions
+    .filter((m) => m.missionStatus === "Assigned" || m.missionStatus === "Processing")
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 5)
+
+  // Weekly Process
+  const weeklyMissions = missions.filter((m) =>
+    isWithinInterval(new Date(m.createdAt), { start: weekStart, end: weekEnd })
+  )
+
+  const missionsCompleted = weeklyMissions.filter((m) => m.missionStatus === "Completed")
+  const totalMissions = weeklyMissions.length
+  const coinsEarned = missionsCompleted.reduce((sum, m) => sum + (m.points || 0), 0)
+  const totalMissionsCompleted = missions.filter(m => m.missionStatus === "Completed").length
+
+  return (
+    <div className="space-y-6">
+      {/* Welcome Header */}
+      <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 rounded-3xl p-8 text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 text-9xl opacity-10 animate-pulse">⭐</div>
+        <div className="flex items-center gap-6 mb-6">
+          <div className="text-8xl animate-bounce">{mockData.player.avatar}</div>
+          <div className="flex-1">
+            <h1 className="text-4xl font-bold mb-2">{t("welcome.greeting")} {user?.name}! 🎉</h1>
+            <p className="text-xl text-purple-100 mb-2">{mockData.player.title}</p>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Flame className="w-6 h-6 text-orange-300" />
+                <span className="text-xl font-bold">{t("welcome.streak", { days: streak })}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="text-center bg-white/20 rounded-2xl p-4">
+            <div className="text-3xl font-bold">{points}</div>
+            <div className="text-sm text-purple-100 flex items-center justify-center gap-1">
+              <Star className="w-4 h-4" /> {t("welcome.points")}
+            </div>
+          </div>
+          <div className="text-center bg-white/20 rounded-2xl p-4">
+            <div className="text-3xl font-bold">{missions.length}</div>
+            <div className="text-sm text-purple-100">{t("welcome.totalMissions")}</div>
+          </div>
+          <div className="text-center bg-white/20 rounded-2xl p-4">
+            <div className="text-3xl font-bold">{totalMissionsCompleted}</div>
+            <div className="text-sm text-purple-100">{t("welcome.totalMissionsCompleted")}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Dashboard Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column - Daily Quests and Active Missions */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Daily Quests */}
+          <div>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <Target className="w-8 h-8 text-blue-500" />
+              {t("sections.dailyQuests")}
+            </h2>
+            <div className="space-y-4">
+              {dailyQuests.map((quest) => (
+                <QuestCard key={quest.missionId} title={quest.title} description={quest.description} points={quest.points} status={quest.missionStatus} deadline={quest.deadline}/>
+              ))}
+            </div>
+          </div>
+
+          {/* Active Missions */}
+          {/* <div>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <Trophy className="w-8 h-8 text-green-500" />
+              {t("sections.activeMissions")}
+            </h2>
+            <div className="space-y-4">
+              {mockData.missions
+                .filter((m) => m.status === "active")
+                .map((mission) => (
+                  <MissionCard key={mission.id} {...mission} />
+                ))}
+            </div>
+          </div> */}
+        </div>
+
+        {/* Right Column - Stats and Activities */}
+        <div className="space-y-6">
+          {/* Weekly Progress */}
+          <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200">
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <Calendar className="w-6 h-6 text-purple-500" />
+                {t("sections.weekly")}
+              </h3>
+              <div className="space-y-4">
+                <ProgressBar
+                  current={missionsCompleted.length}
+                  total={totalMissions}
+                  label={t("weekly.goal")}
+                />
+
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <div className="text-center bg-white/50 rounded-lg p-3">
+                    <div className="text-2xl font-bold text-purple-600">{missionsCompleted.length}</div>
+                    <div className="text-xs text-gray-600">{t("weekly.missionsDone")}</div>
+                  </div>
+                  <div className="text-center bg-white/50 rounded-lg p-3">
+                    <div className="text-2xl font-bold text-yellow-600">{coinsEarned}</div>
+                    <div className="text-xs text-gray-600">{t("weekly.coinsEarned")}</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Quick Stats */}
+          {/* <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200">
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <TrendingUp className="w-6 h-6 text-blue-500" />
+                {t("sections.quickStats")}
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">{t("quickStats.studyTime")}</span>
+                  <span className="font-bold text-blue-600">{mockData.weeklyStats.studyTime}h</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">{t("quickStats.favoriteCategory")}</span>
+                  <span className="font-bold text-green-600">{mockData.player.favoriteCategory}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">{t("quickStats.achievementsEarned")}</span>
+                  <span className="font-bold text-yellow-600">
+                    {mockData.achievements.filter((a) => a.earned).length}
+                  </span>
+                </div>
+              </div>
+            </CardContent>
+          </Card> */}
+
+          {/* Recent Activities */}
+          <Card className="bg-gradient-to-br from-orange-50 to-yellow-50 border-2 border-orange-200">
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <Clock className="w-6 h-6 text-orange-500" />
+                {t("sections.recentActivities")}
+              </h3>
+              <div className="space-y-3">
+                {/* Recent Activities */}
+      {missions
+        .filter(
+          (m) =>
+            m.missionStatus === "Completed" ||
+            m.submission?.status === "Approved"
+        )
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() -
+            new Date(a.createdAt).getTime()
+        )
+        .slice(0, 5)
+        .map((mission) => (
+                  <div key={mission.missionId} className="flex items-center gap-3 p-2 bg-white/50 rounded-lg">
+                    <div className="text-lg">
+                      {mission.points >= 100
+                        ? "🚀"
+                        : mission.points < 100
+                          ? "🏆"
+                            : "⭐"}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-800">{ mission.title }</p>
+                      <p className="text-xs text-gray-500">{new Date(mission.createdAt).toLocaleString()}</p>
+                    </div>
+                    <div className="text-sm font-bold text-yellow-600">
+                      +{mission.points}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Quick Actions */}
+          {/* <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200">
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <Zap className="w-6 h-6 text-green-500" />
+                {t("sections.quickActions")}
+              </h3>
+              <div className="space-y-3">
+                <Button className="w-full bg-purple-500 hover:bg-purple-600 justify-start">
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  {t("quickActions.messageParents")}
+                </Button>
+                <Button className="w-full bg-blue-500 hover:bg-blue-600 justify-start">
+                  <Gift className="w-4 h-4 mr-2" />
+                  {t("quickActions.visitShop")}
+                </Button>
+                <Button className="w-full bg-yellow-500 hover:bg-yellow-600 justify-start">
+                  <Trophy className="w-4 h-4 mr-2" />
+                  {t("quickActions.viewAchievements")}
+                </Button>
+              </div>
+            </CardContent>
+          </Card> */}
+        </div>
+      </div>
+    </div>
+  )
+}

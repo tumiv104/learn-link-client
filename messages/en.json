@@ -1,0 +1,551 @@
+{
+  "header": {
+    "welcome": "Welcome",
+    "login": "Log In",
+    "signup": "Sign Up Free",
+    "logout": "Logout"
+  },
+  "home": {
+    "heroTitle1": "Connect Learning.",
+    "heroTitle2": "Strengthen Bonds.",
+    "heroSubtitle": "Learn Link helps parents guide children's learning with tasks, rewards, and fun challenges. Turn everyday learning into an exciting adventure for the whole family!",
+    "signupParent": "Sign Up as Parent",
+    "login": "Log In",
+    "parentPage": "Go to Parent Page",
+    "whyChoose": "Why Choose Learn Link?",
+    "whyChooseDesc": "Designed for both parents and children with features that make learning fun and rewarding",
+    "features": {
+      "parents": {
+        "title": "For Parents",
+        "desc": "Assign tasks, track progress, and reward your child's learning achievements.",
+        "list": ["Create custom tasks", "Monitor progress", "Set up rewards"]
+      },
+      "children": {
+        "title": "For Children",
+        "desc": "Complete tasks, earn points, and redeem amazing rewards in a fun way.",
+        "list": ["Fun task completion", "Earn points & badges", "Unlock rewards"]
+      },
+      "gamification": {
+        "title": "Gamification",
+        "desc": "Minigames, badges, and achievements make learning feel like play.",
+        "list": ["Interactive minigames", "Achievement badges", "Progress tracking"]
+      },
+      "safe": {
+        "title": "Safe & Easy",
+        "desc": "Secure platform with kid-friendly design and parental controls.",
+        "list": ["Secure & private", "Kid-friendly interface", "Parental controls"]
+      }
+    },
+
+    "howItWorksTitle": "How It Works",
+    "howItWorksDesc": "Simple 3-step process that brings families together through learning",
+    "steps": {
+      "1": {
+        "title": "1. Parents Assign Tasks",
+        "desc": "Create learning tasks, homework assignments, or chores with clear instructions and point values."
+      },
+      "2": {
+        "title": "2. Child Completes & Submits",
+        "desc": "Children complete tasks and submit proof of completion through photos, videos, or text updates."
+      },
+      "3": {
+        "title": "3. Review & Reward",
+        "desc": "Parents review submissions, award points, and children redeem rewards from the family store."
+      }
+    },
+
+    "screenshotsTitle": "See Learn Link in Action",
+    "screenshotsDesc": "Discover how both parents and children experience the magic of gamified learning",
+    "screens": {
+      "parent": "Parent Dashboard",
+      "child": "Child Interface"
+    },
+
+    "testimonialsTitle": "What Families Are Saying",
+    "testimonialsDesc": "Real feedback from parents and children using Learn Link",
+    "parentTestimonial": "My kid is excited to study every day with Learn Link! The gamification makes homework feel like play, and I love being able to track their progress and celebrate their achievements.",
+    "childTestimonial": "I love unlocking rewards after finishing my homework! The mini-games are super fun, and I can't wait to earn enough points for the new art supplies in the reward store!",
+
+    "finalCtaTitle": "Ready to Transform Learning?",
+    "finalCtaDesc": "Join thousands of families who have made learning fun, rewarding, and meaningful with Learn Link.",
+    "finalCtaStart": "Start Free Trial",
+    "finalCtaDemo": "Watch Demo"
+  },
+  "footer": {
+    "safe": "Safe & Secure",
+    "family": "Family-Friendly",
+    "quickLinks": "Quick Links",
+    "support": "Support",
+    "copyright": "© 2024 Learn Link. All rights reserved. Made with ❤️ for families everywhere."
+  },
+  "parentDashboard": {
+    "welcome": "Welcome back",
+    "subtitle": "Here's how your children are doing today",
+    "tabs": {
+      "overview": "Overview",
+      "missions": "Missions",
+      "submissions": "Submissions",
+      "rewards": "Rewards",
+      "reports": "Reports",
+      "profile": "Profile"
+    },
+    "missions": {
+      "title": "Mission Management",
+      "create": "Create New Mission",
+      "assignedTo": "Assigned to",
+      "due": "Due",
+      "points": "points",
+      "bonus": "bonus",
+      "promise": "Promise",
+      "edit": "Edit",
+      "view": "View",
+      "description": "Description",
+      "created": "Created",
+      "totalReward": "Total Reward",
+      "deadline": "Deadline",
+      "attachment": "Mission Attachment",
+      "missionStatus": {
+        "Assigned": "Assigned",
+        "Submitted": "Submitted",
+        "Processing": "Processing",
+        "Completed": "Completed"
+      },
+      "form": {
+        "title": "Mission Title",
+        "titlePlaceholder": "Enter mission title",
+        "description": "Description",
+        "descriptionPlaceholder": "Describe what needs to be done",
+        "attachment": "Attachment",
+        "url": "URL",
+        "file": "Upload File",
+        "urlPlaceholder": "Paste a link here",
+        "urlHelp": "Add a link to instructions, reference materials, or any online resource",
+        "fileHelp": "Upload images, PDFs, Word docs, ZIP files, or any other file type",
+        "child": "Assign to Child",
+        "selectChild": "Select a child",
+        "deadline": "Deadline",
+        "points": "Points Reward",
+        "promise": "Special Promise",
+        "promisePlaceholder": "e.g., Extra story time if completed early"
+      },
+      "alerts": {
+        "created": {
+          "title": "Mission Created",
+          "success": "\"{title}\" has been successfully created.",
+          "error": "Failed to create \"{title}\"."
+        },
+        "updated": {
+          "title": "Mission Updated",
+          "success": "\"{title}\" has been successfully updated."
+        }
+      },
+      "deleteDialog": {
+        "title": "Delete Mission",
+        "description": "Are you sure you want to delete this mission? This action cannot be undone.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      }
+    },
+    "overview": {
+      "stats": {
+        "totalMissions": {
+          "title": "Total Missions",
+          "desc": "This month"
+        },
+        "completed": {
+          "title": "Completed",
+          "desc": "Missions finished"
+        },
+        "pendingReviews": {
+          "title": "Pending Reviews",
+          "desc": "Need attention"
+        },
+        "redemptions": {
+          "title": "Redemptions",
+          "desc": "Pending approval"
+        }
+      },
+      "children": {
+        "title": "Children Overview",
+        "points": "{points} total points",
+        "viewDetails": "View Details",
+      "createButton": "Create new child account"
+      },
+      "activity": {
+        "title": "Recent Activity"
+      }
+    },
+    "profile": {
+      "title": "Profile & Account Management",
+      "desc": "Manage your account and children's profiles",
+      "settingsTitle": "Profile settings",
+      "settingsDesc": "Account management features will be available here",
+      "subtitle": "Manage your account information",
+      "editButton": "Edit",
+      "loadingProfile": "Loading profile...",
+      "errorLoading": "Error loading profile",
+      "noProfileData": "No profile data available",
+      "dob": "Date of Birth",
+      "joinedDate": "Joined Date",
+      "points": "Accumulated Points",
+      "childrenCount": "Number of Children",
+      "parent": "Parent",
+      "notUpdated": "Not updated",
+      "notAvailable": "Not available"
+    },
+    "reports": {
+      "title": "Learning Reports",
+      "desc": "Track your children's progress and achievements",
+      "comingTitle": "Reports coming soon",
+      "comingDesc": "Detailed analytics and progress reports will be available here",
+      "selectChild": "Select a child",
+      "selectChildPlaceholder": "Select a child",
+      "allChildren": "All Children",
+      "period": "Time Period",
+      "periodLabels": {
+        "day": "Today",
+        "week": "This Week",
+        "month": "This Month",
+        "year": "This Year",
+        "all": "All Time"
+      },
+      "loading": "Loading report...",
+      "noData": "No data available",
+      "stats": {
+        "totalMissions": "Total Missions",
+        "completedMissions": "Completed",
+        "processingMissions": "In Progress",
+        "submittedMissions": "Submitted",
+        "completionRate": "Completion Rate",
+        "totalPointsEarned": "Points Earned",
+        "avgPointsPerMission": "Average Points per Mission",
+        "lastSubmission": "Last Submission"
+      },
+      "charts": {
+        "missionStatus": "Mission Status Distribution",
+        "completionTrend": "Completion Trend"
+      },
+      "missionStatusLabels": {
+        "Assigned": "Assigned",
+        "Processing": "In Progress",
+        "Submitted": "Submitted",
+        "Completed": "Completed"
+      },
+      "summary": {
+        "title": "Progress Summary",
+        "reportFor": "Report for {child} • {period}",
+        "completionRate": "Completion Rate",
+        "avgPoints": "Average Points per Mission",
+        "lastSubmission": "Last Submission",
+        "noSubmissionsYet": "No submissions yet"
+      },
+      "noChildren": {
+        "title": "No Children Found",
+        "desc": "Add children to your account to view their progress reports."
+      },
+      "errorLoading": "Failed to load report"
+    },
+    "rewards": {
+      "title": "Reward Management",
+      "add": "Add New Reward",
+      "pending": "Pending Redemptions",
+      "requestedBy": "Requested by {child} • {points} points",
+      "approve": "Approve",
+      "reject": "Reject",
+      "points": "points",
+      "left": "left",
+      "edit": "Edit",
+      "delete": "Delete",
+      "form": {
+        "createTitle": "Create New Reward",
+        "editTitle": "Edit Reward",
+        "name": "Reward Name",
+        "namePlaceholder": "Enter reward name",
+        "description": "Description",
+        "descriptionPlaceholder": "Describe the reward",
+        "points": "Points Cost",
+        "pointsPlaceholder": "Enter points cost",
+        "stock": "Stock Quantity",
+        "stockPlaceholder": "Enter available quantity",
+        "cancel": "Cancel",
+        "create": "Create Reward",
+        "save": "Save Changes"
+      },
+      "deleteDialog": {
+        "title": "Delete Reward",
+        "description": "Are you sure you want to delete this reward? This action cannot be undone.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      }
+    },
+    "submissions": {
+      "title": "Submission Reviews",
+      "pending": "{count} pending reviews",
+      "submittedBy": "Submitted by",
+      "score": "Score",
+      "viewDetail": "View Detail",
+      "review": "Review",
+      "submissionStatus": {
+        "Pending": "Pending Review",
+        "Approved": "Approved",
+        "Rejected": "Rejected"
+      },
+      "noSubmissions": "No submissions found",
+      "loadMore": "Load More",
+      "loading": "Loading submissions...",
+      "page": "Page {current} of {total}",
+      "detailTitle": "Submission Details",
+      "missionInfo": "Mission Information",
+      "points": "Points",
+      "deadline": "Deadline",
+      "child": "Child",
+      "submissionInfo": "Submission Information",
+      "status": "Status",
+      "submitted": "Submitted",
+      "reviewed": "Reviewed",
+      "yourFeedback": "Your Feedback",
+      "downloadFile": "Download Submission File",
+      "reviewDialog": {
+        "title": "Review Submission",
+        "viewFile": "View Submission File",
+        "scoreLabel": "Score (0-100)",
+        "scorePlaceholder": "Enter score between 0 and 100",
+        "feedbackLabel": "Feedback",
+        "feedbackPlaceholder": "Write your feedback for the child... Be encouraging and specific!",
+        "feedbackTip": "Tip: Be specific about what they did well and what they can improve"
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "approve": "Approve",
+        "reject": "Reject"
+      },
+      "alerts": {
+        "approved": {
+          "title": "Submission Approved",
+          "message": "The submission has been approved with a score of {score}/100."
+        },
+        "rejected": {
+          "title": "Submission Rejected",
+          "message": "The submission has been rejected."
+        },
+        "validation": {
+          "feedbackRequired": {
+            "title": "Feedback Required",
+            "messageApprove": "Please provide feedback before approving.",
+            "messageReject": "Please provide feedback before rejecting."
+          },
+          "invalidScore": {
+            "title": "Invalid Score",
+            "message": "Score must be between 0 and 100."
+          }
+        }
+      }
+    }
+  },
+  "childDashboard": {
+    "nav": {
+      "home": "Dashboard",
+      "missions": "Missions",
+      "shop": "Shop",
+      "achievements": "Achievements",
+      "profile": "Profile"
+    },
+    "header": {
+      "home": "🏠 Dashboard",
+      "missions": "🚀 Mission Control",
+      "shop": "🏪 Power-Up Shop",
+      "achievements": "🏆 Trophy Collection",
+      "profile": "👤 My Profile",
+      "logout": "Logout"
+    },
+    "childHome": {
+      "welcome": {
+        "greeting": "Hey",
+        "level": "Level {level}",
+        "streak": "{days} day streak!",
+        "points": "Points",
+        "gems": "Gems",
+        "energy": "Energy",
+        "totalMissions": "Total Missions",
+        "totalMissionsCompleted": "Total Missions Completed",
+        "progress": "Level Progress"
+      },
+      "sections": {
+        "dailyQuests": "Daily Quests 🎯",
+        "activeMissions": "Active Missions 🚀",
+        "weekly": "This Week 📅",
+        "quickStats": "Quick Stats 📊",
+        "recentActivities": "Recent Activities 🎯",
+        "quickActions": "Quick Actions ⚡"
+      },
+      "weekly": {
+        "goal": "Weekly Goal",
+        "missionsDone": "Missions Done",
+        "coinsEarned": "Coins Earned"
+      },
+      "quickStats": {
+        "studyTime": "Study Time This Week",
+        "favoriteCategory": "Favorite Category",
+        "achievementsEarned": "Achievements Earned"
+      },
+      "quickActions": {
+        "messageParents": "Message Parents",
+        "visitShop": "Visit Shop",
+        "viewAchievements": "View Achievements"
+      }
+    },
+    "missions": {
+      "title": "Mission Control",
+      "subtitle": "Choose your next adventure!",
+      "deadline": "Deadline",
+      "tabs": {
+        "all": "All",
+        "assigned": "Assigned",
+        "processing": "Processing",
+        "submitted": "Submitted",
+        "completed": "Completed"
+      },
+      "dialog": {
+        "startTitle": "Start Mission",
+        "startDescription": "Confirm start mission {title} ?",
+        "startSuccessTitle": "Mission Started",
+        "startSuccessMessage": "Mission {title} has been started. Good luck!",
+        "startError": "Failed to start mission. Please try again.",
+        "submitSuccessTitle": "Mission Submitted",
+        "submitSuccessMessage": "Mission submit successful!",
+        "submitError": "Failed to submit mission. Please try again."
+      },
+      "status": {
+        "new": "New Mission",
+        "assigned": "Assigned",
+        "processing": "In Progress",
+        "submitted": "Submitted",
+        "completed": "Completed",
+        "default": "Unknown"
+      },
+      "reward": "Reward",
+      "expired": "Expired!",
+      "scoreTitle": "Your Score",
+      "feedbackTitle": "Message from Parents",
+      "buttons": {
+        "viewDetail": "View Details",
+        "startNow": "Start Now!",
+        "submitWork": "Submit Work"
+      },
+      "detail": {
+        "title": "Mission Details",
+        "reward": "Reward",
+        "createdAt": "Created:",
+        "specialReward": "Special Reward",
+        "importantNote": "Important Note",
+        "downloadMissionFiles": "Download Mission Files",
+        "yourSubmission": "Your Submission",
+        "status": "Status",
+        "submitted": "Submitted",
+        "yourScore": "Your Score",
+        "reviewed": "Reviewed",
+        "messageFromParents": "Message from Parents",
+        "downloadSubmission": "Download Your Submission"
+      },
+      "time": {
+        "expired": "Expired!",
+        "daysLeft": "{count} day(s) left",
+        "hoursLeft": "{count} hour(s) left",
+        "minutesLeft": "{count} minute(s) left",
+        "daysLate": "{count} day(s) late",
+        "hoursLate": "{count} hour(s) late",
+        "minutesLate": "{count} minute(s) late",
+        "daysEarly": "{count} day(s) early",
+        "hoursEarly": "{count} hour(s) early",
+        "minutesEarly": "{count} minute(s) early"
+      }
+    },
+    "shop": {
+      "title": "Power-Up Shop",
+      "subtitle": "Spend your points on awesome rewards!",
+      "coins": "points",
+      "gems": "gems",
+      "stock": "Stock",
+      "needMore": "💰 Need More",
+      "soldOut": "❌ Sold Out",
+      "buyNow": "🛒 Buy Now",
+      "header": {
+        "title": "Awesome Rewards Shop!",
+        "subtitle": "Use your points to get cool stuff!",
+        "pointsLabel": "Your Points"
+      },
+      "tabs": {
+        "shop": "🛍️ Shop",
+        "orders": "📦 My Orders"
+      },
+      "orders": {
+        "emptyTitle": "No orders yet!",
+        "emptyDescription": "Start shopping to see your orders here!",
+        "emptyButton": "Go Shopping! 🛍️"
+      },
+      "dialog": {
+        "buyTitle": "Buy This Product?",
+        "buyDescription": "Do you want to spend {points} points to get {name}?",
+        "success": "Yay! You got {name}! 🎉",
+        "startError": "Something went wrong. Please try again."
+      },
+      "product": {
+        "onlyLeft": "Only {count} left! 🔥",
+        "soldOut": "Sold Out 😢",
+        "points": "points",
+        "buyNow": "Buy Now! 🎉",
+        "needMore": "Need {count} more points"
+      }
+    },
+    "achievements": {
+      "title": "Trophy Collection",
+      "subtitle": "Show off your amazing achievements!",
+      "unlocked": "✨ Unlocked!",
+      "leaderboard": "Leaderboard 👑",
+      "you": "(You!)"
+    },
+    "profile": {
+      "level": "Level {level}",
+      "days": "days",
+      "coins": "Total Coins",
+      "gems": "Gems",
+      "achievements": "Achievements",
+      "energy": "Energy",
+      "editProfile": "Edit Profile",
+      "messageParents": "Message Parents",
+      "logout": "Logout"
+    },
+    "quests": {
+      "difficulty": {
+        "easy": "Easy",
+        "medium": "Medium",
+        "hard": "Hard"
+      }
+    }
+  },
+  "component": {
+    "paginationBar": {
+      "pageSize": "Items per page",
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+  "NotificationDropdown": {
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "noNotifications": "No notifications yet!",
+    "time": {
+      "justNow": "Just now",
+      "minutesAgo": "{count}m ago",
+      "hoursAgo": "{count}h ago",
+      "daysAgo": "{count}d ago"
+    },
+    "message": {
+      "missionAssigned": "Mission \"{title}\" has been assigned to you.",
+      "missionReviewed": "Your mission \"{title}\" was reviewed.",
+      "missionStarted": "\"{childName}\" started mission \"{title}\".",
+      "missionSubmitted": "\"{childName}\" has submitted mission \"{title}\"."
+    }
+  }
+
+}

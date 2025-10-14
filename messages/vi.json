@@ -1,0 +1,576 @@
+{
+  "header": {
+    "welcome": "Xin chào",
+    "login": "Đăng nhập",
+    "signup": "Đăng ký miễn phí",
+    "logout": "Đăng xuất"
+  },
+  "home": {
+    "heroTitle1": "Kết nối học tập.",
+    "heroTitle2": "Gắn kết gia đình.",
+    "heroSubtitle": "Learn Link giúp phụ huynh hướng dẫn con học tập thông qua nhiệm vụ, phần thưởng và thử thách vui nhộn. Biến việc học thành cuộc phiêu lưu thú vị cho cả gia đình!",
+    "signupParent": "Đăng ký cho phụ huynh",
+    "login": "Đăng nhập",
+    "parentPage": "Đi tới trang dành cho phụ huynh",
+    "whyChoose": "Tại sao chọn Learn Link?",
+    "whyChooseDesc": "Thiết kế cho cả phụ huynh và trẻ em với những tính năng giúp việc học trở nên thú vị và bổ ích",
+    "features": {
+      "parents": {
+        "title": "Dành cho Phụ huynh",
+        "desc": "Giao nhiệm vụ, theo dõi tiến trình và thưởng cho thành tích học tập của con.",
+        "list": ["Tạo nhiệm vụ tùy chỉnh", "Theo dõi tiến độ", "Thiết lập phần thưởng"]
+      },
+      "children": {
+        "title": "Dành cho Trẻ em",
+        "desc": "Hoàn thành nhiệm vụ, tích điểm và đổi quà hấp dẫn một cách vui nhộn.",
+        "list": ["Hoàn thành nhiệm vụ vui vẻ", "Nhận điểm & huy hiệu", "Mở khóa phần thưởng"]
+      },
+      "gamification": {
+        "title": "Trò chơi hóa",
+        "desc": "Trò chơi nhỏ, huy hiệu và thành tựu giúp việc học như trò chơi.",
+        "list": ["Trò chơi tương tác", "Huy hiệu thành tích", "Theo dõi tiến trình"]
+      },
+      "safe": {
+        "title": "An toàn & Dễ dùng",
+        "desc": "Nền tảng bảo mật với giao diện thân thiện cho trẻ và kiểm soát của phụ huynh.",
+        "list": ["Bảo mật & riêng tư", "Giao diện thân thiện", "Kiểm soát phụ huynh"]
+      }
+    },
+
+    "howItWorksTitle": "Cách hoạt động",
+    "howItWorksDesc": "Quy trình 3 bước đơn giản gắn kết gia đình thông qua việc học",
+    "steps": {
+      "1": {
+        "title": "1. Phụ huynh giao nhiệm vụ",
+        "desc": "Tạo các nhiệm vụ học tập, bài tập về nhà hoặc việc nhà với hướng dẫn rõ ràng và điểm số."
+      },
+      "2": {
+        "title": "2. Trẻ hoàn thành & gửi",
+        "desc": "Trẻ em hoàn thành nhiệm vụ và gửi minh chứng bằng ảnh, video hoặc cập nhật văn bản."
+      },
+      "3": {
+        "title": "3. Đánh giá & Thưởng",
+        "desc": "Phụ huynh đánh giá, chấm điểm và trẻ đổi phần thưởng trong cửa hàng gia đình."
+      }
+    },
+
+    "screenshotsTitle": "Khám phá Learn Link",
+    "screenshotsDesc": "Tìm hiểu cách phụ huynh và trẻ em trải nghiệm học tập trò chơi hóa",
+    "screens": {
+      "parent": "Bảng điều khiển Phụ huynh",
+      "child": "Giao diện Trẻ em"
+    },
+
+    "testimonialsTitle": "Phản hồi từ gia đình",
+    "testimonialsDesc": "Chia sẻ thật từ phụ huynh và trẻ em sử dụng Learn Link",
+    "parentTestimonial": "Con tôi rất hào hứng học mỗi ngày với Learn Link! Việc trò chơi hóa khiến bài tập về nhà trở nên vui hơn, và tôi thích được theo dõi tiến trình cũng như chúc mừng thành tích của con.",
+    "childTestimonial": "Em thích mở khóa phần thưởng sau khi làm xong bài tập! Các trò chơi nhỏ rất vui và em đang cố gắng tích đủ điểm để lấy bộ dụng cụ mỹ thuật mới!",
+
+    "finalCtaTitle": "Sẵn sàng thay đổi cách học?",
+    "finalCtaDesc": "Hãy cùng hàng ngàn gia đình biến việc học trở nên thú vị, bổ ích và ý nghĩa với Learn Link.",
+    "finalCtaStart": "Bắt đầu dùng thử miễn phí",
+    "finalCtaDemo": "Xem Demo"
+  },
+  "footer": {
+    "safe": "An toàn & Bảo mật",
+    "family": "Thân thiện với gia đình",
+    "quickLinks": "Liên kết nhanh",
+    "support": "Hỗ trợ",
+    "copyright": "© 2024 Learn Link. Bản quyền thuộc về Learn Link."
+  },
+  "parentDashboard": {
+    "welcome": "Chào mừng trở lại",
+    "subtitle": "Tình hình học tập của con bạn hôm nay",
+    "tabs": {
+      "overview": "Tổng quan",
+      "missions": "Nhiệm vụ",
+      "submissions": "Bài nộp",
+      "rewards": "Phần thưởng",
+      "reports": "Báo cáo",
+      "profile": "Hồ sơ"
+    },
+    "missions": {
+      "title": "Quản lý nhiệm vụ",
+      "create": "Tạo nhiệm vụ mới",
+      "assignedTo": "Giao cho",
+      "due": "Hạn chót",
+      "points": "điểm",
+      "bonus": "thưởng",
+      "promise": "Lời hứa",
+      "edit": "Chỉnh sửa",
+      "view": "Xem",
+      "description": "Mô tả",
+      "created": "Ngày tạo",
+      "totalReward": "Phần thưởng",
+      "deadline": "Hạn chót",
+      "attachment": "Tệp đính kèm",
+      "missionStatus": {
+        "Assigned": "Đã giao",
+        "Submitted": "Đã nộp",
+        "Processing": "Đang làm",
+        "Completed": "Hoàn thành"
+      },
+      "form": {
+        "title": "Tiêu đề nhiệm vụ",
+        "titlePlaceholder": "Nhập tiêu đề nhiệm vụ",
+        "description": "Mô tả",
+        "descriptionPlaceholder": "Mô tả chi tiết công việc cần làm",
+        "attachment": "Tệp đính kèm",
+        "url": "Đường dẫn URL",
+        "file": "Tải tệp lên",
+        "urlPlaceholder": "Dán liên kết vào đây",
+        "urlHelp": "Thêm liên kết tới hướng dẫn, tài liệu tham khảo hoặc bất kỳ nguồn trực tuyến nào",
+        "fileHelp": "Tải lên hình ảnh, PDF, Word, ZIP hoặc bất kỳ loại tệp nào khác",
+        "child": "Giao cho bé",
+        "selectChild": "Chọn bé",
+        "deadline": "Hạn hoàn thành",
+        "points": "Điểm thưởng",
+        "promise": "Lời hứa đặc biệt",
+        "promisePlaceholder": "Ví dụ: Kể thêm một câu chuyện nếu hoàn thành sớm"
+      },
+      "alerts": {
+        "created": {
+          "title": "Tạo nhiệm vụ",
+          "success": "Nhiệm vụ \"{title}\" đã được tạo thành công.",
+          "error": "Tạo nhiệm vụ \"{title}\" thất bại."
+        },
+        "updated": {
+          "title": "Cập nhật nhiệm vụ",
+          "success": "Nhiệm vụ \"{title}\" đã được cập nhật thành công."
+        }
+      },
+      "deleteDialog": {
+        "title": "Xóa nhiệm vụ",
+        "description": "Bạn có chắc chắn muốn xóa nhiệm vụ này? Hành động này không thể hoàn tác.",
+        "cancel": "Hủy",
+        "delete": "Xóa"
+      }
+    },
+    "overview": {
+      "stats": {
+        "totalMissions": {
+          "title": "Tổng số nhiệm vụ",
+          "desc": "Trong tháng này"
+        },
+        "completed": {
+          "title": "Hoàn thành",
+          "desc": "Nhiệm vụ đã xong"
+        },
+        "pendingReviews": {
+          "title": "Chờ duyệt",
+          "desc": "Cần xử lý"
+        },
+        "redemptions": {
+          "title": "Đổi thưởng",
+          "desc": "Chờ phê duyệt"
+        }
+      },
+      "children": {
+        "title": "Tổng quan con cái",
+        "points": "{points} điểm tích lũy",
+        "viewDetails": "Xem chi tiết",
+        "createButton": "Tạo tài khoản con mới",
+        "createDialog": {
+          "title": "Tạo tài khoản cho con",
+          "avatarHelp": "Nhấn để tải ảnh đại diện",
+          "nameLabel": "Họ và tên",
+          "namePlaceholder": "Nhập tên của bé",
+          "emailLabel": "Địa chỉ Email",
+          "emailPlaceholder": "Nhập địa chỉ email",
+          "passwordLabel": "Mật khẩu",
+          "passwordPlaceholder": "Tạo mật khẩu",
+          "passwordHelp": "Mật khẩu phải có ít nhất 6 ký tự",
+          "dobLabel": "Ngày sinh",
+          "cancel": "Hủy",
+          "create": "Tạo tài khoản"
+        }
+      },
+      "activity": {
+        "title": "Hoạt động gần đây"
+      }
+    },
+    "reports": {
+      "title": "Báo cáo học tập",
+      "desc": "Theo dõi tiến độ và thành tích của con bạn",
+      "comingTitle": "Báo cáo sắp ra mắt",
+      "comingDesc": "Phân tích chi tiết và báo cáo tiến độ sẽ có tại đây",
+      "selectChild": "Chọn một bé",
+      "allChildren": "Tất cả con",
+      "period": "Khoảng thời gian",
+      "periodLabels": {
+        "day": "Hôm nay",
+        "week": "Tuần này",
+        "month": "Tháng này",
+        "year": "Năm nay",
+        "all": "Toàn bộ"
+      },
+      "loading": "Đang tải báo cáo...",
+      "noData": "Không có dữ liệu",
+      "stats": {
+        "totalMissions": "Tổng nhiệm vụ",
+        "completedMissions": "Hoàn thành",
+        "processingMissions": "Đang làm",
+        "submittedMissions": "Đã nộp",
+        "completionRate": "Tỷ lệ hoàn thành",
+        "totalPointsEarned": "Điểm tích lũy",
+        "avgPointsPerMission": "Điểm trung bình mỗi nhiệm vụ",
+        "lastSubmission": "Bài nộp gần nhất"
+      },
+      "charts": {
+        "missionStatus": "Phân bố trạng thái nhiệm vụ",
+        "completionTrend": "Xu hướng hoàn thành"
+      },
+      "missionStatusLabels": {
+        "Assigned": "Đã giao",
+        "Processing": "Đang làm",
+        "Submitted": "Đã nộp",
+        "Completed": "Hoàn thành"
+      },
+      "summary": {
+        "title": "Tổng quan tiến độ",
+        "reportFor": "Báo cáo của {child} • {period}",
+        "completionRate": "Tỷ lệ hoàn thành",
+        "avgPoints": "Điểm trung bình mỗi nhiệm vụ",
+        "lastSubmission": "Bài nộp gần nhất",
+        "noSubmissionsYet": "Chưa có bài nộp"
+      },
+      "noChildren": {
+        "title": "Chưa có trẻ nào",
+        "desc": "Thêm trẻ vào tài khoản để xem báo cáo tiến độ."
+      },
+      "errorLoading": "Tải báo cáo thất bại"
+    },
+    "rewards": {
+      "title": "Quản lý phần thưởng",
+      "add": "Thêm phần thưởng mới",
+      "pending": "Đổi thưởng chờ duyệt",
+      "requestedBy": "{child} yêu cầu • {points} điểm",
+      "approve": "Duyệt",
+      "reject": "Từ chối",
+      "points": "điểm",
+      "left": "còn lại",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "form": {
+        "createTitle": "Tạo phần thưởng mới",
+        "editTitle": "Chỉnh sửa phần thưởng",
+        "name": "Tên phần thưởng",
+        "namePlaceholder": "Nhập tên phần thưởng",
+        "description": "Mô tả",
+        "descriptionPlaceholder": "Mô tả phần thưởng",
+        "points": "Giá điểm",
+        "pointsPlaceholder": "Nhập số điểm cần thiết",
+        "stock": "Số lượng",
+        "stockPlaceholder": "Nhập số lượng có sẵn",
+        "cancel": "Hủy",
+        "create": "Tạo phần thưởng",
+        "save": "Lưu thay đổi"
+      },
+      "deleteDialog": {
+        "title": "Xóa phần thưởng",
+        "description": "Bạn có chắc chắn muốn xóa phần thưởng này? Hành động này không thể hoàn tác.",
+        "cancel": "Hủy",
+        "delete": "Xóa"
+      }
+    },
+    "submissions": {
+      "title": "Duyệt bài nộp",
+      "pending": "{count} bài chờ duyệt",
+      "submittedBy": "Nộp bởi",
+      "score": "Điểm",
+      "viewDetail": "Xem chi tiết",
+      "review": "Duyệt",
+      "submissionStatus": {
+        "Pending": "Chờ duyệt",
+        "Approved": "Đã chấp nhận",
+        "Rejected": "Bị từ chối"
+      },
+      "noSubmissions": "Không tìm thấy bài nộp",
+      "loadMore": "Tải thêm",
+      "loading": "Đang tải bài nộp...",
+      "page": "Trang {current} / {total}",
+      "detailTitle": "Chi tiết bài nộp",
+      "missionInfo": "Thông tin nhiệm vụ",
+      "points": "Điểm thưởng",
+      "deadline": "Hạn chót",
+      "child": "Trẻ em",
+      "submissionInfo": "Thông tin bài nộp",
+      "status": "Trạng thái",
+      "submitted": "Ngày nộp",
+      "reviewed": "Ngày chấm",
+      "yourFeedback": "Phản hồi của bạn",
+      "downloadFile": "Tải tệp bài nộp",
+      "reviewDialog": {
+        "title": "Đánh giá bài nộp",
+        "viewFile": "Xem tệp bài nộp",
+        "scoreLabel": "Điểm (0-100)",
+        "scorePlaceholder": "Nhập điểm từ 0 đến 100",
+        "feedbackLabel": "Nhận xét",
+        "feedbackPlaceholder": "Viết nhận xét cho bé... Hãy khuyến khích và cụ thể!",
+        "feedbackTip": "Mẹo: Hãy chỉ ra cụ thể bé làm tốt điểm nào và cần cải thiện ở đâu"
+      },
+      "actions": {
+        "cancel": "Hủy",
+        "approve": "Chấp nhận",
+        "reject": "Từ chối"
+      },
+      "alerts": {
+        "approved": {
+          "title": "Bài nộp đã được duyệt",
+          "message": "Bài nộp đã được chấp nhận với số điểm {score}/100."
+        },
+        "rejected": {
+          "title": "Bài nộp bị từ chối",
+          "message": "Bài nộp đã bị từ chối."
+        },
+        "validation": {
+          "feedbackRequired": {
+            "title": "Thiếu phản hồi",
+            "messageApprove": "Vui lòng nhập phản hồi trước khi duyệt.",
+            "messageReject": "Vui lòng nhập phản hồi trước khi từ chối."
+          },
+          "invalidScore": {
+            "title": "Điểm không hợp lệ",
+            "message": "Điểm phải nằm trong khoảng từ 0 đến 100."
+          }
+        }
+      }
+    },
+    "profile": {
+      "title": "Quản lý hồ sơ & tài khoản",
+      "subtitle": "Quản lý thông tin tài khoản của bạn",
+      "editButton": "Chỉnh sửa",
+      "loadingProfile": "Đang tải hồ sơ...",
+      "errorLoading": "Lỗi khi tải hồ sơ",
+      "noProfileData": "Không có dữ liệu hồ sơ",
+      "dob": "Ngày sinh",
+      "joinedDate": "Ngày tham gia",
+      "points": "Điểm tích lũy",
+      "childrenCount": "Số con",
+      "parent": "Phụ huynh",
+      "notUpdated": "Chưa cập nhật",
+      "notAvailable": "Chưa có thông tin",
+      "editDialog": {
+        "title": "Chỉnh sửa hồ sơ",
+        "avatarHelp": "Nhấn để thay đổi ảnh đại diện",
+        "emailLabel": "Địa chỉ Email",
+        "emailHelp": "Email không thể thay đổi",
+        "nameLabel": "Họ và tên",
+        "namePlaceholder": "Nhập tên của bạn",
+        "dobLabel": "Ngày sinh",
+        "roleLabel": "Vai trò",
+        "cancel": "Hủy",
+        "save": "Lưu thay đổi"
+      }
+    }
+  },
+  "childDashboard": {
+    "nav": {
+      "home": "Trang chủ",
+      "missions": "Nhiệm vụ",
+      "shop": "Cửa hàng",
+      "achievements": "Thành tích",
+      "profile": "Hồ sơ"
+    },
+    "header": {
+      "home": "🏠 Trang chủ",
+      "missions": "🚀 Trung tâm nhiệm vụ",
+      "shop": "🏪 Cửa hàng sức mạnh",
+      "achievements": "🏆 Bộ sưu tập cúp",
+      "profile": "👤 Hồ sơ của tôi",
+      "logout": "Đăng xuất"
+    },
+    "childHome": {
+      "welcome": {
+        "greeting": "Chào",
+        "level": "Cấp {level}",
+        "streak": "Chuỗi {days} ngày!",
+        "points": "Điểm",
+        "gems": "Ngọc",
+        "energy": "Năng lượng",
+        "totalMissions": "Tổng số nhiệm vụ",
+        "totalMissionsCompleted": "Tổng số nhiệm vụ đã hoàn thành",
+        "progress": "Tiến trình cấp độ"
+      },
+      "sections": {
+        "dailyQuests": "Nhiệm vụ hằng ngày 🎯",
+        "activeMissions": "Nhiệm vụ đang làm 🚀",
+        "weekly": "Tuần này 📅",
+        "quickStats": "Thống kê nhanh 📊",
+        "recentActivities": "Hoạt động gần đây 🎯",
+        "quickActions": "Hành động nhanh ⚡"
+      },
+      "weekly": {
+        "goal": "Mục tiêu tuần",
+        "missionsDone": "Nhiệm vụ đã hoàn thành",
+        "coinsEarned": "Xu kiếm được"
+      },
+      "quickStats": {
+        "studyTime": "Thời gian học tuần này",
+        "favoriteCategory": "Môn yêu thích",
+        "achievementsEarned": "Thành tích đạt được"
+      },
+      "quickActions": {
+        "messageParents": "Nhắn tin cho ba mẹ",
+        "visitShop": "Vào cửa hàng",
+        "viewAchievements": "Xem thành tích"
+      }
+    },
+    "missions": {
+      "title": "Trung tâm Nhiệm vụ",
+      "subtitle": "Hãy chọn cuộc phiêu lưu tiếp theo!",
+      "deadline": "Hạn chót",
+      "tabs": {
+        "all": "Tất cả",
+        "assigned": "Được giao",
+        "processing": "Đang làm",
+        "submitted": "Đã nộp",
+        "completed": "Hoàn thành"
+      },
+      "dialog": {
+        "startTitle": "Bắt đầu nhiệm vụ",
+        "startDescription": "Xác nhận bắt đầu nhiệm vụ {title} ?",
+        "startSuccessTitle": "Đã bắt đầu nhiệm vụ",
+        "startSuccessMessage": "Nhiệm vụ {title} đã được bắt đầu. Chúc may mắn!",
+        "startError": "Không thể bắt đầu nhiệm vụ. Vui lòng thử lại.",
+        "submitSuccessTitle": "Đã nộp nhiệm vụ",
+        "submitSuccessMessage": "Nộp nhiệm vụ thành công!",
+        "submitError": "Không thể nộp nhiệm vụ. Vui lòng thử lại."
+      },
+      "status": {
+        "new": "Nhiệm vụ mới",
+        "assigned": "Được giao",
+        "processing": "Đang làm",
+        "submitted": "Đã nộp",
+        "completed": "Hoàn thành",
+        "default": "Không rõ"
+      },
+      "reward": "Phần thưởng",
+      "expired": "Hết hạn!",
+      "scoreTitle": "Điểm số của bạn",
+      "feedbackTitle": "Lời nhắn từ cha mẹ",
+      "buttons": {
+        "viewDetail": "Xem chi tiết",
+        "startNow": "Bắt đầu ngay!",
+        "submitWork": "Nộp bài"
+      },
+      "detail": {
+        "title": "Chi tiết nhiệm vụ",
+        "reward": "Phần thưởng",
+        "createdAt": "Ngày tạo:",
+        "specialReward": "Phần thưởng đặc biệt",
+        "importantNote": "Lưu ý quan trọng",
+        "downloadMissionFiles": "Tải tệp nhiệm vụ",
+        "yourSubmission": "Bài nộp của bạn",
+        "status": "Trạng thái",
+        "submitted": "Đã nộp",
+        "yourScore": "Điểm của bạn",
+        "reviewed": "Ngày chấm",
+        "messageFromParents": "Lời nhắn từ cha mẹ",
+        "downloadSubmission": "Tải bài nộp"
+      },
+      "time": {
+        "expired": "Đã quá hạn!",
+        "daysLeft": "Còn {count} ngày",
+        "hoursLeft": "Còn {count} giờ",
+        "minutesLeft": "Còn {count} phút",
+        "daysLate": "Muộn {count} ngày",
+        "hoursLate": "Muộn {count} giờ",
+        "minutesLate": "Muộn {count} phút",
+        "daysEarly": "Sớm {count} ngày",
+        "hoursEarly": "Sớm {count} giờ",
+        "minutesEarly": "Sớm {count} phút"
+      }
+    },
+    "shop": {
+      "title": "Cửa hàng Sức mạnh",
+      "subtitle": "Dùng điểm của bạn để đổi phần thưởng hấp dẫn!",
+      "coins": "điểm",
+      "gems": "ngọc",
+      "stock": "Kho",
+      "needMore": "💰 Cần thêm xu",
+      "soldOut": "❌ Hết hàng",
+      "buyNow": "🛒 Mua ngay",
+      "header": {
+        "title": "Cửa Hàng Phần Thưởng Tuyệt Vời!",
+        "subtitle": "Dùng điểm của bạn để đổi lấy những món quà hấp dẫn!",
+        "pointsLabel": "Điểm của bạn"
+      },
+      "tabs": {
+        "shop": "🛍️ Cửa Hàng",
+        "orders": "📦 Đơn Hàng Của Tôi"
+      },
+      "orders": {
+        "emptyTitle": "Chưa có đơn hàng nào!",
+        "emptyDescription": "Hãy bắt đầu mua sắm để thấy đơn hàng của bạn tại đây!",
+        "goShopping": "Đi Mua Sắm! 🛍️"
+      },
+      "dialog": {
+        "buyTitle": "Mua sản phẩm này?",
+        "buyDescription": "Bạn có muốn dùng {points} điểm để nhận {name}?",
+        "startError": "Có lỗi xảy ra, vui lòng thử lại!"
+      },
+      "alerts": {
+        "purchaseSuccess": "Thành công! Bạn đã nhận được {product}! 🎉",
+        "purchaseError": "Không thể mua sản phẩm: {message}"
+      },
+      "product": {
+        "onlyLeft": "Chỉ còn {count} sản phẩm! 🔥",
+        "soldOut": "Hết hàng 😢",
+        "points": "điểm",
+        "buyNow": "Mua ngay! 🎉",
+        "needMore": "Cần thêm {count} điểm"
+      }
+    },
+    "achievements": {
+      "title": "Bộ sưu tập Cúp",
+      "subtitle": "Khoe những thành tựu tuyệt vời của bạn!",
+      "unlocked": "✨ Đã mở khóa!",
+      "leaderboard": "Bảng xếp hạng 👑",
+      "you": "(Bạn!)"
+    },
+    "profile": {
+      "level": "Cấp {level}",
+      "days": "ngày",
+      "coins": "Tổng xu",
+      "gems": "Ngọc",
+      "achievements": "Thành tích",
+      "energy": "Năng lượng",
+      "editProfile": "Chỉnh sửa hồ sơ",
+      "messageParents": "Gửi tin cho phụ huynh",
+      "logout": "Đăng xuất"
+    },
+    "quests": {
+      "difficulty": {
+        "easy": "Dễ",
+        "medium": "Trung bình",
+        "hard": "Khó"
+      }
+    }
+  },
+  "component": {
+    "paginationBar": {
+      "pageSize": "Số mục mỗi trang",
+      "previous": "Trước",
+      "next": "Sau"
+    }
+  },
+  "NotificationDropdown": {
+    "title": "Thông báo",
+    "markAllRead": "Đánh dấu tất cả đã đọc",
+    "noNotifications": "Chưa có thông báo nào!",
+    "time": {
+      "justNow": "Vừa xong",
+      "minutesAgo": "{count} phút trước",
+      "hoursAgo": "{count} giờ trước",
+      "daysAgo": "{count} ngày trước"
+    },
+    "message": {
+      "missionAssigned": "Nhiệm vụ \"{title}\" đã được giao cho bạn.",
+      "missionReviewed": "Nhiệm vụ \"{title}\" của bạn đã được xem xét.",
+      "missionStarted": "\"{childName}\" đã bắt đầu nhiệm vụ \"{title}\".",
+      "missionSubmitted": "\"{childName}\" đã nộp nhiệm vụ \"{title}\"."
+    }
+  }
+
+}
