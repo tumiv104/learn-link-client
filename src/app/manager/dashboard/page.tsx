@@ -24,7 +24,6 @@ import {
 import { ShopDialog } from "@/components/dashboard/manager/ShopDialog"
 import { ProductDialog } from "@/components/dashboard/manager/ProductDialog"
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog"
-import { Alert } from "@/components/ui/alert"
 import { useAlert } from "@/hooks/useAlert"
 import { AlertPopup } from "@/components/ui/alert-popup"
 import { createProduct, createShop, editProduct, editShop, getAllProduct, getAllShop } from "@/services/shop/shopService"

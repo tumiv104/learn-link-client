@@ -2,7 +2,7 @@
 
 import { Mission } from "@/data/mission"
 import { formatDateTime } from "@/utils/formatDateTime"
-import { Calendar, Clock, Star, User, File, Link, NotepadText } from "lucide-react"
+import { Calendar, Clock, Star, File, Link, NotepadText } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 interface MissionViewProps {

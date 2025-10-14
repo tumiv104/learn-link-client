@@ -23,7 +23,6 @@ interface ShopProps {
 
 export default function ShopScreen({ user, points }: ShopProps) {
   const t = useTranslations("childDashboard.shop")
-  const [selectedProduct, setSelectedProduct] = useState<any>(null)
   const [products, setProducts] = useState<ProductResponse[]>([])
   const [redemptions, setRedemptions] = useState<RedemptionResponse[]>([])
   const { alert, showSuccess, showError, hideAlert } = useAlert()

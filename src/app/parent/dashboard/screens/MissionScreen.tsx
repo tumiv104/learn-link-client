@@ -5,7 +5,6 @@ import { MissionDialog } from "@/components/dashboard/parent/MissionDialog"
 import { MissionManagementCard } from "@/components/dashboard/parent/MissionManagementCard"
 import { AlertPopup } from "@/components/ui/alert-popup"
 import { Button } from "@/components/ui/button"
-import { mockData } from "@/data/mockData"
 import { useAlert } from "@/hooks/useAlert"
 import { assignMission, getParentMissions } from "@/services/mission/missionService"
 import { Plus } from "lucide-react"
@@ -14,10 +13,7 @@ import type { Mission } from "@/data/mission"
 import type { PageResult } from "@/data/pagination"
 import type { MissionResponse } from "@/data/missionResponse"
 import type { ChildBasicInfoDTO } from "@/data/ChildBasicInfoDTO"
-import api from "@/lib/api"
 import { getChildren } from "@/services/parent/parentService"
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { usePagination } from "@/hooks/usePagination"
 import { PaginationBar } from "@/components/dashboard/PaginationBar"
 
@@ -170,7 +166,7 @@ export default function MissionScreen() {
         onOpenChange={(open) => setMissionDialog({ ...missionDialog, open })}
         mode={missionDialog.mode}
         mission={missionDialog.mission}
-        children={children || []}   
+        childrenList={children || []}   
         onSave={handleSaveMission}
         locale={locale}
       />

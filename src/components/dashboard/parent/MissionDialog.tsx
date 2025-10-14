@@ -29,23 +29,23 @@ interface MissionDialogProps {
   onOpenChange: (open: boolean) => void
   mode: "create" | "view" | "edit"
   mission: Mission
-  children: ChildBasicInfoDTO[]
+  childrenList: ChildBasicInfoDTO[]
   onSave: (data: any) => void
   locale: string
 }
 
-export function MissionDialog({ open, onOpenChange, mode, mission, children, onSave, locale }: MissionDialogProps) {
+export function MissionDialog({ open, onOpenChange, mode, mission, childrenList, onSave, locale }: MissionDialogProps) {
   const t = useTranslations("parentDashboard.missions")
 
   const [formData, setFormData] = useState({
     Title: mission?.Title || "",
     Description: mission?.Description || "",
-    ChildId: mission?.ChildId || (children.length > 0 ? Number(children[0].childId) : null),
+    ChildId: mission?.ChildId || (childrenList.length > 0 ? Number(childrenList[0].childId) : null),
     Deadline: mission?.Deadline || new Date().toISOString().slice(0, 16),
     Points: mission?.Points || 10,
     Promise: mission?.Promise || "",
     Status: mission?.Status || "Assigned",
-    ChildName: mission?.ChildName || (children.length > 0 ? children[0].name : null),
+    ChildName: mission?.ChildName || (childrenList.length > 0 ? childrenList[0].name : null),
     CreatedAt: mission?.CreatedAt || new Date(),
     AttachmentUrl: mission?.AttachmentUrl || "",
   })
@@ -55,17 +55,17 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
       setFormData({
         Title: mission.Title || "",
         Description: mission.Description || "",
-        ChildId: mission.ChildId || (children.length > 0 ? Number(children[0].childId) : null),
+        ChildId: mission.ChildId || (childrenList.length > 0 ? Number(childrenList[0].childId) : null),
         Deadline: mission.Deadline || new Date().toISOString().slice(0, 16),
         Points: mission.Points || 10,
         Promise: mission.Promise || "",
         Status: mission.Status || "Assigned",
-        ChildName: mission.ChildName || (children.length > 0 ? children[0].name : null),
+        ChildName: mission.ChildName || (childrenList.length > 0 ? childrenList[0].name : null),
         CreatedAt: mission.CreatedAt || new Date(),
         AttachmentUrl: mission.AttachmentUrl || "",
       })
     }
-  }, [mission, mode, children])
+  }, [mission, mode, childrenList])
 
   const [attachmentType, setAttachmentType] = useState<"file" | "url">("url")
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -270,7 +270,7 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
                     <SelectValue placeholder={t("form.selectChild")} />
                   </SelectTrigger>
                   <SelectContent>
-                    {children.map((child) => (
+                    {childrenList.map((child) => (
                       <SelectItem key={child.childId} value={child.childId != null ? child.childId.toString() : ""}>
                         <div className="flex items-center gap-3">
                           {child.avatarUrl && <span className="text-lg">{child.avatarUrl}</span>}

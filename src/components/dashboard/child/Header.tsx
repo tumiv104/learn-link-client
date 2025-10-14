@@ -1,6 +1,6 @@
 import LanguageSwitcher from "@/components/LanguageSwitcher"
 import { Button } from "@/components/ui/button"
-import { Star, Flame, Bell, Settings, LogOut } from "lucide-react"
+import { Star, Flame, LogOut } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { NotificationDropdown } from "./NotificationDropdown"
 import { NotificationResponse } from "@/data/notification"

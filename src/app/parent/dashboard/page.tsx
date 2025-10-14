@@ -4,7 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   Users,
   TrendingUp,
-  Gift,
   Target,
   BookOpen,
   FileText,
@@ -14,7 +13,6 @@ import {
 import { useCallback, useEffect, useState } from "react"
 import MissionScreen from "./screens/MissionScreen"
 import SubmissionScreen from "./screens/SubmissionScreen"
-import RewardScreen from "./screens/RewardScreen"
 import ReportScreen from "./screens/ReportScreen"
 import ProfileScreen from "./screens/ProfileScreen"
 import OverviewScreen from "./screens/OverviewScreen"
@@ -244,7 +242,7 @@ export default function ParentDashboard() {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-6 bg-white/80 backdrop-blur-sm">
+            <TabsList className="grid w-full grid-cols-5 bg-white/80 backdrop-blur-sm">
               <TabsTrigger value="overview" className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4" />
                 {t("tabs.overview")}
@@ -257,10 +255,10 @@ export default function ParentDashboard() {
                 <FileText className="w-4 h-4" />
                 {t("tabs.submissions")}
               </TabsTrigger>
-              <TabsTrigger value="rewards" className="flex items-center gap-2">
+              {/* <TabsTrigger value="rewards" className="flex items-center gap-2">
                 <Gift className="w-4 h-4" />
                 {t("tabs.rewards")}
-              </TabsTrigger>
+              </TabsTrigger> */}
               <TabsTrigger value="reports" className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4" />
                 {t("tabs.reports")}
@@ -277,7 +275,7 @@ export default function ParentDashboard() {
 
             <TabsContent value="submissions"><SubmissionScreen onApprove={onApproveSubmission}/></TabsContent>
 
-            <TabsContent value="rewards"><RewardScreen/></TabsContent>
+            {/* <TabsContent value="rewards"><RewardScreen/></TabsContent> */}
 
             <TabsContent value="reports"><ReportScreen/></TabsContent>
 
