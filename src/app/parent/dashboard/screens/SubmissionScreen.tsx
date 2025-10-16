@@ -47,7 +47,6 @@ export default function SubmissionScreen({onApprove} : SubmissionProps) {
       setTotalPages(data.totalPages)
       setTotalCount(data.totalCount)
     } catch (err) {
-      console.error("Error fetching submissions:", err)
       showError("Error", "Failed to load submissions")
     } finally {
       setLoading(false)

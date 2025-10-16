@@ -42,7 +42,7 @@ export function useMissionHub(userId: number | undefined, handlers: MissionEvent
           conn.on("MissionSubmitted", handlers.onMissionSubmitted);
         }
       })
-      .catch((err) => console.error("SignalR connect error:", err));
+      .catch((err) => console.error("connect error:"));
 
     return () => {
       conn.stop();
