@@ -136,7 +136,8 @@
         },
         "updated": {
           "title": "Mission Updated",
-          "success": "\"{title}\" has been successfully updated."
+          "success": "\"{title}\" has been successfully updated.",
+          "error": "Failed to update \"{title}\"."
         }
       },
       "deleteDialog": {
@@ -169,7 +170,21 @@
         "title": "Children Overview",
         "points": "{points} total points",
         "viewDetails": "View Details",
-      "createButton": "Create new child account"
+        "createButton": "Create new child account",
+        "createDialog": {
+          "title": "Create a Child Account",
+          "avatarHelp": "Click to upload an avatar",
+          "nameLabel": "Full Name",
+          "namePlaceholder": "Enter your child's name",
+          "emailLabel": "Email Address",
+          "emailPlaceholder": "Enter email address",
+          "passwordLabel": "Password",
+          "passwordPlaceholder": "Create a password",
+          "passwordHelp": "Password must be at least 6 characters long",
+          "dobLabel": "Date of Birth",
+          "cancel": "Cancel",
+          "create": "Create Account"
+        }
       },
       "activity": {
         "title": "Recent Activity"
@@ -191,7 +206,19 @@
       "childrenCount": "Number of Children",
       "parent": "Parent",
       "notUpdated": "Not updated",
-      "notAvailable": "Not available"
+      "notAvailable": "Not available",
+      "editDialog": {
+        "title": "Edit Profile",
+        "avatarHelp": "Click to change avatar",
+        "emailLabel": "Email Address",
+        "emailHelp": "Email cannot be changed",
+        "nameLabel": "Full Name",
+        "namePlaceholder": "Enter your name",
+        "dobLabel": "Date of Birth",
+        "roleLabel": "Role",
+        "cancel": "Cancel",
+        "save": "Save Changes"
+      }
     },
     "reports": {
       "title": "Learning Reports",

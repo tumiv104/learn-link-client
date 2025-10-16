@@ -41,7 +41,7 @@ export function EditProfileDialog({ open, onClose, profile, onSuccess, onUpdateP
         dob: profile.dob ? new Date(profile.dob).toISOString().split("T")[0] : "",
       })
       setAvatarPreview(
-        profile.avatarUrl ? `${process.env.NEXT_PUBLIC_API_URL}/avatars/${profile.avatarUrl}` : "/default-avatar.png",
+        profile.avatarUrl ? `${process.env.NEXT_PUBLIC_API_URL}${profile.avatarUrl}` : "/default-avatar.png",
       )
     }
   }, [profile])

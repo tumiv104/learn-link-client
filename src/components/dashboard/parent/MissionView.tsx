@@ -34,6 +34,10 @@ export function MissionView({ mission, locale }: MissionViewProps) {
     }
   }
 
+  const isExternalUrl = (url : string) => {
+    return /^https?:\/\//i.test(url)
+  }
+
   return (
     <div className="grid gap-6 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
         <h4 className="font-bold text-lg flex items-center gap-3 text-slate-800">
@@ -78,13 +82,12 @@ export function MissionView({ mission, locale }: MissionViewProps) {
                 <div className="flex-1">
                   <p className="font-medium text-slate-800">{t("attachment")}</p>
                   <a
-                    href={`${process.env.NEXT_PUBLIC_API_URL}${mission.AttachmentUrl}`}
+                    href={isExternalUrl(mission.AttachmentUrl) ? mission.AttachmentUrl : `${process.env.NEXT_PUBLIC_API_URL}${mission.AttachmentUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm text-blue-600 hover:text-blue-800 underline break-all"
-                    
                   >
-                    {mission.AttachmentUrl}
+                    {mission.AttachmentUrl.split("/").pop()}
                   </a>
                 </div>
               </div>

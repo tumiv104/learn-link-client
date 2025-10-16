@@ -191,7 +191,7 @@ export default function ReportScreen() {
                 <CardDescription>{t("charts.completionTrend")}</CardDescription>
               </CardHeader>
               <CardContent>
-                <ChartContainer config={{ count: { label: t("charts.missions") } }} className="h-[300px]">
+                <ChartContainer className="h-[300px]">
                   <BarChart data={barChartData}>
                     <XAxis dataKey="status" />
                     <YAxis />
@@ -216,7 +216,7 @@ export default function ReportScreen() {
                 <CardDescription>{t("charts.missionStatus")}</CardDescription>
               </CardHeader>
               <CardContent className="flex gap-6">
-                <ChartContainer config={{ value: { label: t("charts.missions") } }} className="h-[300px] w-[300px]">
+                <ChartContainer className="h-[300px] w-[300px]">
                   <PieChart>
                     <Pie data={missionStatusData} cx="50%" cy="50%" labelLine={false} outerRadius={80} dataKey="value">
                       {missionStatusData.map((entry, index) => (

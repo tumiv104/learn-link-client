@@ -77,13 +77,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  const doLogin = async (email: string, password: string) => {
+  // Helper: wrap actions in loading/finally
+  const withLoading = async <T,>(fn: () => Promise<T>): Promise<T> => {
     setLoading(true);
-    const { accessToken: token, user: u } = await loginApi(email, password);
-    handleAuthSuccess(token);
-    setLoading(false);
-    return u;
+    try {
+      return await fn();
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const doLogin = async (email: string, password: string) => withLoading(async () => {
+    try {
+      const { accessToken: token, user: u } = await loginApi(email, password);
+      handleAuthSuccess(token);
+      return u;
+    } catch (err) {
+      throw err;
+    }
+  });
 
   const doRegister = async (
     name: string,
@@ -92,11 +104,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     roleId: number,
     dob?: Date,
     avatarUrl?: string
-  ) => {
-    setLoading(true);
-    await registerApi(name, email, password, roleId, dob, avatarUrl);
-    setLoading(false);
-  };
+  ) => withLoading(async () => {
+    try {
+      await registerApi(name, email, password, roleId, dob, avatarUrl);
+    } catch (err) {
+      throw err;
+    }
+  });
 
   const doRegisterChild = async (
     name: string,
@@ -105,11 +119,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     parentId: number,
     dob?: Date,
     avatarUrl?: string
-  ) => {
-    setLoading(true);
-    await registerChildApi(name, email, password, parentId, dob, avatarUrl);
-    setLoading(false);
-  };
+  ) => withLoading(async () => {
+    try {
+      await registerChildApi(name, email, password, parentId, dob, avatarUrl);
+    } catch (err) {
+      throw err;
+    }
+  });
 
   const doLogout = async () => {
     setLoading(true);

@@ -6,7 +6,7 @@ import { MissionManagementCard } from "@/components/dashboard/parent/MissionMana
 import { AlertPopup } from "@/components/ui/alert-popup"
 import { Button } from "@/components/ui/button"
 import { useAlert } from "@/hooks/useAlert"
-import { assignMission, getParentMissions } from "@/services/mission/missionService"
+import { assignMission, editMission, getParentMissions } from "@/services/mission/missionService"
 import { Plus } from "lucide-react"
 import { useLocale, useTranslations } from "next-intl"
 import type { Mission } from "@/data/mission"
@@ -60,7 +60,7 @@ export default function MissionScreen() {
       setMissions(mapped)
       setTotalPages(data.totalPages)
     } catch (err) {
-      console.error(err)
+      //console.error(err)
     } finally {
       setLoading(false)
     }
@@ -81,7 +81,7 @@ export default function MissionScreen() {
       }))
       setChildren(data)
     } catch (err) {
-      console.error(err)
+      //console.error(err)
     } finally {
       setLoadingChildren(false)
     }
@@ -113,42 +113,54 @@ export default function MissionScreen() {
   const handleSaveMission = async (formData: FormData) => {
     // Giữ nguyên hàm cũ
     let success = false
-    if (missionDialog.mode === "create") {
-      try {
+    const id = formData.get("MissionId")?.toString()
+    formData.delete("MissionId")
+    try {
+      if (missionDialog.mode === "create") {
         const createRes = await assignMission(formData)
         success = createRes.success
-      } catch (err) {}
-    } else {
-      // call api edit
-      success = true
-    }
-
-    setTimeout(async () => {
-      const title = formData.get("Title")?.toString() ?? ""
-      if (missionDialog.mode === "create") {
+      } else {
+        if (!id) throw new Error("Mission ID is missing")
+        const editRes = await editMission(id, formData)
+        success = editRes.success
+      }
+    } catch (err) {
+      
+    } finally {
+      setTimeout(async () => {
+        const title = formData.get("Title")?.toString() ?? ""
         if (success) {
-          showSuccess(
-            t("alerts.created.title"),
-            t("alerts.created.success", { title })
-          )
+          if (missionDialog.mode === "create") {
+            showSuccess(
+              t("alerts.created.title"),
+              t("alerts.created.success", { title })
+            )
+          } else {
+            showSuccess(
+              t("alerts.updated.title"),
+              t("alerts.updated.success", { title })
+            )
+          }
           setMissionDialog({ ...missionDialog, open: false })
           await fetchMissions(page, pageSize) // refresh list
         } else {
-          showError(
-            t("alerts.created.title"),
-            t("alerts.created.error", { title })
-          )
+          if (missionDialog.mode === "create") {
+            showError(
+              t("alerts.created.title"),
+              t("alerts.created.error", { title })
+            )
+          } else {
+            showError(
+              t("alerts.updated.title"),
+              t("alerts.updated.error", { title })
+            )
+          }
           setMissionDialog({ ...missionDialog, open: false })
         }
-      } else {
-        showSuccess(
-          t("alerts.updated.title"),
-          t("alerts.updated.success", { title })
-        )
-        setMissionDialog({ ...missionDialog, open: false })
-        await fetchMissions(page, pageSize) // refresh list
-      }
-    }, 500)
+      }, 500)
+    }
+
+    
   }
   return (
     <div className="space-y-6">
