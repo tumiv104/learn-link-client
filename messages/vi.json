@@ -12,6 +12,7 @@
     "signupParent": "Đăng ký cho phụ huynh",
     "login": "Đăng nhập",
     "parentPage": "Đi tới trang dành cho phụ huynh",
+    "childPage": "Đi tới trang dành cho bé",
     "whyChoose": "Tại sao chọn Learn Link?",
     "whyChooseDesc": "Thiết kế cho cả phụ huynh và trẻ em với những tính năng giúp việc học trở nên thú vị và bổ ích",
     "features": {
@@ -181,9 +182,24 @@
           "passwordLabel": "Mật khẩu",
           "passwordPlaceholder": "Tạo mật khẩu",
           "passwordHelp": "Mật khẩu phải có ít nhất 6 ký tự",
+          "confirmPasswordLabel": "Xác nhận mật khẩu",
+          "confirmPasswordPlaceholder": "Nhập lại mật khẩu",
+          "confirmPasswordHelp": "Phải trùng khớp với mật khẩu ở trên",
           "dobLabel": "Ngày sinh",
           "cancel": "Hủy",
           "create": "Tạo tài khoản"
+        },
+        "alerts": {
+          "validationError": "Lỗi xác thực",
+          "successTitle": "Thành công",
+          "errorTitle": "Lỗi",
+          "nameRequired": "Vui lòng nhập tên",
+          "emailRequired": "Vui lòng nhập email hợp lệ",
+          "passwordTooShort": "Mật khẩu phải có ít nhất 6 ký tự",
+          "passwordMismatch": "Mật khẩu xác nhận không khớp",
+          "dobRequired": "Vui lòng nhập ngày sinh",
+          "createSuccess": "Tạo tài khoản con thành công!",
+          "createFail": "Tạo tài khoản con thất bại"
         }
       },
       "activity": {
