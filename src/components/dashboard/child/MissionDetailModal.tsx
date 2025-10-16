@@ -16,6 +16,7 @@ import {
   Rocket,
   Send,
   CheckCircle2,
+  Link,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { MissionSubmission } from "@/data/mission"
@@ -131,6 +132,10 @@ export function MissionDetailModal({ open, onClose, mission }: MissionDetailModa
 
   const statusConfig = getStatusConfig(mission.missionStatus)
 
+  const isExternalUrl = (url : string) => {
+    return /^https?:\/\//i.test(url)
+  }
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
@@ -220,9 +225,18 @@ export function MissionDetailModal({ open, onClose, mission }: MissionDetailModa
 
             {mission.attachmentUrl && (
               <Button variant="outline" size="sm" className="w-full mt-3 bg-white border-2 font-bold" asChild>
-                <a href={`${process.env.NEXT_PUBLIC_API_URL}${mission.attachmentUrl}`}  target="_blank" rel="noopener noreferrer"> 
+                {/* <a href={`${process.env.NEXT_PUBLIC_API_URL}${mission.attachmentUrl}`}  target="_blank" rel="noopener noreferrer"> 
                   <Download className="w-4 h-4 mr-2" />📎 {t("detail.downloadMissionFiles")}
-                </a>
+                </a> */}
+                {isExternalUrl(mission.attachmentUrl) ? (
+                  <a href={mission.attachmentUrl} target="_blank" rel="noopener noreferrer"> 
+                    <Link className="w-4 h-4 mr-2" />📎 {t("detail.downloadMissionFiles")}
+                  </a>
+                ) : (
+                  <a href={`${process.env.NEXT_PUBLIC_API_URL}${mission.attachmentUrl}`}  target="_blank" rel="noopener noreferrer"> 
+                    <Download className="w-4 h-4 mr-2" />📎 {t("detail.downloadMissionFiles")}
+                  </a>
+                )}
               </Button>
             )}
           </div>

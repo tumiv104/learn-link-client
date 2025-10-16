@@ -34,7 +34,6 @@ export default function MissionScreen() {
     const res = await getAllMissionByStatus("All");
     if (res.data) {
       setMissionList(res.data);
-      console.log(missionList);
     }
   }, []);
 

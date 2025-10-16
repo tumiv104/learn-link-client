@@ -136,7 +136,8 @@
         },
         "updated": {
           "title": "Cập nhật nhiệm vụ",
-          "success": "Nhiệm vụ \"{title}\" đã được cập nhật thành công."
+          "success": "Nhiệm vụ \"{title}\" đã được cập nhật thành công.",
+          "error": "Cập nhật nhiệm vụ \"{title}\" thất bại."
         }
       },
       "deleteDialog": {
@@ -195,6 +196,7 @@
       "comingTitle": "Báo cáo sắp ra mắt",
       "comingDesc": "Phân tích chi tiết và báo cáo tiến độ sẽ có tại đây",
       "selectChild": "Chọn một bé",
+      "selectChildPlaceholder": "Chọn một bé",
       "allChildren": "Tất cả con",
       "period": "Khoảng thời gian",
       "periodLabels": {
@@ -503,11 +505,12 @@
       "orders": {
         "emptyTitle": "Chưa có đơn hàng nào!",
         "emptyDescription": "Hãy bắt đầu mua sắm để thấy đơn hàng của bạn tại đây!",
-        "goShopping": "Đi Mua Sắm! 🛍️"
+        "emptyButton": "Đi Mua Sắm! 🛍️"
       },
       "dialog": {
         "buyTitle": "Mua sản phẩm này?",
         "buyDescription": "Bạn có muốn dùng {points} điểm để nhận {name}?",
+        "success": "Tuyệt vời! Bạn đã nhận được {name}! 🎉",
         "startError": "Có lỗi xảy ra, vui lòng thử lại!"
       },
       "alerts": {
