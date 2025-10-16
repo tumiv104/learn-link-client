@@ -12,6 +12,7 @@
     "signupParent": "Sign Up as Parent",
     "login": "Log In",
     "parentPage": "Go to Parent Page",
+    "childPage": "Go to Child Page",
     "whyChoose": "Why Choose Learn Link?",
     "whyChooseDesc": "Designed for both parents and children with features that make learning fun and rewarding",
     "features": {
@@ -181,9 +182,24 @@
           "passwordLabel": "Password",
           "passwordPlaceholder": "Create a password",
           "passwordHelp": "Password must be at least 6 characters long",
+          "confirmPasswordLabel": "Confirm Password",
+          "confirmPasswordPlaceholder": "Confirm your password",
+          "confirmPasswordHelp": "Must match the password above",
           "dobLabel": "Date of Birth",
           "cancel": "Cancel",
           "create": "Create Account"
+        },
+        "alerts": {
+          "validationError": "Validation Error",
+          "successTitle": "Success",
+          "errorTitle": "Error",
+          "nameRequired": "Name is required",
+          "emailRequired": "Valid email is required",
+          "passwordTooShort": "Password must be at least 6 characters",
+          "passwordMismatch": "Passwords do not match",
+          "dobRequired": "Date of birth is required",
+          "createSuccess": "Child account created successfully!",
+          "createFail": "Failed to create child account"
         }
       },
       "activity": {
