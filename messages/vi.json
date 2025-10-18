@@ -82,6 +82,11 @@
   "parentDashboard": {
     "welcome": "Chào mừng trở lại",
     "subtitle": "Tình hình học tập của con bạn hôm nay",
+    "balance": {
+      "title": "Số dư hiện có",
+      "subtitle": "điểm khả dụng",
+      "buyButton": "Mua điểm"
+    },
     "tabs": {
       "overview": "Tổng quan",
       "missions": "Nhiệm vụ",
@@ -589,6 +594,47 @@
       "missionReviewed": "Nhiệm vụ \"{title}\" của bạn đã được xem xét.",
       "missionStarted": "\"{childName}\" đã bắt đầu nhiệm vụ \"{title}\".",
       "missionSubmitted": "\"{childName}\" đã nộp nhiệm vụ \"{title}\"."
+    }
+  },
+  "buyPointsDialog": {
+    "title": "Mua điểm",
+    "subtitle": "Chọn gói điểm bạn muốn mua",
+    "packages": {
+      "title": "Gói phổ biến",
+      "popular": "Phổ biến",
+      "points": "điểm",
+      "bonus": "thưởng"
+    },
+    "custom": {
+      "title": "Số lượng tùy chỉnh",
+      "placeholder": "Tối thiểu",
+      "minError": "Số điểm mua tối thiểu là {minPoints}"
+    },
+    "summary": {
+      "buying": "Bạn đang mua",
+      "total": "Tổng thanh toán",
+      "rate": "Tỷ lệ: 1.000 VND mỗi điểm"
+    },
+    "payment": {
+      "title": "Phương thức thanh toán",
+      "subtitle": "Chọn cách bạn muốn thanh toán",
+      "instant": "Xử lý ngay lập tức",
+      "comingSoon": "Sắp ra mắt"
+    },
+    "methods": {
+      "vietqrDesc": "Thanh toán nhanh qua mã VietQR",
+      "momoDesc": "Thanh toán bằng ví điện tử Momo",
+      "vnpayDesc": "Thanh toán qua cổng VNPAY"
+    },
+    "recommended": "Đề xuất",
+    "securePayment": {
+      "title": "Thanh toán an toàn",
+      "description": "Thông tin thanh toán của bạn được mã hóa và bảo mật"
+    },
+    "actions": {
+      "cancel": "Hủy",
+      "purchase": "Thanh toán",
+      "processing": "Đang xử lý..."
     }
   }
 
