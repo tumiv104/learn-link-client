@@ -6,46 +6,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Card, CardContent } from "@/components/ui/card"
-import { Coins, CreditCard, Smartphone, Wallet, AlertCircle, ShoppingCart, Star, Zap } from "lucide-react"
+import { Coins, CreditCard, Smartphone, Wallet, AlertCircle, ShoppingCart, Star, Zap, QrCode } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 interface BuyPointsDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   onPurchase: (points: number, paymentMethod: string) => void
 }
-
-const paymentMethods = [
-  {
-    id: "momo",
-    name: "Momo",
-    icon: <Smartphone className="w-6 h-6" />,
-    description: "Pay with Momo e-wallet",
-    color: "text-pink-600",
-    bgColor: "bg-gradient-to-br from-pink-50 to-pink-100",
-    borderColor: "border-pink-200",
-    popular: true,
-  },
-  {
-    id: "vnpay",
-    name: "VNPAY",
-    icon: <CreditCard className="w-6 h-6" />,
-    description: "Pay with VNPAY gateway",
-    color: "text-blue-600",
-    bgColor: "bg-gradient-to-br from-blue-50 to-blue-100",
-    borderColor: "border-blue-200",
-    popular: false,
-  },
-  {
-    id: "bank",
-    name: "Bank Transfer",
-    icon: <Wallet className="w-6 h-6" />,
-    description: "Direct bank transfer",
-    color: "text-green-600",
-    bgColor: "bg-gradient-to-br from-green-50 to-green-100",
-    borderColor: "border-green-200",
-    popular: false,
-  },
-]
 
 const pointPackages = [
   { points: 10, bonus: 0, popular: false },
@@ -55,12 +23,49 @@ const pointPackages = [
 ]
 
 export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDialogProps) {
+  const t = useTranslations("buyPointsDialog")
   const [points, setPoints] = useState(100)
-  const [paymentMethod, setPaymentMethod] = useState("momo")
+  const [paymentMethod, setPaymentMethod] = useState("bank")
   const [loading, setLoading] = useState(false)
 
   const totalCost = points * 1000 // 1 point = 1000 VND
   const minPoints = 10
+
+  const paymentMethods = [
+  {
+    id: "bank",
+    name: "VietQR",
+    icon: <QrCode className="w-6 h-6" />,
+    description: t("methods.vietqrDesc"),
+    color: "text-green-600",
+    bgColor: "bg-gradient-to-br from-green-50 to-green-100",
+    borderColor: "border-green-200",
+    popular: true,
+    available: true,
+  },
+  {
+    id: "momo",
+    name: "Momo",
+    icon: <Smartphone className="w-6 h-6" />,
+    description: t("methods.momoDesc"),
+    color: "text-pink-600",
+    bgColor: "bg-gradient-to-br from-pink-50 to-pink-100",
+    borderColor: "border-pink-200",
+    popular: false,
+    available: false,
+  },
+  {
+    id: "vnpay",
+    name: "VNPAY",
+    icon: <CreditCard className="w-6 h-6" />,
+    description: t("methods.vnpayDesc"),
+    color: "text-blue-600",
+    bgColor: "bg-gradient-to-br from-blue-50 to-blue-100",
+    borderColor: "border-blue-200",
+    popular: false,
+    available: false,
+  },
+]
 
   const handlePurchase = async () => {
     if (points < minPoints) return
@@ -70,7 +75,7 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
       await onPurchase(points, paymentMethod)
       onOpenChange(false)
       setPoints(10)
-      setPaymentMethod("momo")
+      setPaymentMethod("bank")
     } catch (error) {
       console.error("Purchase failed:", error)
     } finally {
@@ -93,14 +98,14 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
                 <Coins className="w-8 h-8 text-white" />
               </div> */}
               <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 bg-clip-text text-transparent">
-                Buy Points
+                {t("title")}
               </DialogTitle>
-              <p className="text-gray-600 mt-1 text-base">Choose your points package</p>
+              <p className="text-gray-600 mt-1 text-base">{t("subtitle")}</p>
             </DialogHeader>
 
             {/* Quick Package Selection */}
             <div className="space-y-3 mb-4">
-              <Label className="text-base font-semibold text-gray-800">Popular Packages</Label>
+              <Label className="text-base font-semibold text-gray-800">{t("packages.title")}</Label>
               <div className="grid grid-cols-2 gap-2">
                 {pointPackages.map((pkg) => (
                   <Card
@@ -116,14 +121,14 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
                       {pkg.popular && (
                         <div className="absolute -top-2 -right-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1">
                           <Star className="w-3 h-3" />
-                          Popular
+                          {t("packages.popular")}
                         </div>
                       )}
                       <div className="text-xl font-bold text-amber-600">{pkg.points}</div>
-                      <div className="text-sm text-gray-600">points</div>
+                      <div className="text-sm text-gray-600">{t("packages.points")}</div>
                       {pkg.bonus > 0 && (
                         <div className="text-xs text-green-600 font-semibold mt-1 flex items-center justify-center gap-1">
-                          <Zap className="w-3 h-3" />+{pkg.bonus} bonus
+                          <Zap className="w-3 h-3" />+{pkg.bonus} {t("packages.bonus")}
                         </div>
                       )}
                       <div className="text-sm font-semibold text-gray-800 mt-1">
@@ -138,7 +143,7 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
             {/* Custom Amount */}
             <div className="space-y-3">
               <Label htmlFor="points" className="text-base font-semibold text-gray-800">
-                Custom Amount
+                {t("custom.title")}
               </Label>
               <div className="relative">
                 <Input
@@ -148,14 +153,14 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
                   value={points}
                   onChange={(e) => setPoints(Math.max(minPoints, Number.parseInt(e.target.value) || minPoints))}
                   className="pl-10 pr-4 py-3 text-lg font-bold border-2 border-gray-300 focus:border-amber-400 rounded-xl bg-white/80 backdrop-blur-sm"
-                  placeholder={`Min ${minPoints}`}
+                  placeholder={`${t("custom.placeholder")} ${minPoints}`}
                 />
                 <Coins className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-amber-500" />
               </div>
               {points < minPoints && (
                 <div className="flex items-center gap-2 text-red-600 text-sm bg-red-50 p-2 rounded-lg">
                   <AlertCircle className="w-4 h-4" />
-                  <span>Minimum purchase is {minPoints} points</span>
+                  <span>{t("custom.minError", { minPoints })}</span>
                 </div>
               )}
             </div>
@@ -165,16 +170,16 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
               <CardContent className="p-4">
                 <div className="flex justify-between items-center mb-3">
                   <div>
-                    <p className="text-sm text-gray-700 font-medium">You're buying</p>
-                    <p className="text-2xl font-bold text-amber-700">{points} points</p>
+                    <p className="text-sm text-gray-700 font-medium">{t("summary.buying")}</p>
+                    <p className="text-2xl font-bold text-amber-700">{points} {t("packages.points")}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-gray-700 font-medium">Total cost</p>
+                    <p className="text-sm text-gray-700 font-medium">{t("summary.total")}</p>
                     <p className="text-2xl font-bold text-orange-700">{totalCost.toLocaleString()} VND</p>
                   </div>
                 </div>
                 <div className="text-center text-sm text-gray-600 bg-white/60 rounded-lg p-2">
-                  Rate: 1,000 VND per point
+                  {t("summary.rate")}
                 </div>
               </CardContent>
             </Card>
@@ -183,8 +188,8 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
           {/* Right Side - Payment Methods */}
           <div className="flex-1 p-6 bg-gradient-to-br from-slate-50 to-gray-100">
             <div className="mb-6 mt-10">
-              <h3 className="text-xl font-bold text-gray-800 mb-2">Payment Method</h3>
-              <p className="text-gray-600">Choose how you'd like to pay</p>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">{t("payment.title")}</h3>
+              <p className="text-gray-600">{t("payment.subtitle")}</p>
             </div>
 
             <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="space-y-3">
@@ -201,7 +206,7 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
                   >
                     {method.popular && (
                       <div className="absolute -top-2 -right-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                        Recommended
+                        {t("recommended")}
                       </div>
                     )}
                     <div className={`p-3 rounded-lg ${method.bgColor} ${method.borderColor} border`}>
@@ -210,10 +215,18 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
                     <div className="flex-1">
                       <p className="font-bold text-base text-gray-800">{method.name}</p>
                       <p className="text-gray-600 text-sm">{method.description}</p>
+                      {method.available ? (
                       <div className="flex items-center gap-2 mt-1">
                         <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                        <span className="text-sm text-green-600 font-medium">Instant processing</span>
+                        <span className="text-sm text-green-600 font-medium">{t("payment.instant")}</span>
                       </div>
+                      ) : (
+                      <div className="flex items-center gap-2 mt-1">
+                        <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                        <span className="text-sm text-gray-400 font-medium">{t("payment.comingSoon")}</span>
+                      </div>
+                      )}
+                      
                     </div>
                     {paymentMethod === method.id && (
                       <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
@@ -232,8 +245,8 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
                   <div className="w-2 h-2 bg-white rounded-full"></div>
                 </div>
                 <div>
-                  <p className="font-semibold text-blue-800 text-sm">Secure Payment</p>
-                  <p className="text-blue-700 text-sm">Your payment information is encrypted and secure</p>
+                  <p className="font-semibold text-blue-800 text-sm">{t("securePayment.title")}</p>
+                  <p className="text-blue-700 text-sm">{t("securePayment.description")}</p>
                 </div>
               </div>
             </div>
@@ -246,7 +259,7 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
                 className="flex-1 py-3 text-base border-2 hover:bg-gray-50"
                 disabled={loading}
               >
-                Cancel
+                {t("actions.cancel")}
               </Button>
               <Button
                 onClick={handlePurchase}
@@ -256,12 +269,12 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
                 {loading ? (
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Processing...
+                    {t("actions.processing")}
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
                     <ShoppingCart className="w-4 h-4" />
-                    Purchase
+                    {t("actions.purchase")}
                   </div>
                 )}
               </Button>

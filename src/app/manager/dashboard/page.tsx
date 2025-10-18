@@ -20,6 +20,9 @@ import {
   Clock,
   Truck,
   ShoppingBag,
+  TrendingUp,
+  Users,
+  BarChart3,
 } from "lucide-react"
 import { ShopDialog } from "@/components/dashboard/manager/ShopDialog"
 import { ProductDialog } from "@/components/dashboard/manager/ProductDialog"
@@ -30,6 +33,18 @@ import { createProduct, createShop, editProduct, editShop, getAllProduct, getAll
 import { Product, ProductRequest, RedemptionResponse, ShopRequest } from "@/data/shop"
 import { RedemptionStatusDialog } from "@/components/dashboard/manager/RedemptionStatusDialog"
 import { getAllRedemption, updateStatus } from "@/services/points/pointService"
+import { OverviewWidgets } from "@/components/dashboard/manager/OverviewWidgets"
+import { UserDetailsList } from "@/components/dashboard/manager/UserDetailsList"
+import { TaskPerformanceList } from "@/components/dashboard/manager/TaskPerformanceList"
+import ShopScreen from "./screens/ShopScreen"
+import OverviewScreen from "./screens/OverviewScreen"
+import UserDetailScreen from "./screens/UserDetailScreen"
+import PerformanceScreen from "./screens/PerformanceScreen"
+import ProductScreen from "./screens/ProductScreen"
+import RedemptionScreen from "./screens/RedemptionScreen"
+import useRequireAuth from "@/hooks/useRequireAuth"
+import { logout } from "@/services/auth/authService"
+import { useRouter } from "next/navigation"
 
 interface Shop {
   shopId: number
@@ -40,7 +55,9 @@ interface Shop {
 }
 
 export default function ManagerDashboard() {
-  const [activeTab, setActiveTab] = useState("shops")
+  const { user, loading, ready } = useRequireAuth("/auth/login", ["Admin"])
+  const router = useRouter()
+  const [activeTab, setActiveTab] = useState("overview")
   const [shops, setShops] = useState<Shop[]>([])
   const [filteredShops, setFilteredShops] = useState<Shop[]>([])
   const [searchQuery, setSearchQuery] = useState("")
@@ -347,9 +364,23 @@ export default function ManagerDashboard() {
     }
   }
 
-  const handleLogout = () => {
-    window.location.href = "/auth/login"
+  const handleLogout = async () => {
+    try {
+      await logout()
+      router.push("/auth/login")
+    } catch (error) {
+      console.error("Logout failed:", error)
+    }
   }
+
+  if (loading)
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-500"></div>
+    </div>
+  )
+
+  if (!ready) return null;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -381,10 +412,43 @@ export default function ManagerDashboard() {
         )}
 
         <div className="mb-6 border-b border-gray-200">
-          <nav className="flex gap-8">
+          <nav className="flex gap-8 overflow-x-auto">
+            <button
+              onClick={() => setActiveTab("overview")}
+              className={`pb-4 px-1 border-b-2 font-medium text-sm transition-colors whitespace-nowrap ${
+                activeTab === "overview"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+              }`}
+            >
+              <TrendingUp className="w-4 h-4 inline mr-2" />
+              Overview
+            </button>
+            <button
+              onClick={() => setActiveTab("users")}
+              className={`pb-4 px-1 border-b-2 font-medium text-sm transition-colors whitespace-nowrap ${
+                activeTab === "users"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+              }`}
+            >
+              <Users className="w-4 h-4 inline mr-2" />
+              User Details
+            </button>
+            <button
+              onClick={() => setActiveTab("performance")}
+              className={`pb-4 px-1 border-b-2 font-medium text-sm transition-colors whitespace-nowrap ${
+                activeTab === "performance"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+              }`}
+            >
+              <BarChart3 className="w-4 h-4 inline mr-2" />
+              Performance
+            </button>
             <button
               onClick={() => setActiveTab("shops")}
-              className={`pb-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+              className={`pb-4 px-1 border-b-2 font-medium text-sm transition-colors whitespace-nowrap${
                 activeTab === "shops"
                   ? "border-blue-600 text-blue-600"
                   : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
@@ -395,7 +459,7 @@ export default function ManagerDashboard() {
             </button>
             <button
               onClick={() => setActiveTab("products")}
-              className={`pb-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+              className={`pb-4 px-1 border-b-2 font-medium text-sm transition-colors whitespace-nowrap${
                 activeTab === "products"
                   ? "border-blue-600 text-blue-600"
                   : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
@@ -406,7 +470,7 @@ export default function ManagerDashboard() {
             </button>
             <button
               onClick={() => setActiveTab("redemptions")}
-              className={`pb-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+              className={`pb-4 px-1 border-b-2 font-medium text-sm transition-colors whitespace-nowrap${
                 activeTab === "redemptions"
                   ? "border-blue-600 text-blue-600"
                   : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
@@ -418,7 +482,13 @@ export default function ManagerDashboard() {
           </nav>
         </div>
 
-        {activeTab === "shops" && (
+        {activeTab === "overview" && <OverviewScreen/>}
+
+        {activeTab === "users" && <UserDetailScreen/>}
+
+        {activeTab === "performance" && <PerformanceScreen/>}
+
+        {activeTab === "shops" && /*(
           <div className="space-y-6">
             <Card className="p-4">
               <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
@@ -596,9 +666,10 @@ export default function ManagerDashboard() {
               )}
             </Card>
           </div>
-        )}
+        )} */
+        <ShopScreen/>}
 
-        {activeTab === "products" && (
+        {activeTab === "products" && /*(
           <div className="space-y-6">
             <Card className="p-4">
               <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
@@ -802,8 +873,10 @@ export default function ManagerDashboard() {
               )}
             </Card>
           </div>
-        )}
-        {activeTab === "redemptions" && (
+        )} */
+        <ProductScreen/>
+        }
+        {activeTab === "redemptions" && /*(
           <div className="space-y-6">
             <Card className="p-4">
               <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
@@ -976,10 +1049,12 @@ export default function ManagerDashboard() {
               )}
             </Card>
           </div>
-        )}
+        )} */
+        <RedemptionScreen/>
+        }
       </main>
 
-      <ShopDialog
+      {/* <ShopDialog
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         onSave={handleSaveShop}
@@ -994,16 +1069,16 @@ export default function ManagerDashboard() {
         product={selectedProduct}
         mode={productDialogMode}
         shops={shops}
-      />
+      /> */}
 
-      <RedemptionStatusDialog
+      {/* <RedemptionStatusDialog
         isOpen={isRedemptionDialogOpen}
         onClose={() => setIsRedemptionDialogOpen(false)}
         onUpdateStatus={handleUpdateRedemptionStatus}
         redemption={selectedRedemption}
-      />
+      /> */}
 
-      <ConfirmationDialog
+      {/* <ConfirmationDialog
         open={!!deleteShop}
         onOpenChange={() => setDeleteShop(null)}
         onConfirm={handleDeleteConfirm}
@@ -1019,7 +1094,7 @@ export default function ManagerDashboard() {
         title="Delete Product"
         description={`Are you sure you want to delete "${deleteProduct?.name}"? This action cannot be undone.`}
         variant="warning"
-      />
+      /> */}
     </div>
   )
 }

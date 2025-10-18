@@ -35,6 +35,8 @@ export default function LoginPage() {
         router.push("/parent/dashboard")
       } else if (user?.role === "Child") {
         router.push("/child/dashboard")
+      } else if (user?.role === "Admin") {
+        router.push("/manager/dashboard")
       }
     } catch (error: any) {
       setError(error?.message || "Login failed. Please try again.")
