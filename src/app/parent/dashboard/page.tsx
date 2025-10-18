@@ -21,7 +21,7 @@ import { useMissionHub } from "@/hooks/useMissionHub"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { BuyPointsDialog } from "@/components/dashboard/parent/BuyPointsDialog"
-import { createMomoPayment, updatePaymentStatus } from "@/services/payment/paymentService"
+import { createMomoPayment, createPayOSPayment, updatePaymentStatus } from "@/services/payment/paymentService"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { getPointDetailByUserId } from "@/services/points/pointService"
 import { CustomToast } from "@/components/ui/custom-toast"
@@ -90,21 +90,39 @@ export default function ParentDashboard() {
   }, [user, fetchBalance]);
 
   useEffect(() => {
-    const orderId = searchParams.get("orderId");
-    const resultCode = searchParams.get("resultCode");
+    // const orderId = searchParams.get("orderId");
+    // const resultCode = searchParams.get("resultCode");
+    const code = searchParams.get("code");
+    const paymentStatus = searchParams.get("status");
+    const orderCode = searchParams.get("orderCode");
 
     const handlePaymentCallback = async () => {
-      if (orderId && resultCode && !callbackHandled) {
-        setCallbackHandled(true); // đánh dấu đã xử lý
-        const paymentId = Number.parseInt(orderId);
+      // if (orderId && resultCode && !callbackHandled) {
+      //   setCallbackHandled(true); 
+      //   const paymentId = Number.parseInt(orderId);
+      //   let status = "";
+
+      //   if (resultCode === "0") {
+      //     status = "success";
+      //   }
+
+      //   await updatePaymentStatus(paymentId, status);
+      //   if (resultCode === "0") await fetchBalance();
+
+      //   // clear params
+      //   router.replace(pathname);
+      //   return;
+      // }
+
+      if (code && paymentStatus && orderCode && !callbackHandled) {
+        setCallbackHandled(true);
+        const paymentId = Number.parseInt(orderCode);
         let status = "";
 
-        if (resultCode === "0") {
-          status = "success";
-        }
+        if (code === "00" && paymentStatus === "PAID") status = "success";
 
         await updatePaymentStatus(paymentId, status);
-        if (resultCode === "0") await fetchBalance();
+        if (code === "00" && paymentStatus === "PAID") await fetchBalance();
 
         // clear params
         router.replace(pathname);
@@ -178,9 +196,15 @@ export default function ParentDashboard() {
         throw new Error("Payment creation failed");
       }
       let paymentUrl : string = "";
-      if (paymentMethod == "momo") {
-        console.log(user.id, points * 1000)
-        const response = await createMomoPayment(user?.id, points * 1000);
+      // if (paymentMethod == "momo") {
+      //   const response = await createMomoPayment(user?.id, points * 1000);
+      //   if (!response.success) {
+      //     throw new Error("Create payment failed");
+      //   }
+      //   paymentUrl = response.data;
+      // }
+      if (paymentMethod == "bank") {
+        const response = await createPayOSPayment(user?.id, points * 1000);
         if (!response.success) {
           throw new Error("Create payment failed");
         }
@@ -222,11 +246,11 @@ export default function ParentDashboard() {
                       <Coins className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">Your Balance</p>
+                      <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">{t("balance.title")}</p>
                       <p className="text-xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
                         {balance}
                       </p>
-                      <p className="text-xs text-amber-600 font-medium">points available</p>
+                      <p className="text-xs text-amber-600 font-medium">{t("balance.subtitle")}</p>
                     </div>
                   </div>
                   <Button
@@ -234,7 +258,7 @@ export default function ParentDashboard() {
                     className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-600 hover:via-orange-600 hover:to-red-600 text-white font-bold px-5 py-2.5 shadow-xl hover:shadow-2xl transition-all"
                   >
                     <Plus className="w-4 h-4 mr-2" />
-                    Buy Points
+                    {t("balance.buyButton")}
                   </Button>
                   </div>
                 </CardContent>

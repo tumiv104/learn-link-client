@@ -82,6 +82,11 @@
   "parentDashboard": {
     "welcome": "Welcome back",
     "subtitle": "Here's how your children are doing today",
+    "balance": {
+      "title": "Your Balance",
+      "subtitle": "points available",
+      "buyButton": "Buy Points"
+    },
     "tabs": {
       "overview": "Overview",
       "missions": "Missions",
@@ -588,6 +593,47 @@
       "missionReviewed": "Your mission \"{title}\" was reviewed.",
       "missionStarted": "\"{childName}\" started mission \"{title}\".",
       "missionSubmitted": "\"{childName}\" has submitted mission \"{title}\"."
+    }
+  },
+  "buyPointsDialog": {
+    "title": "Buy Points",
+    "subtitle": "Choose your points package",
+    "packages": {
+      "title": "Popular Packages",
+      "popular": "Popular",
+      "points": "points",
+      "bonus": "bonus"
+    },
+    "custom": {
+      "title": "Custom Amount",
+      "placeholder": "Min",
+      "minError": "Minimum purchase is {minPoints} points"
+    },
+    "summary": {
+      "buying": "You're buying",
+      "total": "Total cost",
+      "rate": "Rate: 1,000 VND per point"
+    },
+    "payment": {
+      "title": "Payment Method",
+      "subtitle": "Choose how you'd like to pay",
+      "instant": "Instant processing",
+      "comingSoon": "Coming soon"
+    },
+    "methods": {
+      "vietqrDesc": "Fast payment via VietQR code",
+      "momoDesc": "Pay with Momo e-wallet",
+      "vnpayDesc": "Pay with VNPAY gateway"
+    },
+    "recommended": "Recommended",
+    "securePayment": {
+      "title": "Secure Payment",
+      "description": "Your payment information is encrypted and secure"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "purchase": "Purchase",
+      "processing": "Processing..."
     }
   }
 
