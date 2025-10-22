@@ -27,6 +27,7 @@ export default function CreateChildDialog({ open, onClose, onSuccess, onCreateCh
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
     dob: "",
   })
   const [avatarFile, setAvatarFile] = useState<File | null>(null)
@@ -48,19 +49,25 @@ export default function CreateChildDialog({ open, onClose, onSuccess, onCreateCh
   const handleSubmit = async () => {
     // Validation
     if (!formData.name.trim()) {
-      showError("Validation Error", "Name is required")
+      showError(t("alerts.validationError"), t("alerts.nameRequired"))
       return
     }
     if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      showError("Validation Error", "Valid email is required")
+      showError(t("alerts.validationError"), t("alerts.emailRequired"))
       return
     }
     if (!formData.password || formData.password.length < 6) {
-      showError("Validation Error", "Password must be at least 6 characters")
+      showError(t("alerts.validationError"), t("alerts.passwordTooShort"))
       return
     }
+
+    if (formData.password !== formData.confirmPassword) {
+      showError(t("alerts.validationError"), t("alerts.passwordMismatch"))
+      return
+    }
+
     if (!formData.dob) {
-      showError("Validation Error", "Date of birth is required")
+      showError(t("alerts.validationError"), t("alerts.dobRequired"))
       return
     }
 
@@ -91,7 +98,7 @@ export default function CreateChildDialog({ open, onClose, onSuccess, onCreateCh
   }
 
   const handleClose = () => {
-    setFormData({ name: "", email: "", password: "", dob: "" })
+    setFormData({ name: "", email: "", password: "",confirmPassword: "", dob: "" })
     setAvatarFile(null)
     setAvatarPreview("/default-avatar.png")
     onClose()
@@ -174,6 +181,23 @@ export default function CreateChildDialog({ open, onClose, onSuccess, onCreateCh
               className="text-base"
             />
             <p className="text-xs text-gray-500">{t("createDialog.passwordHelp")}</p>
+          </div>
+
+          {/* Confirm Password */}
+          <div className="space-y-2">
+            <Label htmlFor="password" className="text-base font-bold flex items-center gap-2">
+              <Lock className="w-5 h-5 text-blue-500" />
+              {t("createDialog.confirmPasswordLabel")}
+            </Label>
+            <Input
+              id="confirmPassword"
+              type="password"
+              value={formData.confirmPassword}
+              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+              placeholder={t("createDialog.confirmPasswordPlaceholder")}
+              className="text-base"
+            />
+            <p className="text-xs text-gray-500">{t("createDialog.confirmPasswordHelp")}</p>
           </div>
 
           {/* Date of Birth */}

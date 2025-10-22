@@ -1,7 +1,6 @@
 "use client"
 
-import { Home, Gamepad2, ShoppingBag, Award, User, Crown } from "lucide-react"
-import { Progress } from "@/components/ui/progress"
+import { Home, Gamepad2, ShoppingBag } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 interface SidebarProps {

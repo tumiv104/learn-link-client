@@ -2,17 +2,16 @@
 
 import { SubmissionReviewCard } from "@/components/dashboard/parent/SubmissionReviewCard"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
 import { SubmissionDetailModal } from "@/components/dashboard/parent/SubmissionDetailModal"
 import { ReviewSubmissionDialog } from "@/components/dashboard/parent/ReviewSubmissionDialog"
 import { useEffect, useState } from "react"
 import { useAlert } from "@/hooks/useAlert"
 import { AlertPopup } from "@/components/ui/alert-popup"
-import { approveSubmission, getParentSubmissions, rejectSubmission, reviewSubmission } from "@/services/submission/submissionService"
+import { approveSubmission, getParentSubmissions, rejectSubmission } from "@/services/submission/submissionService"
 import type { SubmissionDetailDTO } from "@/data/submissionDetail"
 import type { PageResult } from "@/data/pagination"
-import { Loader2, ChevronLeft, ChevronRight } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { PaginationBar } from "@/components/dashboard/PaginationBar"
 import { usePagination } from "@/hooks/usePagination"
 
@@ -48,7 +47,6 @@ export default function SubmissionScreen({onApprove} : SubmissionProps) {
       setTotalPages(data.totalPages)
       setTotalCount(data.totalCount)
     } catch (err) {
-      console.error("Error fetching submissions:", err)
       showError("Error", "Failed to load submissions")
     } finally {
       setLoading(false)

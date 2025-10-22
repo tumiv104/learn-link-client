@@ -1,11 +1,11 @@
 import LanguageSwitcher from "@/components/LanguageSwitcher"
 import { Button } from "@/components/ui/button"
-import { Star, Flame, Bell, Settings, LogOut } from "lucide-react"
+import { Star, Flame, LogOut } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { NotificationDropdown } from "./NotificationDropdown"
 import { NotificationResponse } from "@/data/notification"
-import { logout } from "@/services/auth/authService"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/context/AuthContext"
 
 interface HeaderProps {
   activeScreen: string
@@ -31,6 +31,7 @@ export function Header({
   onMarkAllNotificationsAsRead,
 }: HeaderProps) {
   const t = useTranslations("childDashboard.header")
+  const { logout } = useAuth()
   const getScreenTitle = () => {
     return t(activeScreen as any)
   }

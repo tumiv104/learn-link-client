@@ -1,25 +1,17 @@
 'use client'
 
 import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import {
   Star,
-  Trophy,
   Target,
-  Crown,
   Flame,
-  MessageCircle,
   Calendar,
-  TrendingUp,
-  Clock,
-  Gift,
-  Zap
+  Clock
 } from "lucide-react"
 import { mockData } from "@/data/mockData"
 import { UserDto } from "@/services/auth/authService"
 import { ProgressBar } from "@/components/dashboard/ProgressBar"
 import { QuestCard } from "@/components/dashboard/child/QuestCard"
-import { MissionCard } from "@/components/dashboard/child/MissionCard"
 import { useTranslations } from "next-intl"
 import { MissionSubmission } from "@/data/mission"
 import { endOfWeek, isToday, isWithinInterval, startOfWeek} from "date-fns"

@@ -93,7 +93,7 @@ export default function ProfileScreen() {
       </div>
 
       <Card className="shadow-sm">
-        <CardHeader className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+        <CardHeader className="bg-gradient-to-r from-blue-500 to-blue-600 text-white min-h-[120px] py-4 flex items-center">
           <div className="flex items-center gap-4">
             <Avatar className="w-20 h-20 border-4 border-white">
               <AvatarImage

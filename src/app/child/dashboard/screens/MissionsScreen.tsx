@@ -20,7 +20,7 @@ export default function MissionScreen() {
   const [selectedMission, setSelectedMission] = useState<MissionSubmission>()
   const [detailModalOpen, setDetailModalOpen] = useState(false)
   const [submitModalOpen, setSubmitModalOpen] = useState(false)
-  const { alert,showError, showSuccess, showAlert, hideAlert } = useAlert()
+  const { alert,showError, showSuccess, hideAlert } = useAlert()
   const [missionList, setMissionList] = useState<MissionSubmission[]>([])
   const [confirmDialog, setConfirmDialog] = useState({
         open: false,
@@ -34,7 +34,6 @@ export default function MissionScreen() {
     const res = await getAllMissionByStatus("All");
     if (res.data) {
       setMissionList(res.data);
-      console.log(missionList);
     }
   }, []);
 

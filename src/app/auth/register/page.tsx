@@ -167,7 +167,7 @@ export default function RegisterPage() {
                 />
               </div>
 
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <Label htmlFor="avatarUrl" className="text-sm font-semibold text-foreground flex items-center gap-2">
                   <Camera className="w-4 h-4 text-secondary" />
                   Profile Picture (Optional)
@@ -180,7 +180,7 @@ export default function RegisterPage() {
                   placeholder="Enter image URL or leave blank"
                   className="h-12 border-2 border-border focus:border-secondary transition-colors bg-input"
                 />
-              </div>
+              </div> */}
 
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-sm font-semibold text-foreground flex items-center gap-2">

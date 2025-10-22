@@ -4,7 +4,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   Users,
   TrendingUp,
-  Gift,
   Target,
   BookOpen,
   FileText,
@@ -14,7 +13,6 @@ import {
 import { useCallback, useEffect, useState } from "react"
 import MissionScreen from "./screens/MissionScreen"
 import SubmissionScreen from "./screens/SubmissionScreen"
-import RewardScreen from "./screens/RewardScreen"
 import ReportScreen from "./screens/ReportScreen"
 import ProfileScreen from "./screens/ProfileScreen"
 import OverviewScreen from "./screens/OverviewScreen"
@@ -23,7 +21,7 @@ import { useMissionHub } from "@/hooks/useMissionHub"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { BuyPointsDialog } from "@/components/dashboard/parent/BuyPointsDialog"
-import { createMomoPayment, updatePaymentStatus } from "@/services/payment/paymentService"
+import { createMomoPayment, createPayOSPayment, updatePaymentStatus } from "@/services/payment/paymentService"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { getPointDetailByUserId } from "@/services/points/pointService"
 import { CustomToast } from "@/components/ui/custom-toast"
@@ -92,21 +90,39 @@ export default function ParentDashboard() {
   }, [user, fetchBalance]);
 
   useEffect(() => {
-    const orderId = searchParams.get("orderId");
-    const resultCode = searchParams.get("resultCode");
+    // const orderId = searchParams.get("orderId");
+    // const resultCode = searchParams.get("resultCode");
+    const code = searchParams.get("code");
+    const paymentStatus = searchParams.get("status");
+    const orderCode = searchParams.get("orderCode");
 
     const handlePaymentCallback = async () => {
-      if (orderId && resultCode && !callbackHandled) {
-        setCallbackHandled(true); // đánh dấu đã xử lý
-        const paymentId = Number.parseInt(orderId);
+      // if (orderId && resultCode && !callbackHandled) {
+      //   setCallbackHandled(true); 
+      //   const paymentId = Number.parseInt(orderId);
+      //   let status = "";
+
+      //   if (resultCode === "0") {
+      //     status = "success";
+      //   }
+
+      //   await updatePaymentStatus(paymentId, status);
+      //   if (resultCode === "0") await fetchBalance();
+
+      //   // clear params
+      //   router.replace(pathname);
+      //   return;
+      // }
+
+      if (code && paymentStatus && orderCode && !callbackHandled) {
+        setCallbackHandled(true);
+        const paymentId = Number.parseInt(orderCode);
         let status = "";
 
-        if (resultCode === "0") {
-          status = "success";
-        }
+        if (code === "00" && paymentStatus === "PAID") status = "success";
 
         await updatePaymentStatus(paymentId, status);
-        if (resultCode === "0") await fetchBalance();
+        if (code === "00" && paymentStatus === "PAID") await fetchBalance();
 
         // clear params
         router.replace(pathname);
@@ -180,9 +196,15 @@ export default function ParentDashboard() {
         throw new Error("Payment creation failed");
       }
       let paymentUrl : string = "";
-      if (paymentMethod == "momo") {
-        console.log(user.id, points * 1000)
-        const response = await createMomoPayment(user?.id, points * 1000);
+      // if (paymentMethod == "momo") {
+      //   const response = await createMomoPayment(user?.id, points * 1000);
+      //   if (!response.success) {
+      //     throw new Error("Create payment failed");
+      //   }
+      //   paymentUrl = response.data;
+      // }
+      if (paymentMethod == "bank") {
+        const response = await createPayOSPayment(user?.id, points * 1000);
         if (!response.success) {
           throw new Error("Create payment failed");
         }
@@ -224,11 +246,11 @@ export default function ParentDashboard() {
                       <Coins className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">Your Balance</p>
+                      <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">{t("balance.title")}</p>
                       <p className="text-xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
                         {balance}
                       </p>
-                      <p className="text-xs text-amber-600 font-medium">points available</p>
+                      <p className="text-xs text-amber-600 font-medium">{t("balance.subtitle")}</p>
                     </div>
                   </div>
                   <Button
@@ -236,7 +258,7 @@ export default function ParentDashboard() {
                     className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-600 hover:via-orange-600 hover:to-red-600 text-white font-bold px-5 py-2.5 shadow-xl hover:shadow-2xl transition-all"
                   >
                     <Plus className="w-4 h-4 mr-2" />
-                    Buy Points
+                    {t("balance.buyButton")}
                   </Button>
                   </div>
                 </CardContent>
@@ -244,7 +266,7 @@ export default function ParentDashboard() {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-6 bg-white/80 backdrop-blur-sm">
+            <TabsList className="grid w-full grid-cols-5 bg-white/80 backdrop-blur-sm">
               <TabsTrigger value="overview" className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4" />
                 {t("tabs.overview")}
@@ -257,10 +279,10 @@ export default function ParentDashboard() {
                 <FileText className="w-4 h-4" />
                 {t("tabs.submissions")}
               </TabsTrigger>
-              <TabsTrigger value="rewards" className="flex items-center gap-2">
+              {/* <TabsTrigger value="rewards" className="flex items-center gap-2">
                 <Gift className="w-4 h-4" />
                 {t("tabs.rewards")}
-              </TabsTrigger>
+              </TabsTrigger> */}
               <TabsTrigger value="reports" className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4" />
                 {t("tabs.reports")}
@@ -277,7 +299,7 @@ export default function ParentDashboard() {
 
             <TabsContent value="submissions"><SubmissionScreen onApprove={onApproveSubmission}/></TabsContent>
 
-            <TabsContent value="rewards"><RewardScreen/></TabsContent>
+            {/* <TabsContent value="rewards"><RewardScreen/></TabsContent> */}
 
             <TabsContent value="reports"><ReportScreen/></TabsContent>
 

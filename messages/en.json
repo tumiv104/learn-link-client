@@ -12,6 +12,7 @@
     "signupParent": "Sign Up as Parent",
     "login": "Log In",
     "parentPage": "Go to Parent Page",
+    "childPage": "Go to Child Page",
     "whyChoose": "Why Choose Learn Link?",
     "whyChooseDesc": "Designed for both parents and children with features that make learning fun and rewarding",
     "features": {
@@ -81,6 +82,11 @@
   "parentDashboard": {
     "welcome": "Welcome back",
     "subtitle": "Here's how your children are doing today",
+    "balance": {
+      "title": "Your Balance",
+      "subtitle": "points available",
+      "buyButton": "Buy Points"
+    },
     "tabs": {
       "overview": "Overview",
       "missions": "Missions",
@@ -136,7 +142,8 @@
         },
         "updated": {
           "title": "Mission Updated",
-          "success": "\"{title}\" has been successfully updated."
+          "success": "\"{title}\" has been successfully updated.",
+          "error": "Failed to update \"{title}\"."
         }
       },
       "deleteDialog": {
@@ -169,7 +176,36 @@
         "title": "Children Overview",
         "points": "{points} total points",
         "viewDetails": "View Details",
-      "createButton": "Create new child account"
+        "createButton": "Create new child account",
+        "createDialog": {
+          "title": "Create a Child Account",
+          "avatarHelp": "Click to upload an avatar",
+          "nameLabel": "Full Name",
+          "namePlaceholder": "Enter your child's name",
+          "emailLabel": "Email Address",
+          "emailPlaceholder": "Enter email address",
+          "passwordLabel": "Password",
+          "passwordPlaceholder": "Create a password",
+          "passwordHelp": "Password must be at least 6 characters long",
+          "confirmPasswordLabel": "Confirm Password",
+          "confirmPasswordPlaceholder": "Confirm your password",
+          "confirmPasswordHelp": "Must match the password above",
+          "dobLabel": "Date of Birth",
+          "cancel": "Cancel",
+          "create": "Create Account"
+        },
+        "alerts": {
+          "validationError": "Validation Error",
+          "successTitle": "Success",
+          "errorTitle": "Error",
+          "nameRequired": "Name is required",
+          "emailRequired": "Valid email is required",
+          "passwordTooShort": "Password must be at least 6 characters",
+          "passwordMismatch": "Passwords do not match",
+          "dobRequired": "Date of birth is required",
+          "createSuccess": "Child account created successfully!",
+          "createFail": "Failed to create child account"
+        }
       },
       "activity": {
         "title": "Recent Activity"
@@ -191,7 +227,19 @@
       "childrenCount": "Number of Children",
       "parent": "Parent",
       "notUpdated": "Not updated",
-      "notAvailable": "Not available"
+      "notAvailable": "Not available",
+      "editDialog": {
+        "title": "Edit Profile",
+        "avatarHelp": "Click to change avatar",
+        "emailLabel": "Email Address",
+        "emailHelp": "Email cannot be changed",
+        "nameLabel": "Full Name",
+        "namePlaceholder": "Enter your name",
+        "dobLabel": "Date of Birth",
+        "roleLabel": "Role",
+        "cancel": "Cancel",
+        "save": "Save Changes"
+      }
     },
     "reports": {
       "title": "Learning Reports",
@@ -545,6 +593,47 @@
       "missionReviewed": "Your mission \"{title}\" was reviewed.",
       "missionStarted": "\"{childName}\" started mission \"{title}\".",
       "missionSubmitted": "\"{childName}\" has submitted mission \"{title}\"."
+    }
+  },
+  "buyPointsDialog": {
+    "title": "Buy Points",
+    "subtitle": "Choose your points package",
+    "packages": {
+      "title": "Popular Packages",
+      "popular": "Popular",
+      "points": "points",
+      "bonus": "bonus"
+    },
+    "custom": {
+      "title": "Custom Amount",
+      "placeholder": "Min",
+      "minError": "Minimum purchase is {minPoints} points"
+    },
+    "summary": {
+      "buying": "You're buying",
+      "total": "Total cost",
+      "rate": "Rate: 1,000 VND per point"
+    },
+    "payment": {
+      "title": "Payment Method",
+      "subtitle": "Choose how you'd like to pay",
+      "instant": "Instant processing",
+      "comingSoon": "Coming soon"
+    },
+    "methods": {
+      "vietqrDesc": "Fast payment via VietQR code",
+      "momoDesc": "Pay with Momo e-wallet",
+      "vnpayDesc": "Pay with VNPAY gateway"
+    },
+    "recommended": "Recommended",
+    "securePayment": {
+      "title": "Secure Payment",
+      "description": "Your payment information is encrypted and secure"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "purchase": "Purchase",
+      "processing": "Processing..."
     }
   }
 

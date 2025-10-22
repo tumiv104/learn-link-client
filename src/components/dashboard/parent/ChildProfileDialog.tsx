@@ -27,7 +27,7 @@ export default function ChildProfileDialog({ open, onClose, child, loading }: Ch
           <div className="space-y-4">
             <div className="flex items-center gap-4">
               <img
-                src={`${process.env.NEXT_PUBLIC_API_URL}/avatars/${child.avatarUrl}`}
+                src={`${process.env.NEXT_PUBLIC_API_URL}${child.avatarUrl}`}
                 alt={child.name}
                 className="w-20 h-20 rounded-full border object-cover"
                 onError={(e) => (e.currentTarget.src = "/default-avatar.png")}

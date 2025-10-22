@@ -3,12 +3,9 @@ import useRequireAuth from "@/hooks/useRequireAuth"
 import { useCallback, useEffect, useState } from "react"
 import { Sidebar } from "@/components/dashboard/child/Sidebar"
 import { Header } from "@/components/dashboard/child/Header"
-import { useAuth } from "@/context/AuthContext"
 import HomeScreen from "./screens/HomeScreen"
 import MissionScreen from "./screens/MissionsScreen"
 import ShopScreen from "./screens/ShopScreen"
-import AchievementsScreen from "./screens/AchievementsScreen"
-import ProfileScreen from "./screens/ProfileScreen"
 import { mockData } from "@/data/mockData"
 import { useMissionHub } from "@/hooks/useMissionHub"
 import { getPointDetailByUserId } from "@/services/points/pointService"
@@ -44,7 +41,6 @@ function calculateStreak(missions: MissionSubmission[]) {
 export default function ChildDashboard() {
   const { user, loading, ready } = useRequireAuth("/auth/login", ["Child"])
   const [activeScreen, setActiveScreen] = useState("home")
-  const { logout } = useAuth()
   const [balance, setBalance] = useState<number>(0)
   const [notifications, setNotifications] = useState<NotificationResponse[]>([])
   const [missionList, setMissionList] = useState<MissionSubmission[]>([])
@@ -165,14 +161,6 @@ export default function ChildDashboard() {
     )
   
   if (!ready) return null;
-
-  const handleLogout = async () => {
-      try {
-        await logout()
-      } catch (error) {
-        console.error("Logout failed:", error)
-      }
-    }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100">

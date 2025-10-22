@@ -29,43 +29,61 @@ interface MissionDialogProps {
   onOpenChange: (open: boolean) => void
   mode: "create" | "view" | "edit"
   mission: Mission
-  children: ChildBasicInfoDTO[]
+  childrenList: ChildBasicInfoDTO[]
   onSave: (data: any) => void
   locale: string
 }
 
-export function MissionDialog({ open, onOpenChange, mode, mission, children, onSave, locale }: MissionDialogProps) {
+export function MissionDialog({ open, onOpenChange, mode, mission, childrenList, onSave, locale }: MissionDialogProps) {
   const t = useTranslations("parentDashboard.missions")
 
   const [formData, setFormData] = useState({
+    MissionId: mission?.MissionId || undefined,
     Title: mission?.Title || "",
     Description: mission?.Description || "",
-    ChildId: mission?.ChildId || (children.length > 0 ? Number(children[0].childId) : null),
+    ChildId: mission?.ChildId || (childrenList.length > 0 ? Number(childrenList[0].childId) : null),
     Deadline: mission?.Deadline || new Date().toISOString().slice(0, 16),
-    Points: mission?.Points || 10,
+    Points: mission?.Points || 0,
     Promise: mission?.Promise || "",
     Status: mission?.Status || "Assigned",
-    ChildName: mission?.ChildName || (children.length > 0 ? children[0].name : null),
+    ChildName: mission?.ChildName || (childrenList.length > 0 ? childrenList[0].name : null),
     CreatedAt: mission?.CreatedAt || new Date(),
     AttachmentUrl: mission?.AttachmentUrl || "",
   })
 
+  const isExternalUrl = (url : string) => {
+    return /^https?:\/\//i.test(url)
+  }
+
   useEffect(() => {
     if (mission) {
+      const url = mission?.AttachmentUrl
+
+      if (!url || url === "no-attachment") {
+        setAttachmentType("url")
+      } else {
+        if (isExternalUrl(url)) {
+          setAttachmentType("url")
+        } else {
+          setAttachmentType("file")
+        }
+      }
+
       setFormData({
+        MissionId: mission.MissionId || undefined,
         Title: mission.Title || "",
         Description: mission.Description || "",
-        ChildId: mission.ChildId || (children.length > 0 ? Number(children[0].childId) : null),
+        ChildId: mission.ChildId || (childrenList.length > 0 ? Number(childrenList[0].childId) : null),
         Deadline: mission.Deadline || new Date().toISOString().slice(0, 16),
-        Points: mission.Points || 10,
+        Points: mission.Points || 0,
         Promise: mission.Promise || "",
         Status: mission.Status || "Assigned",
-        ChildName: mission.ChildName || (children.length > 0 ? children[0].name : null),
+        ChildName: mission.ChildName || (childrenList.length > 0 ? childrenList[0].name : null),
         CreatedAt: mission.CreatedAt || new Date(),
         AttachmentUrl: mission.AttachmentUrl || "",
       })
     }
-  }, [mission, mode, children])
+  }, [mission, mode, childrenList])
 
   const [attachmentType, setAttachmentType] = useState<"file" | "url">("url")
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -90,14 +108,14 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
     }
 
     const fd = new FormData()
-
+    if(formData.MissionId) fd.append("MissionId", formData.MissionId.toString())
     fd.append("ChildId", formData.ChildId.toString())
     fd.append("Title", formData.Title)
     fd.append("Description", formData.Description ?? "")
     fd.append("Points", formData.Points.toString())
     if (formData.Promise) fd.append("Promise", formData.Promise)
     fd.append("Deadline", formData.Deadline)
-
+    fd.append("AttachmentUrl", formData.AttachmentUrl)
     if (selectedFile) {
       fd.append("attachmentFile", selectedFile) // match với [FromForm] trong BE
     }
@@ -233,6 +251,20 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
                     className="h-12 border-slate-300 focus:border-blue-500 focus:ring-blue-500/20"
                   />
                   <p className="text-xs text-slate-500">{t("form.urlHelp")}</p>
+
+                  {formData.AttachmentUrl && isExternalUrl(formData.AttachmentUrl) && (
+                    <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                      {getFileTypeIcon(formData.AttachmentUrl)}
+                      <a
+                        href={formData.AttachmentUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm font-medium text-blue-800 truncate max-w-[200px]"
+                      >
+                        {formData.AttachmentUrl.split("/").pop()}
+                      </a>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="grid gap-2">
@@ -245,12 +277,27 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
                     />
                   </div>
                   <p className="text-xs text-slate-500">{t("form.fileHelp")}</p>
-                  {selectedFile && (
+                  {selectedFile ? (
                     <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                      <File className="w-4 h-4 text-blue-600" />
+                      {/* <File className="w-4 h-4 text-blue-600" /> */}
+                      {getFileTypeIcon(selectedFile.name)}
                       <span className="text-sm font-medium text-blue-800">{selectedFile.name}</span>
                       <span className="text-xs text-blue-600">({(selectedFile.size / 1024).toFixed(1)} KB)</span>
                     </div>
+                  ) : (
+                    formData.AttachmentUrl && !isExternalUrl(formData.AttachmentUrl) && (
+                      <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                        {getFileTypeIcon(formData.AttachmentUrl)}
+                        <a
+                          href={`${process.env.NEXT_PUBLIC_API_URL}${formData.AttachmentUrl}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm font-medium text-blue-800 truncate max-w-[200px]"
+                        >
+                          {formData.AttachmentUrl.split("/").pop()}
+                        </a>
+                      </div>
+                    )
                   )}
                 </div>
               )}
@@ -270,10 +317,19 @@ export function MissionDialog({ open, onOpenChange, mode, mission, children, onS
                     <SelectValue placeholder={t("form.selectChild")} />
                   </SelectTrigger>
                   <SelectContent>
-                    {children.map((child) => (
+                    {childrenList.map((child) => (
                       <SelectItem key={child.childId} value={child.childId != null ? child.childId.toString() : ""}>
                         <div className="flex items-center gap-3">
-                          {child.avatarUrl && <span className="text-lg">{child.avatarUrl}</span>}
+                          {child.avatarUrl && 
+                            <img
+                            src={`${process.env.NEXT_PUBLIC_API_URL}${child.avatarUrl}`}
+                            alt={child.name}
+                            className="w-12 h-12 rounded-full object-cover border"
+                            onError={(e) => {
+                              e.currentTarget.src = "/default-avatar.png"
+                            }}
+                          />
+                          }
                           <span className="font-medium">{child.name}</span>
                         </div>
                       </SelectItem>

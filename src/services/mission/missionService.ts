@@ -11,6 +11,15 @@ export async function assignMission(fd: FormData) {
   return res.data;
 }
 
+export async function editMission(id: string, fd: FormData) {
+  const res = await api.put(`/mission/edit/${id}`, fd, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    }
+  })
+  return res.data;
+}
+
 export async function getParentMissions(
   page = 1,
   pageSize = 5

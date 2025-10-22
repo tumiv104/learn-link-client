@@ -3,7 +3,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Calendar, Star, FileText, CheckCircle, Download, Gift, AlertTriangle, Trophy, User } from "lucide-react"
+import { Calendar, Star, FileText, CheckCircle, Download, Trophy, User } from "lucide-react"
 import { Submission } from "@/data/submission"
 import { useLocale, useTranslations } from "next-intl"
 import { formatDateTime } from "@/utils/formatDateTime"

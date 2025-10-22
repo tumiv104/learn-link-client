@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl"
 export default function HomePage() {
   const t = useTranslations("home");
   const router = useRouter()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-pink-50">
@@ -56,9 +56,19 @@ export default function HomePage() {
                   <Button
                     size="lg"
                     className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-lg px-8 py-6"
-                    onClick={() => router.push("/parent/dashboard")}
+                    onClick={() => {
+                      user?.role == "Parent" ? (
+                        router.push("/parent/dashboard")
+                      ) : user?.role == "Child" && (
+                        router.push("/child/dashboard")
+                      )
+                    }}
                   >
-                    {t("parentPage")}
+                    {user?.role == "Parent" ? 
+                        t("parentPage")
+                       : user?.role == "Child" && 
+                        t("childPage")
+                      }
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </div>
@@ -287,7 +297,7 @@ export default function HomePage() {
             </CardHeader>
             <CardContent className="p-0">
               <img
-                src="/parent-dashboard-interface-with-task-management-an.png"
+                src="/learnlink_parent_dashboard_1.png"
                 alt="Parent dashboard view"
                 className="w-full h-64 object-cover"
               />
@@ -304,7 +314,7 @@ export default function HomePage() {
             </CardHeader>
             <CardContent className="p-0">
               <img
-                src="/colorful-child-interface-with-games--rewards-and-a.png"
+                src="/learnlink_child_dashboard_1.png"
                 alt="Child interface view"
                 className="w-full h-64 object-cover"
               />

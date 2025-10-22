@@ -12,6 +12,7 @@
     "signupParent": "Đăng ký cho phụ huynh",
     "login": "Đăng nhập",
     "parentPage": "Đi tới trang dành cho phụ huynh",
+    "childPage": "Đi tới trang dành cho bé",
     "whyChoose": "Tại sao chọn Learn Link?",
     "whyChooseDesc": "Thiết kế cho cả phụ huynh và trẻ em với những tính năng giúp việc học trở nên thú vị và bổ ích",
     "features": {
@@ -81,6 +82,11 @@
   "parentDashboard": {
     "welcome": "Chào mừng trở lại",
     "subtitle": "Tình hình học tập của con bạn hôm nay",
+    "balance": {
+      "title": "Số dư hiện có",
+      "subtitle": "điểm khả dụng",
+      "buyButton": "Mua điểm"
+    },
     "tabs": {
       "overview": "Tổng quan",
       "missions": "Nhiệm vụ",
@@ -136,7 +142,8 @@
         },
         "updated": {
           "title": "Cập nhật nhiệm vụ",
-          "success": "Nhiệm vụ \"{title}\" đã được cập nhật thành công."
+          "success": "Nhiệm vụ \"{title}\" đã được cập nhật thành công.",
+          "error": "Cập nhật nhiệm vụ \"{title}\" thất bại."
         }
       },
       "deleteDialog": {
@@ -180,9 +187,24 @@
           "passwordLabel": "Mật khẩu",
           "passwordPlaceholder": "Tạo mật khẩu",
           "passwordHelp": "Mật khẩu phải có ít nhất 6 ký tự",
+          "confirmPasswordLabel": "Xác nhận mật khẩu",
+          "confirmPasswordPlaceholder": "Nhập lại mật khẩu",
+          "confirmPasswordHelp": "Phải trùng khớp với mật khẩu ở trên",
           "dobLabel": "Ngày sinh",
           "cancel": "Hủy",
           "create": "Tạo tài khoản"
+        },
+        "alerts": {
+          "validationError": "Lỗi xác thực",
+          "successTitle": "Thành công",
+          "errorTitle": "Lỗi",
+          "nameRequired": "Vui lòng nhập tên",
+          "emailRequired": "Vui lòng nhập email hợp lệ",
+          "passwordTooShort": "Mật khẩu phải có ít nhất 6 ký tự",
+          "passwordMismatch": "Mật khẩu xác nhận không khớp",
+          "dobRequired": "Vui lòng nhập ngày sinh",
+          "createSuccess": "Tạo tài khoản con thành công!",
+          "createFail": "Tạo tài khoản con thất bại"
         }
       },
       "activity": {
@@ -195,6 +217,7 @@
       "comingTitle": "Báo cáo sắp ra mắt",
       "comingDesc": "Phân tích chi tiết và báo cáo tiến độ sẽ có tại đây",
       "selectChild": "Chọn một bé",
+      "selectChildPlaceholder": "Chọn một bé",
       "allChildren": "Tất cả con",
       "period": "Khoảng thời gian",
       "periodLabels": {
@@ -503,11 +526,12 @@
       "orders": {
         "emptyTitle": "Chưa có đơn hàng nào!",
         "emptyDescription": "Hãy bắt đầu mua sắm để thấy đơn hàng của bạn tại đây!",
-        "goShopping": "Đi Mua Sắm! 🛍️"
+        "emptyButton": "Đi Mua Sắm! 🛍️"
       },
       "dialog": {
         "buyTitle": "Mua sản phẩm này?",
         "buyDescription": "Bạn có muốn dùng {points} điểm để nhận {name}?",
+        "success": "Tuyệt vời! Bạn đã nhận được {name}! 🎉",
         "startError": "Có lỗi xảy ra, vui lòng thử lại!"
       },
       "alerts": {
@@ -570,6 +594,47 @@
       "missionReviewed": "Nhiệm vụ \"{title}\" của bạn đã được xem xét.",
       "missionStarted": "\"{childName}\" đã bắt đầu nhiệm vụ \"{title}\".",
       "missionSubmitted": "\"{childName}\" đã nộp nhiệm vụ \"{title}\"."
+    }
+  },
+  "buyPointsDialog": {
+    "title": "Mua điểm",
+    "subtitle": "Chọn gói điểm bạn muốn mua",
+    "packages": {
+      "title": "Gói phổ biến",
+      "popular": "Phổ biến",
+      "points": "điểm",
+      "bonus": "thưởng"
+    },
+    "custom": {
+      "title": "Số lượng tùy chỉnh",
+      "placeholder": "Tối thiểu",
+      "minError": "Số điểm mua tối thiểu là {minPoints}"
+    },
+    "summary": {
+      "buying": "Bạn đang mua",
+      "total": "Tổng thanh toán",
+      "rate": "Tỷ lệ: 1.000 VND mỗi điểm"
+    },
+    "payment": {
+      "title": "Phương thức thanh toán",
+      "subtitle": "Chọn cách bạn muốn thanh toán",
+      "instant": "Xử lý ngay lập tức",
+      "comingSoon": "Sắp ra mắt"
+    },
+    "methods": {
+      "vietqrDesc": "Thanh toán nhanh qua mã VietQR",
+      "momoDesc": "Thanh toán bằng ví điện tử Momo",
+      "vnpayDesc": "Thanh toán qua cổng VNPAY"
+    },
+    "recommended": "Đề xuất",
+    "securePayment": {
+      "title": "Thanh toán an toàn",
+      "description": "Thông tin thanh toán của bạn được mã hóa và bảo mật"
+    },
+    "actions": {
+      "cancel": "Hủy",
+      "purchase": "Thanh toán",
+      "processing": "Đang xử lý..."
     }
   }
 

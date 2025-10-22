@@ -19,14 +19,14 @@ export default function LanguageSwitcher() {
         } else {
             const browserLocale = navigator.language.slice(0, 2);
             setLocale(browserLocale);
-            document.cookie = `MYNEXTAPP_LOCALE=${browserLocale};`;
+            document.cookie = `MYNEXTAPP_LOCALE=${browserLocale}; path=/; max-age=31536000; SameSite=Lax`;
             router.refresh();
         }
         
   }, [router]);
 
   const switchLang = (lang: string) => {
-    document.cookie = `MYNEXTAPP_LOCALE=${lang};`;
+    document.cookie = `MYNEXTAPP_LOCALE=${lang}; path=/; max-age=31536000; SameSite=Lax`;
     setLocale(lang);
     router.refresh(); 
   };
