@@ -14,12 +14,12 @@ export async function createPayOSPayment(parentId: number, amount: number) {
 
 export async function createPremiumPayment(parentId: number) {
   const payload = { parentId, amount: 99000 }
-  const res = await api.post("/payment/premium-upgrade", payload)
+  const res = await api.post("/payment/payos-premium-create", payload)
   return res.data
 }
 
-export async function updatePaymentStatus(paymentId: number, status: string) {
-    const payload = { paymentId, status};
+export async function updatePaymentStatus(orderCode: string, status: string) {
+    const payload = { orderCode, status};
     const res = await api.post("/payment/update-status", payload);
     return res.data;
 }

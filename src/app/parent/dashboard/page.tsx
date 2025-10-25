@@ -109,12 +109,11 @@ export default function ParentDashboard() {
     const handlePaymentCallback = async () => {
       if (code && paymentStatus && orderCode && !callbackHandled) {
         setCallbackHandled(true)
-        const paymentId = Number.parseInt(orderCode)
         let status = ""
 
         if (code === "00" && paymentStatus === "PAID") status = "success"
 
-        await updatePaymentStatus(paymentId, status)
+        await updatePaymentStatus(orderCode, status)
         if (code === "00" && paymentStatus === "PAID") {
           await fetchBalance()
           await fetchPremiumStatus()

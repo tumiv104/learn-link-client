@@ -389,10 +389,11 @@
       }
     },
     "premiumLimit": {
-  "upgrade": "Nâng cấp lên Premium để mở khóa tính năng này",
-  "title": "Giới hạn tài khoản miễn phí",
-  "description": "Bạn đã đạt đến giới hạn nhiệm vụ hàng ngày. Hãy nâng cấp lên Premium để tiếp tục giao thêm nhiệm vụ."
-}
+      "upgrade": "Nâng cấp lên Premium để mở khóa tính năng này",
+      "title": "Giới hạn tài khoản miễn phí",
+      "description": "Bạn đã đạt đến giới hạn nhiệm vụ hàng ngày. Hãy nâng cấp lên Premium để tiếp tục giao thêm nhiệm vụ.",
+      "cancel": "Hủy"
+    }
 
   },
   "childDashboard": {

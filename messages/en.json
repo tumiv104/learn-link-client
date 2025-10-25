@@ -389,6 +389,12 @@
           }
         }
       }
+    },
+    "premiumLimit": {
+      "upgrade": "Upgrade to Premium to unlock this feature",
+      "title": "Free Account Limit",
+      "description": "You've reached your daily mission limit. Upgrade to Premium to assign more missions.",
+      "cancel": "Cancel"
     }
   },
   "childDashboard": {
