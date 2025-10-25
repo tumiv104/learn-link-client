@@ -2,6 +2,13 @@ import api from "@/lib/api";
 import { ChildBasicInfoDTO } from "@/data/ChildBasicInfoDTO";
 import { UserProfileDTO } from "@/data/UserProfileDTO";
 
+
+export async function getParentProfile() {
+  const res = await api.get("/User/profile")
+  return res.data.data as { isPremium: boolean; premiumExpiry?: string }
+}
+
+
 export async function getChildren(){
   const res = await api.get("/Parent/children");
   return res.data.data as ChildBasicInfoDTO[];

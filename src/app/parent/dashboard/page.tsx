@@ -1,15 +1,7 @@
 "use client"
 import useRequireAuth from "@/hooks/useRequireAuth"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {
-  Users,
-  TrendingUp,
-  Target,
-  BookOpen,
-  FileText,
-  Coins,
-  Plus,
-} from "lucide-react"
+import { Users, TrendingUp, Target, BookOpen, FileText, Coins, Plus, Crown } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
 import MissionScreen from "./screens/MissionScreen"
 import SubmissionScreen from "./screens/SubmissionScreen"
@@ -21,128 +13,131 @@ import { useMissionHub } from "@/hooks/useMissionHub"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { BuyPointsDialog } from "@/components/dashboard/parent/BuyPointsDialog"
-import { createMomoPayment, createPayOSPayment, updatePaymentStatus } from "@/services/payment/paymentService"
+import { PremiumUpgradeDialog } from "@/components/dashboard/parent/PremiumUpgradeDialog"
+import { createPayOSPayment, updatePaymentStatus, createPremiumPayment } from "@/services/payment/paymentService"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { getPointDetailByUserId } from "@/services/points/pointService"
 import { CustomToast } from "@/components/ui/custom-toast"
 import { toast } from "sonner"
 import Header from "@/components/dashboard/parent/Header"
-import { NotificationResponse } from "@/data/notification"
+import type { NotificationResponse } from "@/data/notification"
 import { getNotificationByUserId, markAllAsRead, markAsRead } from "@/services/notification/notificationService"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
+import { getParentProfile } from "@/services/parent/parentService"
 
 export default function ParentDashboard() {
   const t = useTranslations("parentDashboard")
   const { user, loading, ready } = useRequireAuth("/auth/login", ["Parent"])
   const [activeTab, setActiveTab] = useState("overview")
   const [buyPointsDialog, setBuyPointsDialog] = useState(false)
+  const [premiumUpgradeDialog, setPremiumUpgradeDialog] = useState(false)
+  const [premiumLimitPopup, setPremiumLimitPopup] = useState(false)
+  const [premiumLimitMessage, setPremiumLimitMessage] = useState("")
   const [balance, setBalance] = useState<number>(0)
-  const [callbackHandled, setCallbackHandled] = useState(false);
+  const [callbackHandled, setCallbackHandled] = useState(false)
   const [notifications, setNotifications] = useState<NotificationResponse[]>([])
+  const [isPremium, setIsPremium] = useState(false)
+  const [premiumExpiry, setPremiumExpiry] = useState<string | undefined>()
 
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   const handleMarkNotificationAsRead = useCallback(async (id: number) => {
-      const res = await markAsRead(id);
+    const res = await markAsRead(id)
+    if (res.success) {
+      setNotifications((prev) => prev.map((n) => (n.notificationId === id ? { ...n, isRead: true } : n)))
+    }
+  }, [])
+
+  const handleMarkAllNotificationsAsRead = useCallback(async () => {
+    if (user) {
+      const res = await markAllAsRead(user?.id)
       if (res.success) {
-        setNotifications((prev) => prev.map((n) => (n.notificationId === id ? { ...n, isRead: true } : n)))
-      }
-    }, [])
-  
-    const handleMarkAllNotificationsAsRead = useCallback(async () => {
-      if (user) {
-        const res = await markAllAsRead(user?.id);
-        if (res.success) {
-          setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })))
-        }
-      }
-      
-    }, [user])
-  
-    const addNotification = (notification: NotificationResponse) => {
-      setNotifications(prev => [notification, ...prev])
-    }
-  
-    const fetchNoti = async () => {
-      if (user) {
-        const res = await getNotificationByUserId(user.id);
-        const notifications: NotificationResponse[] = res.data.map((n: any) => ({
-          ...n,
-          payload: JSON.parse(n.payload),
-        }))
-        setNotifications(notifications);
+        setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })))
       }
     }
+  }, [user])
+
+  const addNotification = (notification: NotificationResponse) => {
+    setNotifications((prev) => [notification, ...prev])
+  }
+
+  const fetchNoti = async () => {
+    if (user) {
+      const res = await getNotificationByUserId(user.id)
+      const notifications: NotificationResponse[] = res.data.map((n: any) => ({
+        ...n,
+        payload: JSON.parse(n.payload),
+      }))
+      setNotifications(notifications)
+    }
+  }
 
   const fetchBalance = useCallback(async () => {
     if (user) {
-      const res = await getPointDetailByUserId(user.id);
+      const res = await getPointDetailByUserId(user.id)
       if (res.data) {
-        setBalance(res.data.balance);
+        setBalance(res.data.balance)
       }
     }
-  }, [user]);
+  }, [user])
+
+ const fetchPremiumStatus = useCallback(async () => {
+  try {
+    const profile = await getParentProfile();
+    console.log("PROFILE DATA:", profile);
+    setIsPremium(profile.isPremium ?? false);
+  } catch (error) {
+    console.error("Failed to fetch premium status:", error);
+  }
+}, []);
+
+
 
   useEffect(() => {
-      fetchBalance();
-      fetchNoti();
-  }, [user, fetchBalance]);
+    fetchBalance()
+    fetchNoti()
+    fetchPremiumStatus()
+  }, [user, fetchBalance, fetchPremiumStatus])
 
   useEffect(() => {
-    // const orderId = searchParams.get("orderId");
-    // const resultCode = searchParams.get("resultCode");
-    const code = searchParams.get("code");
-    const paymentStatus = searchParams.get("status");
-    const orderCode = searchParams.get("orderCode");
+    const code = searchParams.get("code")
+    const paymentStatus = searchParams.get("status")
+    const orderCode = searchParams.get("orderCode")
 
     const handlePaymentCallback = async () => {
-      // if (orderId && resultCode && !callbackHandled) {
-      //   setCallbackHandled(true); 
-      //   const paymentId = Number.parseInt(orderId);
-      //   let status = "";
-
-      //   if (resultCode === "0") {
-      //     status = "success";
-      //   }
-
-      //   await updatePaymentStatus(paymentId, status);
-      //   if (resultCode === "0") await fetchBalance();
-
-      //   // clear params
-      //   router.replace(pathname);
-      //   return;
-      // }
-
       if (code && paymentStatus && orderCode && !callbackHandled) {
-        setCallbackHandled(true);
-        const paymentId = Number.parseInt(orderCode);
-        let status = "";
+        setCallbackHandled(true)
+        const paymentId = Number.parseInt(orderCode)
+        let status = ""
 
-        if (code === "00" && paymentStatus === "PAID") status = "success";
+        if (code === "00" && paymentStatus === "PAID") status = "success"
 
-        await updatePaymentStatus(paymentId, status);
-        if (code === "00" && paymentStatus === "PAID") await fetchBalance();
+        await updatePaymentStatus(paymentId, status)
+        if (code === "00" && paymentStatus === "PAID") {
+          await fetchBalance()
+          await fetchPremiumStatus()
+        }
 
-        // clear params
-        router.replace(pathname);
+        router.replace(pathname)
       }
-    };
+    }
 
-    handlePaymentCallback();
-  }, [searchParams, callbackHandled, router, pathname, fetchBalance]);
+    handlePaymentCallback()
+  }, [searchParams, callbackHandled, router, pathname, fetchBalance, fetchPremiumStatus])
 
   useMissionHub(user?.id, {
     onMissionStarted: (data) => {
       toast.custom(() => (
-        <CustomToast 
+        <CustomToast
           type="started"
           title="Mission Started!"
           description={`${data.childName} started mission ${data.title}!`}
         />
       ))
       addNotification({
-        notificationId: Date.now(), 
+        notificationId: Date.now(),
         userId: data.parentId,
         type: "MissionStarted",
         payload: {
@@ -152,18 +147,17 @@ export default function ParentDashboard() {
         isRead: false,
         createdAt: new Date().toISOString(),
       })
-      // TODO: show notification
     },
     onMissionSubmitted: (data) => {
       toast.custom(() => (
-        <CustomToast 
+        <CustomToast
           type="submitted"
           title="Mission Submitted!"
           description={`${data.childName} has submitted for mission ${data.title}!`}
         />
       ))
       addNotification({
-        notificationId: Date.now(), 
+        notificationId: Date.now(),
         userId: data.parentId,
         type: "MissionSubmitted",
         payload: {
@@ -173,74 +167,122 @@ export default function ParentDashboard() {
         isRead: false,
         createdAt: new Date().toISOString(),
       })
-      // TODO: update mission list
     },
-  });
+  })
 
   const onApproveSubmission = useCallback(async () => {
-    fetchBalance();
+    fetchBalance()
   }, [user])
 
   if (loading)
-  return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-500"></div>
-    </div>
-  )
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-red-500"></div>
+      </div>
+    )
 
-  if (!ready) return null;
+  if (!ready) return null
 
   const handleBuyPoints = async (points: number, paymentMethod: string) => {
     try {
       if (user == null) {
-        throw new Error("Payment creation failed");
+        throw new Error("Payment creation failed")
       }
-      let paymentUrl : string = "";
-      // if (paymentMethod == "momo") {
-      //   const response = await createMomoPayment(user?.id, points * 1000);
-      //   if (!response.success) {
-      //     throw new Error("Create payment failed");
-      //   }
-      //   paymentUrl = response.data;
-      // }
+      let paymentUrl = ""
       if (paymentMethod == "bank") {
-        const response = await createPayOSPayment(user?.id, points * 1000);
+        const response = await createPayOSPayment(user?.id, points * 1000)
         if (!response.success) {
-          throw new Error("Create payment failed");
+          throw new Error("Create payment failed")
         }
-        paymentUrl = response.data;
-      }
-      else {
-        throw new Error("This payment method is temporarily not supported.");
+        paymentUrl = response.data
+      } else {
+        throw new Error("This payment method is temporarily not supported.")
       }
       if (paymentUrl != "") {
-        // Redirect to external payment page
         window.location.href = paymentUrl
       } else {
         throw new Error("No payment URL received")
       }
     } catch (error) {
       console.error("Buy points failed:", error)
-      //showError("Payment Failed", "Unable to process payment. Please try again.")
+    }
+  }
+
+  const handleUpgradePremium = async () => {
+    try {
+      if (user == null) {
+        throw new Error("Payment creation failed")
+      }
+      const response = await createPremiumPayment(user?.id)
+      if (!response.success) {
+        throw new Error("Create payment failed")
+      }
+      const paymentUrl = response.data
+      if (paymentUrl) {
+        window.location.href = paymentUrl
+      } else {
+        throw new Error("No payment URL received")
+      }
+    } catch (error) {
+      console.error("Premium upgrade failed:", error)
     }
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-amber-50">
-      <Header notifications={notifications}
+      <Header
+        notifications={notifications}
         onMarkNotificationAsRead={handleMarkNotificationAsRead}
-        onMarkAllNotificationsAsRead={handleMarkAllNotificationsAsRead}/>
+        onMarkAllNotificationsAsRead={handleMarkAllNotificationsAsRead}
+      />
       <BuyPointsDialog open={buyPointsDialog} onOpenChange={setBuyPointsDialog} onPurchase={handleBuyPoints} />
+      <PremiumUpgradeDialog
+        open={premiumUpgradeDialog}
+        onOpenChange={setPremiumUpgradeDialog}
+        onUpgrade={handleUpgradePremium}
+        isPremium={isPremium}
+        premiumExpiry={premiumExpiry}
+      />
+      <Dialog open={premiumLimitPopup} onOpenChange={setPremiumLimitPopup}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-xl">
+              <Crown className="w-6 h-6 text-purple-600" />
+              {t("premiumLimit.title")}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-gray-700 mb-4">{premiumLimitMessage}</p>
+            <p className="text-sm text-gray-600 mb-6">{t("premiumLimit.description")}</p>
+          </div>
+          <DialogFooter className="gap-2">
+            <Button variant="outline" onClick={() => setPremiumLimitPopup(false)}>
+              {t("premiumLimit.cancel")}
+            </Button>
+            <Button
+              onClick={() => {
+                setPremiumLimitPopup(false)
+                setPremiumUpgradeDialog(true)
+              }}
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+            >
+              {t("premiumLimit.upgrade")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       <div className="p-4 pt-20">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8 flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-gray-800 mb-2">{t("welcome")}, {user?.name}! 👋</h1>
+              <h1 className="text-4xl font-bold text-gray-800 mb-2">
+                {t("welcome")}, {user?.name}! 👋
+              </h1>
               <p className="text-gray-600 text-lg">{t("subtitle")}</p>
             </div>
-              <Card className="bg-gradient-to-r from-amber-50 via-orange-50 to-red-50 border-2 border-amber-200 shadow-lg hover:shadow-xl transition-shadow">
-                <CardContent className="px-4 py-0">
-                  <div className="flex items-center gap-4">
+            <Card className="bg-gradient-to-r from-amber-50 via-orange-50 to-red-50 border-2 border-amber-200 shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="px-4 py-0">
+                <div className="flex items-center gap-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-lg">
                       <Coins className="w-5 h-5 text-white" />
@@ -253,16 +295,29 @@ export default function ParentDashboard() {
                       <p className="text-xs text-amber-600 font-medium">{t("balance.subtitle")}</p>
                     </div>
                   </div>
-                  <Button
-                    onClick={() => setBuyPointsDialog(true)}
-                    className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-600 hover:via-orange-600 hover:to-red-600 text-white font-bold px-5 py-2.5 shadow-xl hover:shadow-2xl transition-all"
-                  >
-                    <Plus className="w-4 h-4 mr-2" />
-                    {t("balance.buyButton")}
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={() => setBuyPointsDialog(true)}
+                      className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-600 hover:via-orange-600 hover:to-red-600 text-white font-bold px-5 py-2.5 shadow-xl hover:shadow-2xl transition-all"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      {t("balance.buyButton")}
+                    </Button>
+                    <Button
+                      onClick={() => setPremiumUpgradeDialog(true)}
+                      className={`font-bold px-5 py-2.5 shadow-xl hover:shadow-2xl transition-all ${
+                        isPremium
+                          ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+                          : "bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 hover:from-purple-700 hover:via-pink-700 hover:to-red-700"
+                      } text-white`}
+                    >
+                      <Crown className="w-4 h-4 mr-2" />
+                      {isPremium ? t("balance.premiumStatus") : t("balance.premiumButton")}
+                    </Button>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
@@ -279,10 +334,6 @@ export default function ParentDashboard() {
                 <FileText className="w-4 h-4" />
                 {t("tabs.submissions")}
               </TabsTrigger>
-              {/* <TabsTrigger value="rewards" className="flex items-center gap-2">
-                <Gift className="w-4 h-4" />
-                {t("tabs.rewards")}
-              </TabsTrigger> */}
               <TabsTrigger value="reports" className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4" />
                 {t("tabs.reports")}
@@ -293,17 +344,35 @@ export default function ParentDashboard() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="overview"><OverviewScreen/></TabsContent>
+            <TabsContent value="overview">
+              <OverviewScreen
+                onPremiumLimitReached={(msg) => {
+                  setPremiumLimitMessage(msg)
+                  setPremiumLimitPopup(true)
+                }}
+              />
+            </TabsContent>
 
-            <TabsContent value="missions"><MissionScreen/></TabsContent>
+            <TabsContent value="missions">
+              <MissionScreen
+                onPremiumLimitReached={(msg) => {
+                  setPremiumLimitMessage(msg)
+                  setPremiumLimitPopup(true)
+                }}
+              />
+            </TabsContent>
 
-            <TabsContent value="submissions"><SubmissionScreen onApprove={onApproveSubmission}/></TabsContent>
+            <TabsContent value="submissions">
+              <SubmissionScreen onApprove={onApproveSubmission} />
+            </TabsContent>
 
-            {/* <TabsContent value="rewards"><RewardScreen/></TabsContent> */}
+            <TabsContent value="reports">
+              <ReportScreen />
+            </TabsContent>
 
-            <TabsContent value="reports"><ReportScreen/></TabsContent>
-
-            <TabsContent value="profile"><ProfileScreen/></TabsContent>
+            <TabsContent value="profile">
+              <ProfileScreen />
+            </TabsContent>
           </Tabs>
         </div>
       </div>
