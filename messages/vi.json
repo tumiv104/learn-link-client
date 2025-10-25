@@ -153,7 +153,8 @@
         "description": "Bạn có chắc chắn muốn xóa nhiệm vụ này? Hành động này không thể hoàn tác.",
         "cancel": "Hủy",
         "delete": "Xóa"
-      }
+      },
+      "limitReached": "Giới hạn tài khoản miễn phí"
     },
     "overview": {
       "stats": {
@@ -207,7 +208,8 @@
           "dobRequired": "Vui lòng nhập ngày sinh",
           "createSuccess": "Tạo tài khoản con thành công!",
           "createFail": "Tạo tài khoản con thất bại"
-        }
+        },
+        "limitReached": "Giới hạn tài khoản miễn phí"
       },
       "activity": {
         "title": "Hoạt động gần đây"
@@ -388,12 +390,14 @@
         "save": "Lưu thay đổi"
       }
     },
-    "premiumLimit": {
-      "upgrade": "Nâng cấp lên Premium để mở khóa tính năng này",
-      "title": "Giới hạn tài khoản miễn phí",
-      "description": "Bạn đã đạt đến giới hạn nhiệm vụ hàng ngày. Hãy nâng cấp lên Premium để tiếp tục giao thêm nhiệm vụ.",
-      "cancel": "Hủy"
-    }
+   "premiumLimit": {
+  "upgrade": "Nâng cấp lên Premium để mở khóa tính năng này",
+  "title": "Giới hạn tài khoản miễn phí",
+  "childDescription": "Bạn đã đạt đến giới hạn số lượng con. Hãy nâng cấp lên Premium để thêm con mới.",
+  "missionDescription": "Bạn đã đạt đến giới hạn nhiệm vụ hàng ngày. Hãy nâng cấp lên Premium để tiếp tục giao thêm nhiệm vụ.",
+  "cancel": "Hủy"
+}
+
 
   },
   "childDashboard": {

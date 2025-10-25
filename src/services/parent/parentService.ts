@@ -20,8 +20,13 @@ export async function createChild(formData: FormData) {
       "Content-Type": "multipart/form-data",
     },
   })
+  if (!res.data.success) {
+    throw new Error(res.data.message || "Failed to create child account")
+  }
+
   return res.data
 }
+
 
 export async function getChildProfile(childId: number): Promise<UserProfileDTO> {
   const res = await api.get(`/Parent/children/${childId}`)

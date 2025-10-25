@@ -38,6 +38,7 @@ export default function ParentDashboard() {
   const [notifications, setNotifications] = useState<NotificationResponse[]>([])
   const [isPremium, setIsPremium] = useState(false)
   const [premiumExpiry, setPremiumExpiry] = useState<string | undefined>()
+  const [premiumLimitType, setPremiumLimitType] = useState<"child" | "mission">("mission")
 
   const router = useRouter()
   const pathname = usePathname()
@@ -252,7 +253,12 @@ export default function ParentDashboard() {
           </DialogHeader>
           <div className="py-4">
             <p className="text-gray-700 mb-4">{premiumLimitMessage}</p>
-            <p className="text-sm text-gray-600 mb-6">{t("premiumLimit.description")}</p>
+            <p className="text-sm text-gray-600 mb-6">
+          {premiumLimitType === "child"
+            ? t("premiumLimit.childDescription")
+            : t("premiumLimit.missionDescription")}
+        </p>
+
           </div>
           <DialogFooter className="gap-2">
             <Button variant="outline" onClick={() => setPremiumLimitPopup(false)}>
@@ -345,8 +351,9 @@ export default function ParentDashboard() {
 
             <TabsContent value="overview">
               <OverviewScreen
-                onPremiumLimitReached={(msg) => {
+                onPremiumLimitReached={(msg, type) => {
                   setPremiumLimitMessage(msg)
+                  setPremiumLimitType(type)   
                   setPremiumLimitPopup(true)
                 }}
               />
@@ -354,12 +361,14 @@ export default function ParentDashboard() {
 
             <TabsContent value="missions">
               <MissionScreen
-                onPremiumLimitReached={(msg) => {
+                onPremiumLimitReached={(msg, type) => {
                   setPremiumLimitMessage(msg)
+                  setPremiumLimitType(type)
                   setPremiumLimitPopup(true)
                 }}
               />
             </TabsContent>
+
 
             <TabsContent value="submissions">
               <SubmissionScreen onApprove={onApproveSubmission} />

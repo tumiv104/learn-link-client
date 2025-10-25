@@ -15,8 +15,9 @@ import { createChild, getChildProfile } from "@/services/parent/parentService"
 import type { UserProfileDTO } from "@/data/UserProfileDTO"
 
 interface OverviewScreenProps {
-  onPremiumLimitReached?: (message: string) => void
+  onPremiumLimitReached?: (message: string, type: "child" | "mission") => void
 }
+
 
 export default function OverviewScreen({ onPremiumLimitReached }: OverviewScreenProps) {
   const t = useTranslations("parentDashboard.overview")
@@ -53,7 +54,7 @@ export default function OverviewScreen({ onPremiumLimitReached }: OverviewScreen
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || error.message || ""
       if (errorMessage.includes("limit") || errorMessage.includes("premium")) {
-        onPremiumLimitReached?.(t("children.limitReached"))
+        onPremiumLimitReached?.(t("children.limitReached"), "child")
       } else {
         throw error
       }

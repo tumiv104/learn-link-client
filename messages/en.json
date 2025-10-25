@@ -86,7 +86,8 @@
       "title": "Your Balance",
       "subtitle": "points available",
       "buyButton": "Buy Points",
-       "premiumButton": "Upgrade to Premium"
+         "premiumButton": "Upgrade to Premium",
+      "premiumStatus": "Premium Member"
     },
     "tabs": {
       "overview": "Overview",
@@ -152,7 +153,8 @@
         "description": "Are you sure you want to delete this mission? This action cannot be undone.",
         "cancel": "Cancel",
         "delete": "Delete"
-      }
+      },
+      "limitReached": "Free Account Limit Reached"
     },
     "overview": {
       "stats": {
@@ -206,7 +208,8 @@
           "dobRequired": "Date of birth is required",
           "createSuccess": "Child account created successfully!",
           "createFail": "Failed to create child account"
-        }
+        },
+        "limitReached": "Free Account Limit Reached"
       },
       "activity": {
         "title": "Recent Activity"
@@ -391,11 +394,12 @@
       }
     },
     "premiumLimit": {
-      "upgrade": "Upgrade to Premium to unlock this feature",
-      "title": "Free Account Limit",
-      "description": "You've reached your daily mission limit. Upgrade to Premium to assign more missions.",
-      "cancel": "Cancel"
-    }
+  "upgrade": "Upgrade to Premium to unlock this feature",
+  "title": "Free Account Limit",
+  "childDescription": "You have reached the child limit. Upgrade to Premium to add more children.",
+  "missionDescription": "You have reached the daily mission limit. Upgrade to Premium to continue assigning more.",
+  "cancel" :"Cancel"
+}
   },
   "childDashboard": {
     "nav": {
@@ -657,9 +661,18 @@
     },
     "infoTitle": "Why Go Premium?",
     "infoDescription": "Premium members enjoy unlimited access to all features without daily restrictions. Perfect for families with multiple children or intensive learning programs.",
+    "premiumStatus": {
+      "title": "Premium Account",
+      "subtitle": "You have an active premium subscription",
+      "active": "Premium Active",
+      "expiry": "Expires on",
+      "noExpiry": "Unlimited access",
+      "close": "Close"
+    },
     "actions": {
       "cancel": "Cancel",
-      "upgrade": "Upgrade Now"
+      "upgrade": "Upgrade Now",
+      "processing": "Processing..."
     }
   },
   "premiumLimit": {

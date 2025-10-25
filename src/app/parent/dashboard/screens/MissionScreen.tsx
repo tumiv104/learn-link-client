@@ -18,8 +18,9 @@ import { usePagination } from "@/hooks/usePagination"
 import { PaginationBar } from "@/components/dashboard/PaginationBar"
 
 interface MissionScreenProps {
-  onPremiumLimitReached?: (message: string) => void
+  onPremiumLimitReached?: (message: string, type: "child" | "mission") => void
 }
+
 
 export default function MissionScreen({ onPremiumLimitReached }: MissionScreenProps) {
   const t = useTranslations("parentDashboard.missions")
@@ -128,7 +129,7 @@ export default function MissionScreen({ onPremiumLimitReached }: MissionScreenPr
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || err.message || ""
       if (errorMessage.includes("limit") || errorMessage.includes("premium")) {
-        onPremiumLimitReached?.(t("limitReached"))
+        onPremiumLimitReached?.(t("limitReached"), "mission")
         setMissionDialog({ ...missionDialog, open: false })
         return
       }
