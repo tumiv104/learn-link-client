@@ -182,12 +182,10 @@
           "avatarHelp": "Click to upload an avatar",
           "nameLabel": "Full Name",
           "namePlaceholder": "Enter your child's name",
-
           "emailLabel": "Email Address",
           "emailPlaceholder": "Enter email address",
           "passwordLabel": "Password",
           "passwordPlaceholder": "Create a password",
-
           "passwordHelp": "Password must be at least 6 characters long",
           "confirmPasswordLabel": "Confirm Password",
           "confirmPasswordPlaceholder": "Confirm your password",
@@ -206,12 +204,7 @@
           "passwordMismatch": "Passwords do not match",
           "dobRequired": "Date of birth is required",
           "createSuccess": "Child account created successfully!",
-          "createFail": "Failed to create child account",
-          "passwordHelp": "Password must be at least 6 characters",
-          "dobLabel": "Date of Birth",
-          "cancel": "Cancel",
-          "create": "Create Account"
-
+          "createFail": "Failed to create child account"
         }
       },
       "activity": {
@@ -238,7 +231,6 @@
       "editDialog": {
         "title": "Edit Profile",
         "avatarHelp": "Click to change avatar",
-
         "emailLabel": "Email Address",
         "emailHelp": "Email cannot be changed",
         "nameLabel": "Full Name",
