@@ -55,9 +55,8 @@ export default function OverviewScreen({ onPremiumLimitReached }: OverviewScreen
       const errorMessage = error.response?.data?.message || error.message || ""
       if (errorMessage.includes("limit") || errorMessage.includes("premium")) {
         onPremiumLimitReached?.(t("children.limitReached"), "child")
-      } else {
-        throw error
       }
+      throw error
     }
   }
 
