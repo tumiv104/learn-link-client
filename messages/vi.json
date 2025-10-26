@@ -85,7 +85,9 @@
     "balance": {
       "title": "Số dư hiện có",
       "subtitle": "điểm khả dụng",
-      "buyButton": "Mua điểm"
+      "buyButton": "Mua điểm",
+      "premiumButton": "Nâng cấp lên Premium",
+      "premiumStatus": "Thành viên Premium"
     },
     "tabs": {
       "overview": "Tổng quan",
@@ -151,7 +153,8 @@
         "description": "Bạn có chắc chắn muốn xóa nhiệm vụ này? Hành động này không thể hoàn tác.",
         "cancel": "Hủy",
         "delete": "Xóa"
-      }
+      },
+      "limitReached": "Giới hạn tài khoản miễn phí"
     },
     "overview": {
       "stats": {
@@ -205,7 +208,8 @@
           "dobRequired": "Vui lòng nhập ngày sinh",
           "createSuccess": "Tạo tài khoản con thành công!",
           "createFail": "Tạo tài khoản con thất bại"
-        }
+        },
+        "limitReached": "Giới hạn tài khoản miễn phí"
       },
       "activity": {
         "title": "Hoạt động gần đây"
@@ -385,7 +389,16 @@
         "cancel": "Hủy",
         "save": "Lưu thay đổi"
       }
-    }
+    },
+   "premiumLimit": {
+  "upgrade": "Nâng cấp lên Premium để mở khóa tính năng này",
+  "title": "Giới hạn tài khoản miễn phí",
+  "childDescription": "Bạn đã đạt đến giới hạn số lượng con. Hãy nâng cấp lên Premium để thêm con mới.",
+  "missionDescription": "Bạn đã đạt đến giới hạn nhiệm vụ hàng ngày. Hãy nâng cấp lên Premium để tiếp tục giao thêm nhiệm vụ.",
+  "cancel": "Hủy"
+}
+
+
   },
   "childDashboard": {
     "nav": {
@@ -636,6 +649,39 @@
       "purchase": "Thanh toán",
       "processing": "Đang xử lý..."
     }
+  },
+  "premiumDialog": {
+    "title": "Nâng cấp lên Premium",
+    "subtitle": "Mở khóa những khả năng vô hạn",
+    "priceUnit": "VND / tháng",
+    "priceDescription": "Thanh toán một lần cho một tháng truy cập premium",
+    "benefitsTitle": "Quyền lợi Premium",
+    "benefits": {
+      "unlimitedMissions": "Nhiệm vụ hàng ngày không giới hạn",
+      "unlimitedMissionsDesc": "Giao bao nhiêu nhiệm vụ tùy thích mỗi ngày",
+      "unlimitedChildren": "Tài khoản con không giới hạn",
+      "unlimitedChildrenDesc": "Tạo và quản lý tài khoản con không giới hạn"
+    },
+    "infoTitle": "Tại sao nâng cấp lên Premium?",
+    "infoDescription": "Thành viên Premium được truy cập không giới hạn tất cả các tính năng mà không có hạn chế hàng ngày. Hoàn hảo cho các gia đình có nhiều con hoặc các chương trình học tập chuyên sâu.",
+    "premiumStatus": {
+      "title": "Tài khoản Premium",
+      "subtitle": "Bạn có một gói đăng ký premium đang hoạt động",
+      "active": "Premium Đang hoạt động",
+      "expiry": "Hết hạn vào",
+      "noExpiry": "Truy cập không giới hạn",
+      "close": "Đóng"
+    },
+    "actions": {
+      "cancel": "Hủy",
+      "upgrade": "Nâng cấp ngay",
+      "processing": "Đang xử lý..."
+    }
+  },
+  "premiumLimit": {
+    "title": "Đã đạt giới hạn",
+    "description": "Nâng cấp lên Premium để mở khóa truy cập không giới hạn",
+    "cancel": "Hủy",
+    "upgrade": "Nâng cấp lên Premium"
   }
-
 }
