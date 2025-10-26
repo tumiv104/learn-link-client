@@ -29,7 +29,7 @@ export function SubmissionDetailModal({ open, onClose, submission }: SubmissionD
         return "bg-gray-500"
     }
   }
-
+console.log(submission)
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">

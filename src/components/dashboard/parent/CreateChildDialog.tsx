@@ -84,14 +84,14 @@ export default function CreateChildDialog({ open, onClose, onSuccess, onCreateCh
 
     setLoading(true)
     try {
-      await onCreateChild(fd)
+      const res = await onCreateChild(fd)
       showSuccess("Success", "Child account created successfully!")
       setTimeout(() => {
         handleClose()
         onSuccess()
       }, 1500)
     } catch (error: any) {
-      showError("Error", error.response?.data?.message || "Failed to create child account")
+      showError("Error", error.response?.data?.message || error.message || "Failed to create child account")
     } finally {
       setLoading(false)
     }

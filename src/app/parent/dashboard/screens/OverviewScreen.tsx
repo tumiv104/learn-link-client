@@ -12,9 +12,14 @@ import { useTranslations } from "next-intl"
 import CreateChildDialog from "@/components/dashboard/parent/CreateChildDialog"
 import ChildProfileDialog from "@/components/dashboard/parent/ChildProfileDialog"
 import { createChild, getChildProfile } from "@/services/parent/parentService"
-import { UserProfileDTO } from "@/data/UserProfileDTO"
+import type { UserProfileDTO } from "@/data/UserProfileDTO"
 
-export default function OverviewScreen() {
+interface OverviewScreenProps {
+  onPremiumLimitReached?: (message: string, type: "child" | "mission") => void
+}
+
+
+export default function OverviewScreen({ onPremiumLimitReached }: OverviewScreenProps) {
   const t = useTranslations("parentDashboard.overview")
 
   const [overview, setOverview] = useState<ParentOverview | null>(null)
@@ -43,7 +48,16 @@ export default function OverviewScreen() {
   }, [])
 
   const handleCreateChild = async (formData: FormData) => {
-    await createChild(formData)
+    try {
+      await createChild(formData)
+      handleCreateSuccess()
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || error.message || ""
+      if (errorMessage.includes("limit") || errorMessage.includes("premium")) {
+        onPremiumLimitReached?.(t("children.limitReached"), "child")
+      }
+      throw error
+    }
   }
 
   const handleCreateSuccess = () => {
@@ -139,10 +153,7 @@ export default function OverviewScreen() {
           <CardContent>
             <div className="space-y-4">
               {overview.children.map((child) => (
-                <div
-                  key={child.userId}
-                  className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-                >
+                <div key={child.userId} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-center gap-3">
                     <img
                       src={`${process.env.NEXT_PUBLIC_API_URL}${child.avatarUrl}`}
@@ -154,9 +165,7 @@ export default function OverviewScreen() {
                     />
                     <div>
                       <h4 className="font-semibold">{child.name}</h4>
-                      <p className="text-sm text-gray-600">
-                        {t("children.points", { points: child.totalPoints })}
-                      </p>
+                      <p className="text-sm text-gray-600">{t("children.points", { points: child.totalPoints })}</p>
                     </div>
                   </div>
 
@@ -188,10 +197,7 @@ export default function OverviewScreen() {
                   key={notification.notificationId}
                   message={notification.message}
                   time={notification.createdAt}
-                  type={notification.type as
-                    | "completion"
-                    | "reward"
-                    | "submission"}
+                  type={notification.type as "completion" | "reward" | "submission"}
                   isRead={notification.isRead}
                 />
               ))}

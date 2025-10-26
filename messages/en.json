@@ -85,7 +85,9 @@
     "balance": {
       "title": "Your Balance",
       "subtitle": "points available",
-      "buyButton": "Buy Points"
+      "buyButton": "Buy Points",
+         "premiumButton": "Upgrade to Premium",
+      "premiumStatus": "Premium Member"
     },
     "tabs": {
       "overview": "Overview",
@@ -151,7 +153,8 @@
         "description": "Are you sure you want to delete this mission? This action cannot be undone.",
         "cancel": "Cancel",
         "delete": "Delete"
-      }
+      },
+      "limitReached": "Free Account Limit Reached"
     },
     "overview": {
       "stats": {
@@ -205,7 +208,8 @@
           "dobRequired": "Date of birth is required",
           "createSuccess": "Child account created successfully!",
           "createFail": "Failed to create child account"
-        }
+        },
+        "limitReached": "Free Account Limit Reached"
       },
       "activity": {
         "title": "Recent Activity"
@@ -217,7 +221,7 @@
       "settingsTitle": "Profile settings",
       "settingsDesc": "Account management features will be available here",
       "subtitle": "Manage your account information",
-      "editButton": "Edit",
+      "editButton": "Edit Profile",
       "loadingProfile": "Loading profile...",
       "errorLoading": "Error loading profile",
       "noProfileData": "No profile data available",
@@ -388,7 +392,14 @@
           }
         }
       }
-    }
+    },
+    "premiumLimit": {
+  "upgrade": "Upgrade to Premium to unlock this feature",
+  "title": "Free Account Limit",
+  "childDescription": "You have reached the child limit. Upgrade to Premium to add more children.",
+  "missionDescription": "You have reached the daily mission limit. Upgrade to Premium to continue assigning more.",
+  "cancel" :"Cancel"
+}
   },
   "childDashboard": {
     "nav": {
@@ -635,6 +646,39 @@
       "purchase": "Purchase",
       "processing": "Processing..."
     }
+  },
+  "premiumDialog": {
+    "title": "Upgrade to Premium",
+    "subtitle": "Unlock unlimited possibilities",
+    "priceUnit": "VND / month",
+    "priceDescription": "One-time payment for one month of premium access",
+    "benefitsTitle": "Premium Benefits",
+    "benefits": {
+      "unlimitedMissions": "Unlimited Daily Missions",
+      "unlimitedMissionsDesc": "Assign as many missions as you want each day",
+      "unlimitedChildren": "Unlimited Child Accounts",
+      "unlimitedChildrenDesc": "Create and manage unlimited child accounts"
+    },
+    "infoTitle": "Why Go Premium?",
+    "infoDescription": "Premium members enjoy unlimited access to all features without daily restrictions. Perfect for families with multiple children or intensive learning programs.",
+    "premiumStatus": {
+      "title": "Premium Account",
+      "subtitle": "You have an active premium subscription",
+      "active": "Premium Active",
+      "expiry": "Expires on",
+      "noExpiry": "Unlimited access",
+      "close": "Close"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "upgrade": "Upgrade Now",
+      "processing": "Processing..."
+    }
+  },
+  "premiumLimit": {
+    "title": "Limit Reached",
+    "description": "Upgrade to Premium to unlock unlimited access",
+    "cancel": "Cancel",
+    "upgrade": "Upgrade to Premium"
   }
-
 }

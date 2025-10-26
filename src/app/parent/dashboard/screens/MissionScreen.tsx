@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useEffect, useState } from "react"
 import { MissionDialog } from "@/components/dashboard/parent/MissionDialog"
@@ -17,8 +17,12 @@ import { getChildren } from "@/services/parent/parentService"
 import { usePagination } from "@/hooks/usePagination"
 import { PaginationBar } from "@/components/dashboard/PaginationBar"
 
+interface MissionScreenProps {
+  onPremiumLimitReached?: (message: string, type: "child" | "mission") => void
+}
 
-export default function MissionScreen() {
+
+export default function MissionScreen({ onPremiumLimitReached }: MissionScreenProps) {
   const t = useTranslations("parentDashboard.missions")
   const { alert, showSuccess, showError, hideAlert } = useAlert()
   const locale = useLocale()
@@ -27,10 +31,9 @@ export default function MissionScreen() {
 
   const [totalPages, setTotalPages] = useState(1)
   const { page, setPage, pageSize, setPageSize, getPageNumbers } = usePagination(totalPages, 1, 5)
-  
+
   const [children, setChildren] = useState<ChildBasicInfoDTO[]>([])
   const [loadingChildren, setLoadingChildren] = useState(true)
-
 
   const [missionDialog, setMissionDialog] = useState({
     open: false,
@@ -43,7 +46,7 @@ export default function MissionScreen() {
     try {
       setLoading(true)
       const data: PageResult<MissionResponse> = await getParentMissions(pageNumber, size)
-      const mapped = data.items.map(m => ({
+      const mapped = data.items.map((m) => ({
         MissionId: m.missionId,
         Title: m.title,
         Description: m.description,
@@ -67,28 +70,27 @@ export default function MissionScreen() {
   }
 
   useEffect(() => {
-  const fetchChildren = async () => {
-    try {
-      setLoadingChildren(true)
-      const res = await getChildren()
-      const data: ChildBasicInfoDTO[] = res.map((c: any) => ({
-        childId: c.childId != null ? c.childId.toString() : "",
-        name: c.name ?? "",
-        email: c.email ?? "",
-        dob: c.dob ?? "",
-        avatarUrl: c.avatarUrl ?? "",
-        createdAt: c.createdAt ?? "",
-      }))
-      setChildren(data)
-    } catch (err) {
-      //console.error(err)
-    } finally {
-      setLoadingChildren(false)
+    const fetchChildren = async () => {
+      try {
+        setLoadingChildren(true)
+        const res = await getChildren()
+        const data: ChildBasicInfoDTO[] = res.map((c: any) => ({
+          childId: c.childId != null ? c.childId.toString() : "",
+          name: c.name ?? "",
+          email: c.email ?? "",
+          dob: c.dob ?? "",
+          avatarUrl: c.avatarUrl ?? "",
+          createdAt: c.createdAt ?? "",
+        }))
+        setChildren(data)
+      } catch (err) {
+        //console.error(err)
+      } finally {
+        setLoadingChildren(false)
+      }
     }
-  }
-  fetchChildren()
-}, [])
-
+    fetchChildren()
+  }, [])
 
   useEffect(() => {
     fetchMissions(page, pageSize)
@@ -124,71 +126,52 @@ export default function MissionScreen() {
         const editRes = await editMission(id, formData)
         success = editRes.success
       }
-    } catch (err) {
-      
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message || err.message || ""
+      if (errorMessage.includes("limit") || errorMessage.includes("premium")) {
+        onPremiumLimitReached?.(t("limitReached"), "mission")
+        setMissionDialog({ ...missionDialog, open: false })
+        return
+      }
     } finally {
       setTimeout(async () => {
         const title = formData.get("Title")?.toString() ?? ""
         if (success) {
           if (missionDialog.mode === "create") {
-            showSuccess(
-              t("alerts.created.title"),
-              t("alerts.created.success", { title })
-            )
+            showSuccess(t("alerts.created.title"), t("alerts.created.success", { title }))
           } else {
-            showSuccess(
-              t("alerts.updated.title"),
-              t("alerts.updated.success", { title })
-            )
+            showSuccess(t("alerts.updated.title"), t("alerts.updated.success", { title }))
           }
           setMissionDialog({ ...missionDialog, open: false })
           await fetchMissions(page, pageSize) // refresh list
         } else {
           if (missionDialog.mode === "create") {
-            showError(
-              t("alerts.created.title"),
-              t("alerts.created.error", { title })
-            )
+            showError(t("alerts.created.title"), t("alerts.created.error", { title }))
           } else {
-            showError(
-              t("alerts.updated.title"),
-              t("alerts.updated.error", { title })
-            )
+            showError(t("alerts.updated.title"), t("alerts.updated.error", { title }))
           }
           setMissionDialog({ ...missionDialog, open: false })
         }
       }, 500)
     }
-
-    
   }
   return (
     <div className="space-y-6">
-      {alert && (
-        <AlertPopup
-          type={alert.type}
-          title={alert.title}
-          message={alert.message}
-          onClose={hideAlert}
-        />
-      )}
-      
+      {alert && <AlertPopup type={alert.type} title={alert.title} message={alert.message} onClose={hideAlert} />}
+
       <MissionDialog
         open={missionDialog.open}
         onOpenChange={(open) => setMissionDialog({ ...missionDialog, open })}
         mode={missionDialog.mode}
         mission={missionDialog.mission}
-        childrenList={children || []}   
+        childrenList={children || []}
         onSave={handleSaveMission}
         locale={locale}
       />
 
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-800">{t("title")}</h2>
-        <Button
-          onClick={handleCreateMission}
-          className="bg-red-500 hover:bg-red-600 text-white"
-        >
+        <Button onClick={handleCreateMission} className="bg-red-500 hover:bg-red-600 text-white">
           <Plus className="w-4 h-4 mr-2" />
           {t("create")}
         </Button>
