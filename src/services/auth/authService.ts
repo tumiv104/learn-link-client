@@ -31,6 +31,22 @@ export async function login(email: string, password: string) {
   return { accessToken, user: user as UserDto };
 }
 
+export async function loginWithGoogle(idToken: string) {
+  const res = await api.post("/auth/google", { idToken })
+  const { accessToken } = res.data.data
+  setAccessToken(accessToken)
+
+  const payload = jwtDecode<JwtPayload>(accessToken)
+  const user: UserDto = {
+    id: Number(payload.id),
+    email: payload.email,
+    name: payload.name,
+    role: payload.role as "Parent" | "Child" | "Admin" | undefined,
+  }
+
+  return { accessToken, user: user as UserDto }
+}
+
 export async function register(
   name: string,
   email: string,

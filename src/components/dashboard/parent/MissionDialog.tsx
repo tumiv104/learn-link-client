@@ -111,7 +111,7 @@ export function MissionDialog({ open, onOpenChange, mode, mission, childrenList,
     if(formData.MissionId) fd.append("MissionId", formData.MissionId.toString())
     fd.append("ChildId", formData.ChildId.toString())
     fd.append("Title", formData.Title)
-    fd.append("Description", formData.Description ?? "")
+    fd.append("Description", formData.Description ?? " ")
     fd.append("Points", formData.Points.toString())
     if (formData.Promise) fd.append("Promise", formData.Promise)
     fd.append("Deadline", formData.Deadline)

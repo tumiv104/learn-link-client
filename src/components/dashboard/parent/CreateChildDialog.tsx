@@ -66,18 +66,15 @@ export default function CreateChildDialog({ open, onClose, onSuccess, onCreateCh
       return
     }
 
-    if (!formData.dob) {
-      showError(t("alerts.validationError"), t("alerts.dobRequired"))
-      return
-    }
-
     const fd = new FormData()
     fd.append("Name", formData.name)
     fd.append("Email", formData.email)
     fd.append("Password", formData.password)
-    const dob = new Date(formData.dob)
-    dob.setDate(dob.getDate() - 1)
-    fd.append("Dob", dob.toISOString().split("T")[0])
+    if (formData.dob) {
+      const dob = new Date(formData.dob)
+      dob.setDate(dob.getDate() - 1)
+      fd.append("Dob", dob.toISOString().split("T")[0])
+    }
     if (avatarFile) {
       fd.append("AvatarFile", avatarFile)
     }
@@ -204,7 +201,7 @@ export default function CreateChildDialog({ open, onClose, onSuccess, onCreateCh
           <div className="space-y-2">
             <Label htmlFor="dob" className="text-base font-bold flex items-center gap-2">
               <Calendar className="w-5 h-5 text-blue-500" />
-              {t("createDialog.dobLabel")}
+              {t("createDialog.dobLabel")} <span className="text-gray-400 text-sm">(Optional)</span>
             </Label>
             <Input
               id="dob"
