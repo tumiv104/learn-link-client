@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { login as loginApi, logout as logoutApi, register as registerApi, registerChild as registerChildApi, refresh as refreshApi, UserDto } from "@/services/auth/authService";
+import { login as loginApi, logout as logoutApi, loginWithGoogle as loginWithGoogleApi, register as registerApi, registerChild as registerChildApi, refresh as refreshApi, UserDto } from "@/services/auth/authService";
 import { jwtDecode } from "jwt-decode";
 
 type JwtPayload = {
@@ -17,6 +17,7 @@ type AuthContextType = {
   accessToken: string | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<UserDto>;
+  loginWithGoogle: (idToken: string) => Promise<UserDto>
   register: (name: string,
             email: string,
             password: string,
@@ -97,6 +98,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   });
 
+  const doLoginWithGoogle = async (idToken: string) => withLoading(async () => {
+    try {
+      const { accessToken: token, user: u } = await loginWithGoogleApi(idToken)
+      handleAuthSuccess(token)
+      return u
+    } catch (error) {
+      throw error
+    }
+  });
+
   const doRegister = async (
     name: string,
     email: string,
@@ -161,6 +172,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       accessToken,
       loading,
       login: doLogin,
+      loginWithGoogle: doLoginWithGoogle,
       register: doRegister,
       registerChild: doRegisterChild,
       logout: doLogout,
