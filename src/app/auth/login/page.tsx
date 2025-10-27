@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Mail, Lock, Star, ArrowRight, Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
+import { ForgotPasswordDialog } from "@/components/auth/ForgotPasswordDialog"
 
 export default function LoginPage() {
   const { login, loading } = useAuth()
@@ -18,6 +19,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -118,6 +120,15 @@ export default function LoginPage() {
                     )}
                   </Button>
                 </div>
+                <div className="text-right">
+                  <button
+                    type="button"
+                    onClick={() => setForgotPasswordOpen(true)}
+                    className="text-sm text-primary hover:text-primary/80 font-medium transition-colors"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
               </div>
 
               <Button
@@ -153,6 +164,8 @@ export default function LoginPage() {
           </CardContent>
         </Card>
       </div>
+
+      <ForgotPasswordDialog open={forgotPasswordOpen} onOpenChange={setForgotPasswordOpen} />
     </div>
   )
 }

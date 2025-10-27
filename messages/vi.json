@@ -377,6 +377,7 @@
       "parent": "Phụ huynh",
       "notUpdated": "Chưa cập nhật",
       "notAvailable": "Chưa có thông tin",
+      "changePassword":"Đổi mật khẩu",
       "editDialog": {
         "title": "Chỉnh sửa hồ sơ",
         "avatarHelp": "Nhấn để thay đổi ảnh đại diện",

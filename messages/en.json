@@ -232,6 +232,7 @@
       "parent": "Parent",
       "notUpdated": "Not updated",
       "notAvailable": "Not available",
+      "changePassword":"Change password",
       "editDialog": {
         "title": "Edit Profile",
         "avatarHelp": "Click to change avatar",

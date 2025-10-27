@@ -1,12 +1,14 @@
-'use client'
+"use client"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { mockData } from "@/data/mockData"
-import { UserDto } from "@/services/auth/authService"
-import { MessageCircle, Star, Trophy, User, Zap } from "lucide-react"
+import type { UserDto } from "@/services/auth/authService"
+import { MessageCircle, Star, Trophy, User, Zap, Lock } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
+import { ChangePasswordDialog } from "@/components/auth/ChangePasswordDialog"
 
 interface ProfileScreenProps {
   user: UserDto | null
@@ -15,15 +17,19 @@ interface ProfileScreenProps {
 
 export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
   const t = useTranslations("childDashboard.profile")
-    return (
-        <div className="space-y-6 pb-24">
+  const [changePasswordOpen, setChangePasswordOpen] = useState(false)
+
+  return (
+    <div className="space-y-6 pb-24">
       <div className="text-center mb-6">
         <div className="text-8xl mb-4">{mockData.player.avatar}</div>
         <h2 className="text-3xl font-bold text-gray-800">{user?.name}</h2>
         <p className="text-gray-600">{mockData.player.title}</p>
         <div className="flex justify-center gap-2 mt-2">
           <Badge className="bg-purple-500">{t("level", { level: mockData.player.level })}</Badge>
-          <Badge className="bg-orange-500">🔥 {mockData.player.streak} {t("days")}</Badge>
+          <Badge className="bg-orange-500">
+            🔥 {mockData.player.streak} {t("days")}
+          </Badge>
         </div>
       </div>
 
@@ -68,6 +74,14 @@ export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
           <User className="w-5 h-5 mr-2" />
           {t("editProfile")}
         </Button>
+        <Button
+          onClick={() => setChangePasswordOpen(true)}
+          variant="outline"
+          className="w-full text-lg py-3 bg-transparent"
+        >
+          <Lock className="w-5 h-5 mr-2" />
+          Change Password
+        </Button>
         <Button variant="outline" className="w-full text-lg py-3 bg-transparent">
           <MessageCircle className="w-5 h-5 mr-2" />
           {t("messageParents")}
@@ -79,7 +93,9 @@ export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
         >
           {t("logout")}
         </Button>
-      </div>  
+      </div>
+
+      <ChangePasswordDialog open={changePasswordOpen} onOpenChange={setChangePasswordOpen} />
     </div>
-    )
+  )
 }
