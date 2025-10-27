@@ -37,7 +37,7 @@ export default function RegisterPage() {
     setError(null)
 
     // Validation
-    if (!formData.name || !formData.email || !formData.password || !formData.dateOfBirth) {
+    if (!formData.name || !formData.email || !formData.password) {
       setError("Please fill in all required fields")
       return
     }
@@ -53,7 +53,7 @@ export default function RegisterPage() {
     }
 
     try {
-      const dob = new Date(formData.dateOfBirth)
+      const dob = formData.dateOfBirth ? new Date(formData.dateOfBirth) : undefined
       await register(
         formData.name,
         formData.email,
@@ -155,7 +155,7 @@ export default function RegisterPage() {
               <div className="space-y-2">
                 <Label htmlFor="dateOfBirth" className="text-sm font-semibold text-foreground flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-primary" />
-                  Date of Birth *
+                  Date of Birth <span className="text-muted-foreground text-xs">(Optional)</span>
                 </Label>
                 <Input
                   id="dateOfBirth"
@@ -163,7 +163,7 @@ export default function RegisterPage() {
                   value={formData.dateOfBirth}
                   onChange={(e) => handleInputChange("dateOfBirth", e.target.value)}
                   className="h-12 border-2 border-border focus:border-primary transition-colors bg-input"
-                  required
+                  
                 />
               </div>
 
