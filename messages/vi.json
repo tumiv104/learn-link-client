@@ -97,6 +97,24 @@
       "reports": "Báo cáo",
       "profile": "Hồ sơ"
     },
+    "toast": {
+      "missionStarted": {
+        "title": "Nhiệm vụ đã bắt đầu!",
+        "desc": "{{childName}} vừa bắt đầu nhiệm vụ {{title}}!"
+      },
+      "missionSubmitted": {
+        "title": "Nhiệm vụ đã được nộp!",
+        "desc": "{{childName}} vừa nộp kết quả cho nhiệm vụ {{title}}!"
+      }
+    },
+    "errors": {
+      "paymentCreationFailed": "Tạo thanh toán thất bại.",
+      "createPaymentFailed": "Không thể tạo yêu cầu thanh toán.",
+      "unsupportedPayment": "Phương thức thanh toán này hiện chưa được hỗ trợ.",
+      "noPaymentUrl": "Không nhận được đường dẫn thanh toán.",
+      "buyPointsFailed": "Mua điểm thất bại.",
+      "upgradeFailed": "Nâng cấp Premium thất bại."
+    },
     "missions": {
       "title": "Quản lý nhiệm vụ",
       "create": "Tạo nhiệm vụ mới",
@@ -118,6 +136,19 @@
         "Processing": "Đang làm",
         "Completed": "Hoàn thành"
       },
+      "header": {
+        "createTitle": "Tạo nhiệm vụ mới",
+        "viewTitle": "Xem chi tiết nhiệm vụ",
+        "editTitle": "Chỉnh sửa nhiệm vụ"
+      },
+      "errors": {
+        "titleRequired": "Vui lòng nhập tiêu đề nhiệm vụ.",
+        "titleTooLong": "Tiêu đề không được vượt quá 200 ký tự.",
+        "childRequired": "Vui lòng chọn trẻ được giao nhiệm vụ.",
+        "deadlineRequired": "Vui lòng chọn hạn chót.",
+        "deadlineFuture": "Hạn chót phải ở tương lai.",
+        "notEnoughPoints": "Bạn không đủ điểm để tạo nhiệm vụ này."
+      },
       "form": {
         "title": "Tiêu đề nhiệm vụ",
         "titlePlaceholder": "Nhập tiêu đề nhiệm vụ",
@@ -134,7 +165,13 @@
         "deadline": "Hạn hoàn thành",
         "points": "Điểm thưởng",
         "promise": "Lời hứa đặc biệt",
-        "promisePlaceholder": "Ví dụ: Kể thêm một câu chuyện nếu hoàn thành sớm"
+        "promisePlaceholder": "Ví dụ: Kể thêm một câu chuyện nếu hoàn thành sớm",
+        "close": "Đóng",
+        "cancel": "Hủy",
+        "createMission": "Tạo nhiệm vụ",
+        "saveChanges": "Lưu thay đổi",
+        "creating": "Đang tạo...",
+        "saving": "Đang lưu..."
       },
       "alerts": {
         "created": {

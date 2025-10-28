@@ -97,6 +97,24 @@
       "reports": "Reports",
       "profile": "Profile"
     },
+    "toast": {
+      "missionStarted": {
+        "title": "Mission Started!",
+        "desc": "{{childName}} started mission {{title}}!"
+      },
+      "missionSubmitted": {
+        "title": "Mission Submitted!",
+        "desc": "{{childName}} has submitted mission {{title}}!"
+      }
+    },
+    "errors": {
+      "paymentCreationFailed": "Payment creation failed.",
+      "createPaymentFailed": "Failed to create payment.",
+      "unsupportedPayment": "This payment method is temporarily not supported.",
+      "noPaymentUrl": "No payment URL received.",
+      "buyPointsFailed": "Buy points failed.",
+      "upgradeFailed": "Premium upgrade failed."
+    },
     "missions": {
       "title": "Mission Management",
       "create": "Create New Mission",
@@ -118,6 +136,19 @@
         "Processing": "Processing",
         "Completed": "Completed"
       },
+      "header": {
+        "createTitle": "Create New Mission",
+        "viewTitle": "View Mission Details",
+        "editTitle": "Edit Mission"
+      },
+      "errors": {
+        "titleRequired": "Title is required.",
+        "titleTooLong": "Title must be under 200 characters.",
+        "childRequired": "You must select a child.",
+        "deadlineRequired": "Deadline is required.",
+        "deadlineFuture": "Deadline must be in the future.",
+        "notEnoughPoints": "You don't have enough points."
+      },
       "form": {
         "title": "Mission Title",
         "titlePlaceholder": "Enter mission title",
@@ -134,7 +165,13 @@
         "deadline": "Deadline",
         "points": "Points Reward",
         "promise": "Special Promise",
-        "promisePlaceholder": "e.g., Extra story time if completed early"
+        "promisePlaceholder": "e.g., Extra story time if completed early",
+        "close": "Close",
+        "cancel": "Cancel",
+        "createMission": "Create Mission",
+        "saveChanges": "Save Changes",
+        "creating": "Creating...",
+        "saving": "Saving..."
       },
       "alerts": {
         "created": {

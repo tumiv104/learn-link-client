@@ -13,13 +13,15 @@ import CreateChildDialog from "@/components/dashboard/parent/CreateChildDialog"
 import ChildProfileDialog from "@/components/dashboard/parent/ChildProfileDialog"
 import { createChild, getChildProfile } from "@/services/parent/parentService"
 import type { UserProfileDTO } from "@/data/UserProfileDTO"
+import { UserDto } from "@/services/auth/authService"
 
 interface OverviewScreenProps {
   onPremiumLimitReached?: (message: string, type: "child" | "mission") => void
+  user: UserDto
 }
 
 
-export default function OverviewScreen({ onPremiumLimitReached }: OverviewScreenProps) {
+export default function OverviewScreen({ onPremiumLimitReached, user }: OverviewScreenProps) {
   const t = useTranslations("parentDashboard.overview")
 
   const [overview, setOverview] = useState<ParentOverview | null>(null)
@@ -34,7 +36,7 @@ export default function OverviewScreen({ onPremiumLimitReached }: OverviewScreen
   const fetchData = async () => {
     try {
       setLoading(true)
-      const data = await getParentOverview()
+      const data = await getParentOverview(user.id)
       setOverview(data)
     } catch (err: any) {
       setError(err.message || t("error"))
@@ -49,7 +51,7 @@ export default function OverviewScreen({ onPremiumLimitReached }: OverviewScreen
 
   const handleCreateChild = async (formData: FormData) => {
     try {
-      await createChild(formData)
+      await createChild(user.id, formData)
       handleCreateSuccess()
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || error.message || ""
@@ -70,10 +72,9 @@ export default function OverviewScreen({ onPremiumLimitReached }: OverviewScreen
     setProfileLoading(true)
     setProfileDialogOpen(true)
     try {
-      const data = await getChildProfile(childId)
+      const data = await getChildProfile(user.id, childId)
       setChildProfile(data)
     } catch (err) {
-      console.error("Failed to fetch child profile:", err)
       setChildProfile(null)
     } finally {
       setProfileLoading(false)

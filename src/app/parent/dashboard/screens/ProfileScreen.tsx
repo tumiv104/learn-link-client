@@ -12,8 +12,13 @@ import { EditProfileDialog } from "@/components/dashboard/parent/EditProfileDial
 import { updateUserProfile } from "@/services/user/userService"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { ChangePasswordDialog } from "@/components/auth/ChangePasswordDialog"
+import { UserDto } from "@/services/auth/authService"
 
-export default function ProfileScreen() {
+interface ProfileScreenProps {
+  user: UserDto
+}
+
+export default function ProfileScreen({ user } : ProfileScreenProps) {
   const t = useTranslations("parentDashboard.profile")
 
   const [profile, setProfile] = useState<UserProfileDTO | null>(null)
@@ -25,7 +30,7 @@ export default function ProfileScreen() {
   const fetchProfile = async () => {
     try {
       setLoading(true)
-      const data = await getUserProfile()
+      const data = await getUserProfile(user.id)
       setProfile(data)
     } catch (err: any) {
       setError(err.message || t("errorLoading"))
@@ -39,7 +44,7 @@ export default function ProfileScreen() {
   }, [])
 
   const handleUpdateProfile = async (formData: FormData) => {
-    await updateUserProfile(formData)
+    await updateUserProfile(user.id, formData)
   }
 
   const handleUpdateSuccess = () => {

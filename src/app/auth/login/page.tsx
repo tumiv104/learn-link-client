@@ -12,14 +12,16 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Mail, Lock, Star, ArrowRight, Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
 import { ForgotPasswordDialog } from "@/components/auth/ForgotPasswordDialog"
+import { GoogleLogin } from "@react-oauth/google"
 
 export default function LoginPage() {
-  const { login, loading } = useAuth()
+  const { login, loading, loginWithGoogle } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false)
+  const [googleLoading, setGoogleLoading] = useState(false)
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,8 +43,30 @@ export default function LoginPage() {
         router.push("/manager/dashboard")
       }
     } catch (error: any) {
-      setError(error?.message || "Login failed. Please try again.")
+      if (error.status == 401) setError("Wrong username or password");
+      else setError("Login failed. Please try again.")
     }
+  }
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    try {
+      const idToken = credentialResponse.credential
+      if (!idToken) {
+        setError("Google did not return an ID token.")
+        return
+      }
+
+      const user = await loginWithGoogle(idToken)
+      if (user?.role === "Parent") router.push("/parent/dashboard")
+      else if (user?.role === "Child") router.push("/child/dashboard")
+      else if (user?.role === "Admin") router.push("/manager/dashboard")
+    } catch (error: any) {
+      setError(error?.message || "Google login failed. Please try again.")
+    }
+  }
+
+  const handleGoogleError = () => {
+    setError("Google login failed. Please try again.")
   }
 
   return (
@@ -149,6 +173,22 @@ export default function LoginPage() {
                 )}
               </Button>
             </form>
+
+            <div className="mt-6 space-y-4">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-border"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-card text-muted-foreground">Or continue with</span>
+                </div>
+              </div>
+              <div className="flex justify-center">
+                <div className="w-full">
+                  <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
+                </div>
+              </div>
+            </div>
 
             <div className="mt-6 text-center">
               <p className="text-muted-foreground">

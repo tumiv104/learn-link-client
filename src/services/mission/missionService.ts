@@ -2,8 +2,8 @@ import api from "@/lib/api"
 import type { MissionResponse } from "@/data/missionResponse"
 import type { PageResult } from "@/data/pagination"
 
-export async function assignMission(fd: FormData) {
-  const res = await api.post("/mission/assign", fd, {
+export async function assignMission(parentId: number, fd: FormData) {
+  const res = await api.post(`/mission/${parentId}/assign`, fd, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -11,8 +11,8 @@ export async function assignMission(fd: FormData) {
   return res.data;
 }
 
-export async function editMission(id: string, fd: FormData) {
-  const res = await api.put(`/mission/edit/${id}`, fd, {
+export async function editMission(parentId: number, id: string, fd: FormData) {
+  const res = await api.put(`/${parentId}/mission/edit/${id}`, fd, {
     headers: {
       "Content-Type": "multipart/form-data",
     }
@@ -21,10 +21,11 @@ export async function editMission(id: string, fd: FormData) {
 }
 
 export async function getParentMissions(
+  parentId: number,
   page = 1,
   pageSize = 5
 ): Promise<PageResult<MissionResponse>> {
-  const res = await api.get(`/mission/parent-missions?page=${page}&pageSize=${pageSize}`)
+  const res = await api.get(`/mission/parent-missions/${parentId}?page=${page}&pageSize=${pageSize}`)
   return res.data.data as PageResult<MissionResponse>
 }
 

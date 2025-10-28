@@ -32,10 +32,13 @@ interface MissionDialogProps {
   childrenList: ChildBasicInfoDTO[]
   onSave: (data: any) => void
   locale: string
+  saving: boolean
+  balance: number
 }
 
-export function MissionDialog({ open, onOpenChange, mode, mission, childrenList, onSave, locale }: MissionDialogProps) {
+export function MissionDialog({ open, onOpenChange, mode, mission, childrenList, onSave, locale, saving, balance }: MissionDialogProps) {
   const t = useTranslations("parentDashboard.missions")
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const [formData, setFormData] = useState({
     MissionId: mission?.MissionId || undefined,
@@ -90,7 +93,34 @@ export function MissionDialog({ open, onOpenChange, mode, mission, childrenList,
 
   const isReadOnly = mode === "view"
 
-  const title = mode === "create" ? "Create New Mission" : mode === "view" ? "View Mission Details" : "Edit Mission"
+  const title = mode === "create" ? t("header.createTitle") : mode === "view" ? t("header.viewTitle") : t("header.editTitle")
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {}
+
+    if (!formData.Title.trim()) {
+      newErrors.Title = t("errors.titleRequired")
+    } else if (formData.Title.length > 200) {
+      newErrors.Title = t("errors.titleTooLong")
+    }
+
+    if (!formData.ChildId) {
+      newErrors.ChildId = t("errors.childRequired")
+    }
+
+    if (!formData.Deadline) {
+      newErrors.Deadline = t("errors.deadlineRequired")
+    } else if (new Date(formData.Deadline) < new Date()) {
+      newErrors.Deadline = t("errors.deadlineFuture")
+    }
+
+    if (formData.Points > balance) {
+      newErrors.Points = t("errors.notEnoughPoints")
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -102,16 +132,13 @@ export function MissionDialog({ open, onOpenChange, mode, mission, childrenList,
   }
 
   const handleSave = () => {
-    if (!formData.ChildId) {
-      console.error("ChildId is required")
-      return
-    }
+    if (!validateForm()) return
 
     const fd = new FormData()
     if(formData.MissionId) fd.append("MissionId", formData.MissionId.toString())
-    fd.append("ChildId", formData.ChildId.toString())
+    fd.append("ChildId", formData.ChildId ? formData.ChildId.toString() : "")
     fd.append("Title", formData.Title)
-    fd.append("Description", formData.Description ?? "")
+    fd.append("Description", formData.Description ?? " ")
     fd.append("Points", formData.Points.toString())
     if (formData.Promise) fd.append("Promise", formData.Promise)
     fd.append("Deadline", formData.Deadline)
@@ -191,6 +218,7 @@ export function MissionDialog({ open, onOpenChange, mode, mission, childrenList,
                 placeholder={t("form.titlePlaceholder")}
                 className="h-12 text-base border-slate-300 focus:border-blue-500 focus:ring-blue-500/20"
               />
+              {errors.Title && <p className="text-sm text-red-500">{errors.Title}</p>}
             </div>
 
             <div className="grid gap-3">
@@ -366,6 +394,15 @@ export function MissionDialog({ open, onOpenChange, mode, mission, childrenList,
                   className="h-12 border-slate-300 focus:border-blue-500 focus:ring-blue-500/20"
                 />
               </div>
+              {(errors.ChildId || errors.Deadline || errors.Points) && (
+                <div className="md:col-span-3 h-5">
+                  <div className="text-sm text-red-500 flex gap-6">
+                    <span className="w-1/3">{errors.ChildId || ""}</span>
+                    <span className="w-1/3">{errors.Deadline || ""}</span>
+                    <span className="w-1/3">{errors.Points || ""}</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="grid gap-3">
@@ -390,14 +427,23 @@ export function MissionDialog({ open, onOpenChange, mode, mission, childrenList,
             onClick={() => onOpenChange(false)}
             className="px-6 py-2 h-11 border-slate-300 hover:bg-slate-50"
           >
-            {isReadOnly ? "Close" : "Cancel"}
+            {isReadOnly ? t("form.close") : t("form.cancel")}
           </Button>
-          {!isReadOnly && (
+          {!isReadOnly && !saving &&(
             <Button
               onClick={handleSave}
               className="px-6 py-2 h-11 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg shadow-blue-500/25"
             >
-              {mode === "create" ? "Create Mission" : "Save Changes"}
+              {mode === "create" ? t("form.createMission") : t("form.saveChanges")}
+            </Button>
+          )}
+          {!isReadOnly && saving &&(
+            <Button
+              disabled={true}
+              onClick={handleSave}
+              className="px-6 py-2 h-11 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg shadow-blue-500/25"
+            >
+              {mode === "create" ? t("form.creating") : t("form.saving")}
             </Button>
           )}
         </DialogFooter>
