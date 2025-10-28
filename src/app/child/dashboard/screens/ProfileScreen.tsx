@@ -13,9 +13,11 @@ import { ChangePasswordDialog } from "@/components/auth/ChangePasswordDialog"
 interface ProfileScreenProps {
   user: UserDto | null
   onLogout: () => Promise<void>
+  streak: number
+  balance: number
 }
 
-export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
+export default function ProfileScreen({ user, onLogout, streak, balance }: ProfileScreenProps) {
   const t = useTranslations("childDashboard.profile")
   const [changePasswordOpen, setChangePasswordOpen] = useState(false)
 
@@ -26,9 +28,8 @@ export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
         <h2 className="text-3xl font-bold text-gray-800">{user?.name}</h2>
         <p className="text-gray-600">{mockData.player.title}</p>
         <div className="flex justify-center gap-2 mt-2">
-          <Badge className="bg-purple-500">{t("level", { level: mockData.player.level })}</Badge>
           <Badge className="bg-orange-500">
-            🔥 {mockData.player.streak} {t("days")}
+            🔥 {streak} {t("days")}
           </Badge>
         </div>
       </div>
@@ -37,12 +38,12 @@ export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
         <Card className="bg-gradient-to-br from-yellow-100 to-orange-200 border-2 border-yellow-300">
           <CardContent className="p-4 text-center">
             <Star className="w-8 h-8 mx-auto mb-2 text-yellow-600" />
-            <div className="text-2xl font-bold text-yellow-800">{mockData.player.coins}</div>
+            <div className="text-2xl font-bold text-yellow-800">{balance}</div>
             <p className="text-yellow-700">{t("coins")}</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-100 to-pink-200 border-2 border-purple-300">
+        {/* <Card className="bg-gradient-to-br from-purple-100 to-pink-200 border-2 border-purple-300">
           <CardContent className="p-4 text-center">
             <div className="text-3xl mb-2">💎</div>
             <div className="text-2xl font-bold text-purple-800">{mockData.player.gems}</div>
@@ -58,7 +59,7 @@ export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
             </div>
             <p className="text-blue-700">{t("achievements")}</p>
           </CardContent>
-        </Card>
+        </Card> */}
 
         <Card className="bg-gradient-to-br from-green-100 to-emerald-200 border-2 border-green-300">
           <CardContent className="p-4 text-center">
@@ -80,12 +81,12 @@ export default function ProfileScreen({ user, onLogout }: ProfileScreenProps) {
           className="w-full text-lg py-3 bg-transparent"
         >
           <Lock className="w-5 h-5 mr-2" />
-          Change Password
+          {t("changePassword")}
         </Button>
-        <Button variant="outline" className="w-full text-lg py-3 bg-transparent">
+        {/* <Button variant="outline" className="w-full text-lg py-3 bg-transparent">
           <MessageCircle className="w-5 h-5 mr-2" />
           {t("messageParents")}
-        </Button>
+        </Button> */}
         <Button
           onClick={onLogout}
           variant="outline"

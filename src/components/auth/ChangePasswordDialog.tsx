@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Lock, Eye, EyeOff, CheckCircle, AlertCircle } from "lucide-react"
 import { changePassword } from "@/services/password/passwordService"
+import { useTranslations } from "next-intl"
 
 interface ChangePasswordDialogProps {
   open: boolean
@@ -17,6 +18,7 @@ interface ChangePasswordDialogProps {
 }
 
 export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialogProps) {
+  const t = useTranslations("profile.changePassword")
   const [oldPassword, setOldPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -32,22 +34,22 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
     setError(null)
 
     if (!oldPassword || !newPassword || !confirmPassword) {
-      setError("Please fill in all fields")
+      setError(t("errors.fillAll"))
       return
     }
 
     if (newPassword.length < 6) {
-      setError("New password must be at least 6 characters long")
+      setError(t("errors.shortPassword"))
       return
     }
 
     if (newPassword !== confirmPassword) {
-      setError("New passwords do not match")
+      setError(t("errors.mismatch"))
       return
     }
 
     if (oldPassword === newPassword) {
-      setError("New password must be different from old password")
+      setError(t("errors.sameAsOld"))
       return
     }
 
@@ -59,7 +61,7 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
         handleClose()
       }, 2000)
     } catch (err: any) {
-      setError(err.message || "Failed to change password. Please try again.")
+      setError(err.message || t("errors.failed"))
     } finally {
       setLoading(false)
     }
@@ -78,11 +80,11 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">Change Password</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">{t("title")}</DialogTitle>
           <DialogDescription>
             {success
-              ? "Your password has been changed successfully"
-              : "Enter your current password and choose a new one"}
+              ? t("successMessage")
+              : t("description")}
           </DialogDescription>
         </DialogHeader>
 
@@ -92,13 +94,13 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
               <CheckCircle className="w-16 h-16 text-green-500" />
             </div>
             <div className="text-center space-y-2">
-              <h3 className="font-semibold text-lg">Password Changed</h3>
+              <h3 className="font-semibold text-lg">{t("successTitle")}</h3>
               <p className="text-muted-foreground">
-                Your password has been successfully updated. You can now use your new password to sign in.
+                {t("successDetail")}
               </p>
             </div>
             <Button onClick={handleClose} className="w-full">
-              Done
+              {t("done")}
             </Button>
           </div>
         ) : (
@@ -113,7 +115,7 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
             <div className="space-y-2">
               <Label htmlFor="old-password" className="text-sm font-semibold flex items-center gap-2">
                 <Lock className="w-4 h-4" />
-                Current Password
+                {t("currentPassword")}
               </Label>
               <div className="relative">
                 <Input
@@ -121,7 +123,7 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
                   type={showOldPassword ? "text" : "password"}
                   value={oldPassword}
                   onChange={(e) => setOldPassword(e.target.value)}
-                  placeholder="Enter current password"
+                  placeholder={t("placeholders.current")}
                   className="h-10 pr-10"
                   required
                 />
@@ -144,7 +146,7 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
             <div className="space-y-2">
               <Label htmlFor="new-password" className="text-sm font-semibold flex items-center gap-2">
                 <Lock className="w-4 h-4" />
-                New Password
+                {t("newPassword")}
               </Label>
               <div className="relative">
                 <Input
@@ -152,7 +154,7 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
                   type={showNewPassword ? "text" : "password"}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Enter new password"
+                  placeholder={t("placeholders.new")}
                   className="h-10 pr-10"
                   required
                 />
@@ -170,13 +172,13 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
                   )}
                 </Button>
               </div>
-              <p className="text-xs text-muted-foreground">At least 6 characters</p>
+              <p className="text-xs text-muted-foreground">{t("passwordHint")}</p>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="confirm-new-password" className="text-sm font-semibold flex items-center gap-2">
                 <Lock className="w-4 h-4" />
-                Confirm New Password
+                {t("confirmPassword")}
               </Label>
               <div className="relative">
                 <Input
@@ -184,7 +186,7 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
                   type={showConfirmPassword ? "text" : "password"}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Confirm new password"
+                  placeholder={t("placeholders.confirm")}
                   className="h-10 pr-10"
                   required
                 />
@@ -206,10 +208,10 @@ export function ChangePasswordDialog({ open, onOpenChange }: ChangePasswordDialo
 
             <div className="flex gap-2">
               <Button type="button" variant="outline" onClick={handleClose} className="flex-1 bg-transparent">
-                Cancel
+                {t("cancel")}
               </Button>
               <Button type="submit" disabled={loading} className="flex-1">
-                {loading ? "Changing..." : "Change Password"}
+                {loading ? t("changing") : t("changeButton")}
               </Button>
             </div>
           </form>
