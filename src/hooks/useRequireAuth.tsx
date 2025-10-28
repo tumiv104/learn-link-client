@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { UserDto } from "@/services/auth/authService";
 
 export default function useRequireAuth(redirectTo = "/auth/login", allowedRoles?: string[]) {
   const { isAuthenticated, loading, user } = useAuth();
@@ -17,5 +18,5 @@ export default function useRequireAuth(redirectTo = "/auth/login", allowedRoles?
     }
   }, [loading, isAuthenticated, user, router, redirectTo, allowedRoles]);
 
-  return { isAuthenticated, loading, user, ready: !loading && isAuthenticated && (!allowedRoles || allowedRoles.includes(user?.role || "")) };
+  return { isAuthenticated, loading, user: user as UserDto, ready: !loading && isAuthenticated && (!allowedRoles || allowedRoles.includes(user?.role || "")) };
 }

@@ -89,7 +89,7 @@ export function BuyPointsDialog({ open, onOpenChange, onPurchase }: BuyPointsDia
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-3xl bg-white border-0 shadow-2xl p-0 overflow-hidden">
+      <DialogContent className="sm:max-w-3xl max-h-[90vh] bg-white border-0 shadow-2xl p-0 overflow-y-auto">
         <div className="flex">
           {/* Left Side - Points Selection */}
           <div className="flex-1 p-6 bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">

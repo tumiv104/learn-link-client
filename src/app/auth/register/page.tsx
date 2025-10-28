@@ -69,7 +69,8 @@ export default function RegisterPage() {
         router.push("/auth/register-child")
       }, 2000)
     } catch (error: any) {
-      setError(error?.message || "Registration failed. Please try again.")
+      if (error.status == 409) setError("Email address already in use. Try another one or login.")
+      else setError("Registration failed. Please try again.")
     }
   }
 

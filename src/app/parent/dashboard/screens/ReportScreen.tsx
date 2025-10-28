@@ -11,8 +11,13 @@ import type { ChildBasicInfoDTO } from "@/data/ChildBasicInfoDTO"
 import type { ChildProgressReportDTO } from "@/data/childProgressReport"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Bar, BarChart, XAxis, YAxis, Cell, Pie, PieChart } from "recharts"
+import { UserDto } from "@/services/auth/authService"
 
-export default function ReportScreen() {
+interface ReportScreenProps {
+  user: UserDto
+}
+
+export default function ReportScreen({ user } : ReportScreenProps) {
   const t = useTranslations("parentDashboard.reports")
 
   const [children, setChildren] = useState<ChildBasicInfoDTO[]>([])
@@ -26,7 +31,7 @@ export default function ReportScreen() {
   useEffect(() => {
     const fetchChildren = async () => {
       try {
-        const data = await getChildren()
+        const data = await getChildren(user.id)
         setChildren(data)
         if (data.length > 0) setSelectedChildId(Number(data[0].childId))
       } catch (err) {
