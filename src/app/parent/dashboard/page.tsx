@@ -24,6 +24,8 @@ import type { NotificationResponse } from "@/data/notification"
 import { getNotificationByUserId, markAllAsRead, markAsRead } from "@/services/notification/notificationService"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { getParentProfile } from "@/services/parent/parentService"
+import { useAlert } from "@/hooks/useAlert"
+import { AlertPopup } from "@/components/ui/alert-popup"
 
 export default function ParentDashboard() {
   const t = useTranslations("parentDashboard")
@@ -39,6 +41,7 @@ export default function ParentDashboard() {
   const [isPremium, setIsPremium] = useState(false)
   const [premiumExpiry, setPremiumExpiry] = useState<string | undefined>()
   const [premiumLimitType, setPremiumLimitType] = useState<"child" | "mission">("mission")
+  const { alert, showSuccess, showError, hideAlert } = useAlert()
 
   const router = useRouter()
   const pathname = usePathname()
@@ -52,11 +55,9 @@ export default function ParentDashboard() {
   }, [])
 
   const handleMarkAllNotificationsAsRead = useCallback(async () => {
-    if (user) {
-      const res = await markAllAsRead(user?.id)
-      if (res.success) {
-        setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })))
-      }
+    const res = await markAllAsRead(user.id)
+    if (res.success) {
+      setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })))
     }
   }, [user])
 
@@ -65,36 +66,28 @@ export default function ParentDashboard() {
   }
 
   const fetchNoti = async () => {
-    if (user) {
-      const res = await getNotificationByUserId(user.id)
-      const notifications: NotificationResponse[] = res.data.map((n: any) => ({
-        ...n,
-        payload: JSON.parse(n.payload),
-      }))
-      setNotifications(notifications)
-    }
+    const res = await getNotificationByUserId(user.id)
+    const notifications: NotificationResponse[] = res.data.map((n: any) => ({
+      ...n,
+      payload: JSON.parse(n.payload),
+    }))
+    setNotifications(notifications)
   }
 
   const fetchBalance = useCallback(async () => {
-    if (user) {
-      const res = await getPointDetailByUserId(user.id)
-      if (res.data) {
-        setBalance(res.data.balance)
-      }
+    const res = await getPointDetailByUserId(user.id)
+    if (res.data) {
+      setBalance(res.data.balance)
     }
   }, [user])
 
  const fetchPremiumStatus = useCallback(async () => {
-  try {
-    const profile = await getParentProfile();
-    console.log("PROFILE DATA:", profile);
-    setIsPremium(profile.isPremium ?? false);
-  } catch (error) {
-    console.error("Failed to fetch premium status:", error);
-  }
-}, []);
-
-
+    try {
+      const profile = await getParentProfile(user.id);
+      setIsPremium(profile.isPremium ?? false);
+    } catch (error) {
+    }
+  }, [user]);
 
   useEffect(() => {
     fetchBalance()
@@ -132,8 +125,11 @@ export default function ParentDashboard() {
       toast.custom(() => (
         <CustomToast
           type="started"
-          title="Mission Started!"
-          description={`${data.childName} started mission ${data.title}!`}
+          title={t("toast.missionStarted.title")}
+          description={t("toast.missionStarted.desc", {
+            childName: data.childName,
+            title: data.title,
+          })}
         />
       ))
       addNotification({
@@ -152,8 +148,11 @@ export default function ParentDashboard() {
       toast.custom(() => (
         <CustomToast
           type="submitted"
-          title="Mission Submitted!"
-          description={`${data.childName} has submitted for mission ${data.title}!`}
+          title={t("toast.missionSubmitted.title")}
+          description={t("toast.missionSubmitted.desc", {
+            childName: data.childName,
+            title: data.title,
+          })}
         />
       ))
       addNotification({
@@ -186,50 +185,51 @@ export default function ParentDashboard() {
   const handleBuyPoints = async (points: number, paymentMethod: string) => {
     try {
       if (user == null) {
-        throw new Error("Payment creation failed")
+        throw new Error(t("errors.paymentCreationFailed"))
       }
       let paymentUrl = ""
       if (paymentMethod == "bank") {
-        const response = await createPayOSPayment(user?.id, points * 1000)
+        const response = await createPayOSPayment(user.id, points * 1000)
         if (!response.success) {
-          throw new Error("Create payment failed")
+          throw new Error(t("errors.createPaymentFailed"))
         }
         paymentUrl = response.data
       } else {
-        throw new Error("This payment method is temporarily not supported.")
+        throw new Error(t("errors.unsupportedPayment"))
       }
       if (paymentUrl != "") {
         window.location.href = paymentUrl
       } else {
-        throw new Error("No payment URL received")
+        throw new Error(t("errors.noPaymentUrl"))
       }
     } catch (error) {
-      console.error("Buy points failed:", error)
+      showError(t("errors.buyPointsFailed"), "" + error);
     }
   }
 
   const handleUpgradePremium = async () => {
     try {
       if (user == null) {
-        throw new Error("Payment creation failed")
+        throw new Error(t("errors.paymentCreationFailed"))
       }
-      const response = await createPremiumPayment(user?.id)
+      const response = await createPremiumPayment(user.id)
       if (!response.success) {
-        throw new Error("Create payment failed")
+        throw new Error(t("errors.createPaymentFailed"))
       }
       const paymentUrl = response.data
       if (paymentUrl) {
         window.location.href = paymentUrl
       } else {
-        throw new Error("No payment URL received")
+        throw new Error(t("errors.noPaymentUrl"))
       }
     } catch (error) {
-      console.error("Premium upgrade failed:", error)
+      showError(t("errors.upgradeFailed"), "" + error);
     }
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-amber-50">
+      {alert && <AlertPopup type={alert.type} title={alert.title} message={alert.message} onClose={hideAlert} />}
       <Header
         notifications={notifications}
         onMarkNotificationAsRead={handleMarkNotificationAsRead}
@@ -356,6 +356,7 @@ export default function ParentDashboard() {
                   setPremiumLimitType(type)   
                   setPremiumLimitPopup(true)
                 }}
+                user={user}
               />
             </TabsContent>
 
@@ -366,20 +367,22 @@ export default function ParentDashboard() {
                   setPremiumLimitType(type)
                   setPremiumLimitPopup(true)
                 }}
+                balance={balance}
+                user={user}
               />
             </TabsContent>
 
 
             <TabsContent value="submissions">
-              <SubmissionScreen onApprove={onApproveSubmission} />
+              <SubmissionScreen onApprove={onApproveSubmission} user={user}/>
             </TabsContent>
 
             <TabsContent value="reports">
-              <ReportScreen />
+              <ReportScreen user={user}/>
             </TabsContent>
 
             <TabsContent value="profile">
-              <ProfileScreen />
+              <ProfileScreen user={user}/>
             </TabsContent>
           </Tabs>
         </div>

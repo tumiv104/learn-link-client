@@ -40,7 +40,7 @@ export function PremiumUpgradeDialog({
   if (isPremium) {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-2xl bg-white border-0 shadow-2xl p-0 overflow-hidden">
+        <DialogContent className="sm:max-w-2xl max-h-[75vh] bg-white border-0 shadow-2xl p-0 overflow-y-auto">
           <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 p-8 text-white">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-3 bg-white/20 rounded-full">
@@ -106,7 +106,7 @@ export function PremiumUpgradeDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl bg-white border-0 shadow-2xl p-0 overflow-hidden">
+      <DialogContent className="sm:max-w-2xl max-h-[75vh] bg-white border-0 shadow-2xl p-0 overflow-y-auto">
         <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 p-8 text-white">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-3 bg-white/20 rounded-full">

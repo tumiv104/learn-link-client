@@ -14,12 +14,14 @@ import type { PageResult } from "@/data/pagination"
 import { Loader2 } from "lucide-react"
 import { PaginationBar } from "@/components/dashboard/PaginationBar"
 import { usePagination } from "@/hooks/usePagination"
+import { UserDto } from "@/services/auth/authService"
 
 interface SubmissionProps {
   onApprove: () => void
+  user: UserDto
 }
 
-export default function SubmissionScreen({onApprove} : SubmissionProps) {
+export default function SubmissionScreen({onApprove, user} : SubmissionProps) {
   const t = useTranslations("parentDashboard.submissions")
   const { alert, showSuccess, showError, hideAlert } = useAlert()
 
@@ -42,7 +44,7 @@ export default function SubmissionScreen({onApprove} : SubmissionProps) {
   const fetchSubmissions = async () => {
     try {
       setLoading(true)
-      const data: PageResult<SubmissionDetailDTO> = await getParentSubmissions(page, pageSize)
+      const data: PageResult<SubmissionDetailDTO> = await getParentSubmissions(user.id, page, pageSize)
       setSubmissions(data.items)
       setTotalPages(data.totalPages)
       setTotalCount(data.totalCount)
@@ -75,10 +77,10 @@ export default function SubmissionScreen({onApprove} : SubmissionProps) {
     try {
       let success = false;
       if (approved) {
-        const res = await approveSubmission(submissionId, score, feedback);
+        const res = await approveSubmission(user.id, submissionId, score, feedback);
         success = res.success
       } else {
-        const res = await rejectSubmission(submissionId, score, feedback);
+        const res = await rejectSubmission(user.id, submissionId, score, feedback);
         success = res.success
       }
       if (success) {

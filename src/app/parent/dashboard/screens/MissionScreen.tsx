@@ -16,18 +16,22 @@ import type { ChildBasicInfoDTO } from "@/data/ChildBasicInfoDTO"
 import { getChildren } from "@/services/parent/parentService"
 import { usePagination } from "@/hooks/usePagination"
 import { PaginationBar } from "@/components/dashboard/PaginationBar"
+import { UserDto } from "@/services/auth/authService"
 
 interface MissionScreenProps {
   onPremiumLimitReached?: (message: string, type: "child" | "mission") => void
+  balance: number
+  user: UserDto
 }
 
 
-export default function MissionScreen({ onPremiumLimitReached }: MissionScreenProps) {
+export default function MissionScreen({ onPremiumLimitReached, balance, user }: MissionScreenProps) {
   const t = useTranslations("parentDashboard.missions")
   const { alert, showSuccess, showError, hideAlert } = useAlert()
   const locale = useLocale()
   const [missions, setMissions] = useState<Mission[]>([])
   const [loading, setLoading] = useState(false)
+  const [saving, setSaving] = useState(false)
 
   const [totalPages, setTotalPages] = useState(1)
   const { page, setPage, pageSize, setPageSize, getPageNumbers } = usePagination(totalPages, 1, 5)
@@ -45,7 +49,7 @@ export default function MissionScreen({ onPremiumLimitReached }: MissionScreenPr
   const fetchMissions = async (pageNumber: number, size: number) => {
     try {
       setLoading(true)
-      const data: PageResult<MissionResponse> = await getParentMissions(pageNumber, size)
+      const data: PageResult<MissionResponse> = await getParentMissions(user.id, pageNumber, size)
       const mapped = data.items.map((m) => ({
         MissionId: m.missionId,
         Title: m.title,
@@ -72,8 +76,8 @@ export default function MissionScreen({ onPremiumLimitReached }: MissionScreenPr
   useEffect(() => {
     const fetchChildren = async () => {
       try {
-        setLoadingChildren(true)
-        const res = await getChildren()
+        setLoading(true)
+        const res = await getChildren(user.id)
         const data: ChildBasicInfoDTO[] = res.map((c: any) => ({
           childId: c.childId != null ? c.childId.toString() : "",
           name: c.name ?? "",
@@ -86,7 +90,7 @@ export default function MissionScreen({ onPremiumLimitReached }: MissionScreenPr
       } catch (err) {
         //console.error(err)
       } finally {
-        setLoadingChildren(false)
+        setLoading(false)
       }
     }
     fetchChildren()
@@ -113,27 +117,31 @@ export default function MissionScreen({ onPremiumLimitReached }: MissionScreenPr
   }
 
   const handleSaveMission = async (formData: FormData) => {
+    setSaving(true);
     // Giữ nguyên hàm cũ
     let success = false
+    let errorMessage: string = ""
     const id = formData.get("MissionId")?.toString()
     formData.delete("MissionId")
     try {
       if (missionDialog.mode === "create") {
-        const createRes = await assignMission(formData)
+        const createRes = await assignMission(user.id, formData)
         success = createRes.success
       } else {
         if (!id) throw new Error("Mission ID is missing")
-        const editRes = await editMission(id, formData)
+        const editRes = await editMission(user.id, id, formData)
         success = editRes.success
       }
     } catch (err: any) {
-      const errorMessage = err.response?.data?.message || err.message || ""
+      errorMessage = err.response?.data?.message || err.message || ""
       if (errorMessage.includes("limit") || errorMessage.includes("premium")) {
         onPremiumLimitReached?.(t("limitReached"), "mission")
+        setSaving(false)
         setMissionDialog({ ...missionDialog, open: false })
         return
       }
     } finally {
+      setSaving(false)
       setTimeout(async () => {
         const title = formData.get("Title")?.toString() ?? ""
         if (success) {
@@ -146,11 +154,10 @@ export default function MissionScreen({ onPremiumLimitReached }: MissionScreenPr
           await fetchMissions(page, pageSize) // refresh list
         } else {
           if (missionDialog.mode === "create") {
-            showError(t("alerts.created.title"), t("alerts.created.error", { title }))
+            showError(t("alerts.created.title"), errorMessage !== "" ? errorMessage : t("alerts.created.error", { title }))
           } else {
-            showError(t("alerts.updated.title"), t("alerts.updated.error", { title }))
+            showError(t("alerts.updated.title"), errorMessage !== "" ? errorMessage : t("alerts.updated.error", { title }))
           }
-          setMissionDialog({ ...missionDialog, open: false })
         }
       }, 500)
     }
@@ -167,6 +174,8 @@ export default function MissionScreen({ onPremiumLimitReached }: MissionScreenPr
         childrenList={children || []}
         onSave={handleSaveMission}
         locale={locale}
+        saving={saving}
+        balance={balance}
       />
 
       <div className="flex justify-between items-center">

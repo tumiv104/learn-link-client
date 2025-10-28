@@ -41,7 +41,8 @@ export default function LoginPage() {
         router.push("/manager/dashboard")
       }
     } catch (error: any) {
-      setError(error?.message || "Login failed. Please try again.")
+      if (error.status == 401) setError("Wrong username or password");
+      else setError("Login failed. Please try again.")
     }
   }
 
@@ -58,7 +59,6 @@ export default function LoginPage() {
       else if (user?.role === "Child") router.push("/child/dashboard")
       else if (user?.role === "Admin") router.push("/manager/dashboard")
     } catch (error: any) {
-      console.error(error)
       setError(error?.message || "Google login failed. Please try again.")
     }
   }
@@ -172,7 +172,11 @@ export default function LoginPage() {
                   <span className="px-2 bg-card text-muted-foreground">Or continue with</span>
                 </div>
               </div>
-              <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
+              <div className="flex justify-center">
+                <div className="w-full">
+                  <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
+                </div>
+              </div>
             </div>
 
             <div className="mt-6 text-center">
