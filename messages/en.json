@@ -490,7 +490,8 @@
       "buttons": {
         "viewDetail": "View Details",
         "startNow": "Start Now!",
-        "submitWork": "Submit Work"
+        "submitWork": "Submit Work",
+        "deadlineExpired": "Deadline Expired"
       },
       "detail": {
         "title": "Mission Details",
@@ -581,6 +582,15 @@
         "medium": "Medium",
         "hard": "Hard"
       }
+    },
+    "submitMissionModal": {
+      "title": "Confirm Mission Completion",
+      "missionLabel": "Mission",
+      "noFile": "No file chosen",
+      "note": "You can submit without a file if you’ve already completed the task — this will act as your confirmation.",
+      "cancel": "Cancel",
+      "confirm": "Confirm Completion",
+      "uploadLabel": "Optional: Upload a file or image"
     }
   },
   "component": {

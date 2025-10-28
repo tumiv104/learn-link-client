@@ -489,7 +489,8 @@
       "buttons": {
         "viewDetail": "Xem chi tiết",
         "startNow": "Bắt đầu ngay!",
-        "submitWork": "Nộp bài"
+        "submitWork": "Nộp bài",
+        "deadlineExpired": "Đã quá hạn"
       },
       "detail": {
         "title": "Chi tiết nhiệm vụ",
@@ -584,7 +585,16 @@
         "medium": "Trung bình",
         "hard": "Khó"
       }
-    }
+    },
+     "submitMissionModal": {
+    "title": "Xác nhận hoàn thành nhiệm vụ",
+    "missionLabel": "Nhiệm vụ",
+    "uploadLabel": "Tải lên tệp của bạn",
+    "noFile": "Chưa chọn tệp",
+    "note": "Lưu ý: Bạn có thể gửi mà không cần tệp nếu đã hoàn thành nhiệm vụ — hành động này sẽ được xem như xác nhận hoàn thành.",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận hoàn thành"
+  }
   },
   "component": {
     "paginationBar": {

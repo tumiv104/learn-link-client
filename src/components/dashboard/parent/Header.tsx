@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { useAuth } from "@/context/AuthContext"
 
 import { useTranslations } from "next-intl"
-import { NotificationResponse } from "@/data/notification"
+import type { NotificationResponse } from "@/data/notification"
 import LanguageSwitcher from "@/components/LanguageSwitcher"
 import { NotificationDropdown } from "../child/NotificationDropdown"
 
@@ -16,12 +16,8 @@ interface HeaderProps {
   onMarkAllNotificationsAsRead: () => void
 }
 
-export default function Header({ 
-  notifications,
-  onMarkNotificationAsRead,
-  onMarkAllNotificationsAsRead,
-}: HeaderProps) {
-  const t = useTranslations("header");
+export default function Header({ notifications, onMarkNotificationAsRead, onMarkAllNotificationsAsRead }: HeaderProps) {
+  const t = useTranslations("header")
   const router = useRouter()
   const { user, logout, isAuthenticated } = useAuth()
 
@@ -37,7 +33,16 @@ export default function Header({
   return (
     <header className="bg-white/80 backdrop-blur-sm border-b border-orange-100 sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push("/")}>
+        <div
+          className="flex items-center gap-3 cursor-pointer"
+          onClick={() => router.push("/")}
+          onClickCapture={(e) => {
+            // Prevent navigation if clicking on notification dropdown
+            if ((e.target as HTMLElement).closest('[role="button"]')) {
+              e.stopPropagation()
+            }
+          }}
+        >
           <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center">
             <Star className="w-6 h-6 text-white" />
           </div>
@@ -49,7 +54,9 @@ export default function Header({
           <LanguageSwitcher />
           {isAuthenticated ? (
             <>
-              <span className="text-sm text-muted-foreground">{t("welcome")}, {user?.name}!</span>
+              <span className="text-sm text-muted-foreground">
+                {t("welcome")}, {user?.name}!
+              </span>
               <NotificationDropdown
                 notifications={notifications}
                 onMarkAsRead={onMarkNotificationAsRead}
