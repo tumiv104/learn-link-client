@@ -16,6 +16,10 @@ import { NotificationResponse } from "@/data/notification"
 import { getAllMissionByStatus } from "@/services/mission/missionService"
 import { MissionSubmission } from "@/data/mission"
 import { isSameDay, subDays } from "date-fns"
+import ProfileScreen from "./screens/ProfileScreen"
+import { useRouter } from "next/navigation"
+import { logout } from "@/services/auth/authService"
+
 
 function calculateStreak(missions: MissionSubmission[]) {
   const completedDates = missions
@@ -45,6 +49,7 @@ export default function ChildDashboard() {
   const [notifications, setNotifications] = useState<NotificationResponse[]>([])
   const [missionList, setMissionList] = useState<MissionSubmission[]>([])
   const [streak, setStreak] = useState<number>(1)
+  const router = useRouter()
 
   const handleMarkNotificationAsRead = useCallback(async (id: number) => {
     const res = await markAsRead(id);
@@ -52,6 +57,15 @@ export default function ChildDashboard() {
       setNotifications((prev) => prev.map((n) => (n.notificationId === id ? { ...n, isRead: true } : n)))
     }
   }, [])
+
+    const handleLogout = async () => {
+    try {
+      await logout()
+      router.push("/auth/login")
+    } catch (error) {
+      console.error("Logout failed:", error)
+    }
+  }
 
   const handleMarkAllNotificationsAsRead = useCallback(async () => {
     if (user) {
@@ -180,8 +194,9 @@ export default function ChildDashboard() {
           {activeScreen === "home" && <HomeScreen user={user} points={balance} missions={missionList} streak={streak}/>}
           {activeScreen === "missions" && <MissionScreen/>}
           {activeScreen === "shop" && <ShopScreen user={user} points={balance}/>}
-          {/* {activeScreen === "achievements" && <AchievementsScreen/>}
-          {activeScreen === "profile" && <ProfileScreen user={user} onLogout={handleLogout}/>} */}
+          {/* {activeScreen === "achievements" && <AchievementsScreen/>} */}
+        {activeScreen === "profile" && <ProfileScreen user={user} onLogout={handleLogout} streak={streak} balance={balance}/>}
+
         </div>
       </div>
     </div>

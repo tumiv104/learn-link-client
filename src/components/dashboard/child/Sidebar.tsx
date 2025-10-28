@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Gamepad2, ShoppingBag } from "lucide-react"
+import { Home, Gamepad2, ShoppingBag, User } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 interface SidebarProps {
@@ -23,7 +23,7 @@ export function Sidebar({ activeScreen, setActiveScreen, name, player }: Sidebar
     { id: "missions", icon: Gamepad2, label: t("missions"), color: "hover:bg-green-500" },
     { id: "shop", icon: ShoppingBag, label: t("shop"), color: "hover:bg-blue-500" },
     // { id: "achievements", icon: Award, label: t("achievements"), color: "hover:bg-yellow-500" },
-    // { id: "profile", icon: User, label: t("profile"), color: "hover:bg-pink-500" },
+    { id: "profile", icon: User, label: t("profile"), color: "hover:bg-pink-500" },
   ]
 
   return (

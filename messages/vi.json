@@ -414,6 +414,7 @@
       "parent": "Phụ huynh",
       "notUpdated": "Chưa cập nhật",
       "notAvailable": "Chưa có thông tin",
+      "changePassword":"Đổi mật khẩu",
       "editDialog": {
         "title": "Chỉnh sửa hồ sơ",
         "avatarHelp": "Nhấn để thay đổi ảnh đại diện",
@@ -525,7 +526,8 @@
       "buttons": {
         "viewDetail": "Xem chi tiết",
         "startNow": "Bắt đầu ngay!",
-        "submitWork": "Nộp bài"
+        "submitWork": "Nộp bài",
+        "deadlineExpired": "Đã quá hạn"
       },
       "detail": {
         "title": "Chi tiết nhiệm vụ",
@@ -612,7 +614,8 @@
       "energy": "Năng lượng",
       "editProfile": "Chỉnh sửa hồ sơ",
       "messageParents": "Gửi tin cho phụ huynh",
-      "logout": "Đăng xuất"
+      "logout": "Đăng xuất",
+      "changePassword": "Đổi mật khẩu"
     },
     "quests": {
       "difficulty": {
@@ -620,7 +623,16 @@
         "medium": "Trung bình",
         "hard": "Khó"
       }
-    }
+    },
+     "submitMissionModal": {
+    "title": "Xác nhận hoàn thành nhiệm vụ",
+    "missionLabel": "Nhiệm vụ",
+    "uploadLabel": "Tải lên tệp của bạn",
+    "noFile": "Chưa chọn tệp",
+    "note": "Lưu ý: Bạn có thể gửi mà không cần tệp nếu đã hoàn thành nhiệm vụ — hành động này sẽ được xem như xác nhận hoàn thành.",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận hoàn thành"
+  }
   },
   "component": {
     "paginationBar": {
@@ -720,5 +732,34 @@
     "description": "Nâng cấp lên Premium để mở khóa truy cập không giới hạn",
     "cancel": "Hủy",
     "upgrade": "Nâng cấp lên Premium"
+  },
+  "profile": {
+    "changePassword": {
+      "title": "Đổi mật khẩu",
+      "description": "Nhập mật khẩu hiện tại và chọn mật khẩu mới",
+      "successMessage": "Mật khẩu của bạn đã được đổi thành công",
+      "successTitle": "Đổi mật khẩu thành công",
+      "successDetail": "Mật khẩu của bạn đã được cập nhật. Bạn có thể đăng nhập bằng mật khẩu mới.",
+      "done": "Hoàn tất",
+      "currentPassword": "Mật khẩu hiện tại",
+      "newPassword": "Mật khẩu mới",
+      "confirmPassword": "Xác nhận mật khẩu mới",
+      "passwordHint": "Tối thiểu 6 ký tự",
+      "placeholders": {
+        "current": "Nhập mật khẩu hiện tại",
+        "new": "Nhập mật khẩu mới",
+        "confirm": "Xác nhận mật khẩu mới"
+      },
+      "cancel": "Hủy",
+      "changeButton": "Đổi mật khẩu",
+      "changing": "Đang đổi...",
+      "errors": {
+        "fillAll": "Vui lòng điền đầy đủ thông tin",
+        "shortPassword": "Mật khẩu mới phải có ít nhất 6 ký tự",
+        "mismatch": "Hai mật khẩu mới không khớp",
+        "sameAsOld": "Mật khẩu mới phải khác mật khẩu cũ",
+        "failed": "Đổi mật khẩu thất bại. Vui lòng thử lại."
+      }
+    }
   }
 }

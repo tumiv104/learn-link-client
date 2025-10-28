@@ -85,7 +85,7 @@ export default function MissionScreen() {
     setSubmitModalOpen(true)
   }
 
-  const handleSubmitMission = async (missionId: number, file: File) => {
+  const handleSubmitMission = async (missionId: number, file?: File | null) => {
     const fd = new FormData()
 
     if (file) {

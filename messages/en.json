@@ -269,6 +269,7 @@
       "parent": "Parent",
       "notUpdated": "Not updated",
       "notAvailable": "Not available",
+      "changePassword":"Change password",
       "editDialog": {
         "title": "Edit Profile",
         "avatarHelp": "Click to change avatar",
@@ -526,7 +527,8 @@
       "buttons": {
         "viewDetail": "View Details",
         "startNow": "Start Now!",
-        "submitWork": "Submit Work"
+        "submitWork": "Submit Work",
+        "deadlineExpired": "Deadline Expired"
       },
       "detail": {
         "title": "Mission Details",
@@ -609,7 +611,8 @@
       "energy": "Energy",
       "editProfile": "Edit Profile",
       "messageParents": "Message Parents",
-      "logout": "Logout"
+      "logout": "Logout",
+      "changePassword": "Change password"
     },
     "quests": {
       "difficulty": {
@@ -617,6 +620,15 @@
         "medium": "Medium",
         "hard": "Hard"
       }
+    },
+    "submitMissionModal": {
+      "title": "Confirm Mission Completion",
+      "missionLabel": "Mission",
+      "noFile": "No file chosen",
+      "note": "You can submit without a file if you’ve already completed the task — this will act as your confirmation.",
+      "cancel": "Cancel",
+      "confirm": "Confirm Completion",
+      "uploadLabel": "Optional: Upload a file or image"
     }
   },
   "component": {
@@ -717,5 +729,34 @@
     "description": "Upgrade to Premium to unlock unlimited access",
     "cancel": "Cancel",
     "upgrade": "Upgrade to Premium"
+  },
+  "profile": {
+    "changePassword": {
+      "title": "Change Password",
+      "description": "Enter your current password and choose a new one",
+      "successMessage": "Your password has been changed successfully",
+      "successTitle": "Password Changed",
+      "successDetail": "Your password has been successfully updated. You can now use your new password to sign in.",
+      "done": "Done",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "passwordHint": "At least 6 characters",
+      "placeholders": {
+        "current": "Enter current password",
+        "new": "Enter new password",
+        "confirm": "Confirm new password"
+      },
+      "cancel": "Cancel",
+      "changeButton": "Change Password",
+      "changing": "Changing...",
+      "errors": {
+        "fillAll": "Please fill in all fields",
+        "shortPassword": "New password must be at least 6 characters long",
+        "mismatch": "New passwords do not match",
+        "sameAsOld": "New password must be different from old password",
+        "failed": "Failed to change password. Please try again."
+      }
+    }
   }
 }
