@@ -12,8 +12,8 @@ import { useAlert } from "@/hooks/useAlert"
 import { AlertPopup } from "@/components/ui/alert-popup"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getAllProduct } from "@/services/shop/shopService"
-import { ProductResponse, RedemptionResponse } from "@/data/shop"
-import { UserDto } from "@/services/auth/authService"
+import type { ProductResponse, RedemptionResponse } from "@/data/shop"
+import type { UserDto } from "@/services/auth/authService"
 import { getAllChildRedemption, redeemProduct } from "@/services/points/pointService"
 
 interface ShopProps {
@@ -69,6 +69,7 @@ export default function ShopScreen({ user, points }: ShopProps) {
             const res = await redeemProduct(user.id, product.productId)
             if (res.success) {
               showSuccess("success", t("dialog.success", { name: product.name }))
+              fetchRedemption()
             } else {
               showError("error", res.message)
             }
@@ -84,21 +85,14 @@ export default function ShopScreen({ user, points }: ShopProps) {
     <div className="space-y-6 pb-24">
       {alert && (
         <div className="mb-6">
-          <AlertPopup
-            type={alert.type}
-            title={alert.title}
-            message={alert.message}
-            onClose={hideAlert}
-          />
+          <AlertPopup type={alert.type} title={alert.title} message={alert.message} onClose={hideAlert} />
         </div>
       )}
 
       {/* Header */}
       <div className="text-center bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 p-8 rounded-3xl shadow-2xl">
         <div className="text-8xl animate-bounce mb-4">🏪</div>
-        <h2 className="text-5xl font-black text-white drop-shadow-lg mb-2">
-          {t("header.title")}
-        </h2>
+        <h2 className="text-5xl font-black text-white drop-shadow-lg mb-2">{t("header.title")}</h2>
         <p className="text-white text-xl font-bold">{t("header.subtitle")}</p>
 
         {/* Points Display */}

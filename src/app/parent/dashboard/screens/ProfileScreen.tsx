@@ -5,12 +5,13 @@ import { getUserProfile } from "@/services/user/userService"
 import type { UserProfileDTO } from "@/data/UserProfileDTO"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { Loader2, User, Star, Users, Calendar, Award, Edit3, Mail, Crown } from "lucide-react"
+import { Loader2, User, Star, Users, Calendar, Award, Edit3, Mail, Crown, Lock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
 import { EditProfileDialog } from "@/components/dashboard/parent/EditProfileDialog"
 import { updateUserProfile } from "@/services/user/userService"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { ChangePasswordDialog } from "@/components/auth/ChangePasswordDialog"
 import { UserDto } from "@/services/auth/authService"
 
 interface ProfileScreenProps {
@@ -24,6 +25,7 @@ export default function ProfileScreen({ user } : ProfileScreenProps) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [editDialogOpen, setEditDialogOpen] = useState(false)
+  const [changePasswordOpen, setChangePasswordOpen] = useState(false)
 
   const fetchProfile = async () => {
     try {
@@ -83,6 +85,7 @@ export default function ProfileScreen({ user } : ProfileScreenProps) {
   return (
     <TooltipProvider>
       <div className="space-y-6">
+        {/* Header */}
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-blue-500 rounded-lg">
@@ -93,12 +96,27 @@ export default function ProfileScreen({ user } : ProfileScreenProps) {
               <p className="text-gray-600">{t("subtitle")}</p>
             </div>
           </div>
-          <Button onClick={() => setEditDialogOpen(true)} className="bg-blue-500 hover:bg-blue-600 text-white">
-            <Edit3 className="w-4 h-4 mr-2" />
-            {t("editButton")}
-          </Button>
+          {/* Buttons: Change Password + Edit */}
+          <div className="flex gap-2">
+            <Button
+              onClick={() => setChangePasswordOpen(true)}
+              className="flex items-center gap-1 px-3 py-2 bg-amber-500 hover:bg-amber-600 text-white"
+            >
+              <Lock className="w-4 h-4" />
+              {t("changePassword")}
+            </Button>
+
+            <Button
+              onClick={() => setEditDialogOpen(true)}
+              className="flex items-center gap-1 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white"
+            >
+              <Edit3 className="w-4 h-4" />
+              {t("editButton")}
+            </Button>
+          </div>
         </div>
 
+        {/* Profile Card */}
         <Card className="shadow-sm">
           <CardHeader className="bg-gradient-to-r from-blue-500 to-blue-600 text-white min-h-[120px] py-4 flex items-center">
             <div className="flex items-center gap-4">
@@ -139,6 +157,7 @@ export default function ProfileScreen({ user } : ProfileScreenProps) {
 
           <CardContent className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* DOB */}
               <div className="p-4 bg-gray-50 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <Calendar className="w-5 h-5 text-blue-500" />
@@ -149,6 +168,7 @@ export default function ProfileScreen({ user } : ProfileScreenProps) {
                 </p>
               </div>
 
+              {/* Joined Date */}
               <div className="p-4 bg-gray-50 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <Calendar className="w-5 h-5 text-green-500" />
@@ -159,6 +179,7 @@ export default function ProfileScreen({ user } : ProfileScreenProps) {
                 </p>
               </div>
 
+              {/* Points */}
               <div className="p-4 bg-gray-50 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <Star className="w-5 h-5 text-amber-500" />
@@ -167,6 +188,7 @@ export default function ProfileScreen({ user } : ProfileScreenProps) {
                 <p className="text-2xl font-bold text-gray-800">{profile.totalPoints?.toLocaleString() || 0}</p>
               </div>
 
+              {/* Children Count (Parent) */}
               {profile.roleName === "Parent" && (
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
@@ -177,6 +199,7 @@ export default function ProfileScreen({ user } : ProfileScreenProps) {
                 </div>
               )}
 
+              {/* Parent Name (Child) */}
               {profile.roleName === "Child" && profile.parentName && (
                 <div className="p-4 bg-gray-50 rounded-lg md:col-span-2">
                   <div className="flex items-center gap-2 mb-2">
@@ -190,6 +213,7 @@ export default function ProfileScreen({ user } : ProfileScreenProps) {
           </CardContent>
         </Card>
 
+        {/* Dialogs */}
         <EditProfileDialog
           open={editDialogOpen}
           onClose={() => setEditDialogOpen(false)}
@@ -197,6 +221,8 @@ export default function ProfileScreen({ user } : ProfileScreenProps) {
           onSuccess={handleUpdateSuccess}
           onUpdateProfile={handleUpdateProfile}
         />
+
+        <ChangePasswordDialog open={changePasswordOpen} onOpenChange={setChangePasswordOpen} />
       </div>
     </TooltipProvider>
   )

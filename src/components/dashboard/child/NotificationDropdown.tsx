@@ -10,8 +10,9 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { NotificationResponse } from "@/data/notification"
+import type { NotificationResponse } from "@/data/notification"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 
 interface NotificationDropdownProps {
   notifications: NotificationResponse[]
@@ -31,17 +32,34 @@ function renderMessage(notification: NotificationResponse, t: (key: string, valu
       return t("message.missionStarted", { childName: payload.childName, title: payload.title })
     case "MissionSubmitted":
       return t("message.missionSubmitted", { childName: payload.childName, title: payload.title })
+    case "ProductRedeemed":
+      return t("message.productRedeemed", { productName: payload.productName })
     default:
       return payload.title
   }
 }
 
-export function NotificationDropdown({
-  notifications,
-  onMarkAsRead,
-  onMarkAllAsRead,
-}: NotificationDropdownProps) {
+function getNotificationPath(notification: NotificationResponse): string {
+  const { type, payload } = notification
+
+  switch (type) {
+    case "MissionAssigned":
+    case "MissionStarted":
+      return "/child/dashboard?tab=missions"
+    case "MissionSubmitted":
+      return "/child/dashboard?tab=missions"
+    case "MissionReviewed":
+      return "/child/dashboard?tab=missions"
+    case "ProductRedeemed":
+      return "/child/dashboard?tab=shop&subtab=orders"
+    default:
+      return "/child/dashboard"
+  }
+}
+
+export function NotificationDropdown({ notifications, onMarkAsRead, onMarkAllAsRead }: NotificationDropdownProps) {
   const t = useTranslations("NotificationDropdown")
+  const router = useRouter()
   const unreadCount = notifications.filter((n) => !n.isRead).length
 
   const getNotificationIcon = (type: NotificationResponse["type"]) => {
@@ -50,6 +68,8 @@ export function NotificationDropdown({
         return "🚀"
       case "MissionReviewed":
         return "🏆"
+      case "ProductRedeemed":
+        return "📦"
       default:
         return "📢"
     }
@@ -69,10 +89,18 @@ export function NotificationDropdown({
     return t("time.daysAgo", { count: days })
   }
 
+  const handleNotificationClick = (notification: NotificationResponse) => {
+    event?.stopPropagation?.()
+    onMarkAsRead(notification.notificationId)
+    const path = getNotificationPath(notification)
+    console.log("[v0] Navigating to:", path)
+    router.push(path)
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="bg-transparent relative">
+        <Button variant="outline" size="sm" className="bg-transparent relative" onClick={(e) => e.stopPropagation()}>
           <Bell className="w-4 h-4" />
           {unreadCount > 0 && (
             <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-white text-xs">
@@ -107,7 +135,7 @@ export function NotificationDropdown({
               <DropdownMenuItem
                 key={notification.notificationId}
                 className={`p-3 cursor-pointer ${!notification.isRead ? "bg-blue-50" : ""}`}
-                onClick={() => onMarkAsRead(notification.notificationId)}
+                onClick={() => handleNotificationClick(notification)}
               >
                 <div className="flex gap-3 w-full">
                   <div className="text-2xl flex-shrink-0">{getNotificationIcon(notification.type)}</div>

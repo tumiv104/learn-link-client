@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Calendar, Star, Trophy, AlertCircle, Clock, Rocket, Send, CheckCircle2 } from "lucide-react"
-import { MissionSubmission } from "@/data/mission"
+import type { MissionSubmission } from "@/data/mission"
 import { useTranslations } from "next-intl"
 
 interface MissionStatusCardProps {
@@ -15,9 +15,14 @@ interface MissionStatusCardProps {
   onSubmit?: () => void
 }
 
-function getTimeRemaining(deadline: string, createdAt: string, t: ReturnType<typeof useTranslations>, submittedAt?: string) {
-  const start = new Date(createdAt);
-  const end = new Date(deadline);
+function getTimeRemaining(
+  deadline: string,
+  createdAt: string,
+  t: ReturnType<typeof useTranslations>,
+  submittedAt?: string,
+) {
+  const start = new Date(createdAt)
+  const end = new Date(deadline)
   let now: Date
   if (submittedAt !== undefined) {
     now = new Date(submittedAt)
@@ -27,15 +32,12 @@ function getTimeRemaining(deadline: string, createdAt: string, t: ReturnType<typ
   const diff = end.getTime() - now.getTime()
   const progress = Math.floor(((now.getTime() - start.getTime()) / (end.getTime() - start.getTime())) * 100)
   if (diff < 0) {
-    if (submittedAt === undefined)
-      return { text: t("time.expired"), urgent: true, expired: true, progress: 100 }
+    if (submittedAt === undefined) return { text: t("time.expired"), urgent: true, expired: true, progress: 100 }
     return getDiff(Math.abs(diff), true, "Late", t, progress)
   } else {
-    if (submittedAt === undefined)
-      return getDiff(diff, false, "Left", t, progress)
+    if (submittedAt === undefined) return getDiff(diff, false, "Left", t, progress)
     return getDiff(diff, false, "Early", t, progress)
   }
-  
 }
 
 function getDiff(diff: number, late: boolean, txt: string, t: ReturnType<typeof useTranslations>, process: number) {
@@ -66,7 +68,7 @@ export function MissionStatusCard({ mission, onViewDetail, onStart, onSubmit }: 
 
   let submittedTime = undefined
   if (mission.submission) {
-    submittedTime = mission.submission.submittedAt ? mission.submission.submittedAt : undefined;
+    submittedTime = mission.submission.submittedAt ? mission.submission.submittedAt : undefined
   }
   const timeInfo = mission.deadline ? getTimeRemaining(mission.deadline, mission.createdAt, t, submittedTime) : null
 
@@ -211,20 +213,33 @@ export function MissionStatusCard({ mission, onViewDetail, onStart, onSubmit }: 
             <Button
               onClick={onStart}
               size="lg"
-              className={`flex-1 text-lg font-bold ${config.color} hover:opacity-90 shadow-md hover:shadow-lg transition-all text-white`}
+              disabled={timeInfo?.expired}
+              className={`flex-1 text-lg font-bold ${
+                timeInfo?.expired
+                  ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                  : `${config.color} hover:opacity-90 shadow-md hover:shadow-lg transition-all text-white`
+              }`}
             >
-              🚀 {t("buttons.startNow")}
+              {timeInfo?.expired ? "⏰ " + t("buttons.deadlineExpired") : "🚀 " + t("buttons.startNow")}
             </Button>
           )}
 
+
           {mission.missionStatus === "Processing" && onSubmit && (
-            <Button
-              onClick={onSubmit}
-              size="lg"
-              className={`flex-1 text-lg font-bold ${config.color} hover:opacity-90 shadow-md hover:shadow-lg transition-all text-white animate-pulse`}
-            >
-              📤 {t("buttons.submitWork")}
-            </Button>
+            <>
+              <Button
+                onClick={onSubmit}
+                size="lg"
+                disabled={timeInfo?.expired}
+                className={`flex-1 text-lg font-bold ${
+                  timeInfo?.expired
+                    ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                    : `${config.color} hover:opacity-90 shadow-md hover:shadow-lg transition-all text-white animate-pulse`
+                }`}
+              >
+                📤 {timeInfo?.expired ? t("buttons.deadlineExpired") : t("buttons.submitWork")}
+              </Button>
+            </>
           )}
         </div>
       </CardContent>
