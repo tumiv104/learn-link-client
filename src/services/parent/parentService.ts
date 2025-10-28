@@ -3,19 +3,19 @@ import { ChildBasicInfoDTO } from "@/data/ChildBasicInfoDTO";
 import { UserProfileDTO } from "@/data/UserProfileDTO";
 
 
-export async function getParentProfile() {
-  const res = await api.get("/User/profile")
+export async function getParentProfile(userId: number) {
+  const res = await api.get(`/User/profile/${userId}`)
   return res.data.data as { isPremium: boolean; premiumExpiry?: string }
 }
 
 
-export async function getChildren(){
-  const res = await api.get("/Parent/children");
+export async function getChildren(parentId: number){
+  const res = await api.get(`/Parent/${parentId}/children`);
   return res.data.data as ChildBasicInfoDTO[];
 }
 
-export async function createChild(formData: FormData) {
-  const res = await api.post("/Parent/children", formData, {
+export async function createChild(parentId: number, formData: FormData) {
+  const res = await api.post(`/Parent/${parentId}/children`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -28,7 +28,7 @@ export async function createChild(formData: FormData) {
 }
 
 
-export async function getChildProfile(childId: number): Promise<UserProfileDTO> {
-  const res = await api.get(`/Parent/children/${childId}`)
+export async function getChildProfile(parentId: number, childId: number): Promise<UserProfileDTO> {
+  const res = await api.get(`/Parent/${parentId}/children/${childId}`)
   return res.data.data as UserProfileDTO
 }

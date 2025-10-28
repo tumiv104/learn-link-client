@@ -2,25 +2,11 @@ import api from "@/lib/api"
 import type { SubmissionDetailDTO } from "@/data/submissionDetail"
 import type { PageResult } from "@/data/pagination"
 
-export async function getParentSubmissions(page = 1, pageSize = 5): Promise<PageResult<SubmissionDetailDTO>> {
-  const res = await api.get(`/Submission/parents`, {
+export async function getParentSubmissions(parentId: number, page = 1, pageSize = 5): Promise<PageResult<SubmissionDetailDTO>> {
+  const res = await api.get(`/Submission/parents/${parentId}`, {
     params: { page, pageSize }
   })
   return res.data.data as PageResult<SubmissionDetailDTO>
-}
-
-export async function reviewSubmission(
-  submissionId: number,
-  feedback: string,
-  score: number,
-  approved: boolean,
-): Promise<any> {
-  const res = await api.post(`/Submission/review/${submissionId}`, {
-    feedback,
-    score,
-    approved,
-  })
-  return res.data
 }
 
 export async function acceptMission(missionId: number) {
@@ -37,8 +23,8 @@ export async function submitMission(missionId: number, fd: FormData) {
   return res.data;
 }
 
-export async function approveSubmission(submissionId: number, score: number, feedback: string) {
-  const res = await api.post("/submission/approve", {
+export async function approveSubmission(parentId: number, submissionId: number, score: number, feedback: string) {
+  const res = await api.post(`/submission/${parentId}/approve`, {
     submissionId,
     score,
     feedback
@@ -46,8 +32,8 @@ export async function approveSubmission(submissionId: number, score: number, fee
   return res.data
 }
 
-export async function rejectSubmission(submissionId: number, score: number, feedback: string) {
-  const res = await api.post("/submission/reject", {
+export async function rejectSubmission(parentId: number, submissionId: number, score: number, feedback: string) {
+  const res = await api.post(`/submission/${parentId}/reject`, {
     submissionId,
     score,
     feedback
