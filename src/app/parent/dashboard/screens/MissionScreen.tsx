@@ -37,7 +37,7 @@ export default function MissionScreen({ onPremiumLimitReached, balance, user }: 
   const { page, setPage, pageSize, setPageSize, getPageNumbers } = usePagination(totalPages, 1, 5)
 
   const [children, setChildren] = useState<ChildBasicInfoDTO[]>([])
-  const [loadingChildren, setLoadingChildren] = useState(true)
+  const [loadingChildren, setLoadingChildren] = useState(false)
 
   const [missionDialog, setMissionDialog] = useState({
     open: false,
@@ -76,7 +76,7 @@ export default function MissionScreen({ onPremiumLimitReached, balance, user }: 
   useEffect(() => {
     const fetchChildren = async () => {
       try {
-        setLoading(true)
+        setLoadingChildren(true)
         const res = await getChildren(user.id)
         const data: ChildBasicInfoDTO[] = res.map((c: any) => ({
           childId: c.childId != null ? c.childId.toString() : "",
@@ -90,7 +90,7 @@ export default function MissionScreen({ onPremiumLimitReached, balance, user }: 
       } catch (err) {
         //console.error(err)
       } finally {
-        setLoading(false)
+        setLoadingChildren(false)
       }
     }
     fetchChildren()
@@ -187,7 +187,7 @@ export default function MissionScreen({ onPremiumLimitReached, balance, user }: 
       </div>
 
       <div className="grid gap-4">
-        {loading ? (
+        {(loading || loadingChildren) ? (
           <div className="text-center py-6">Loading...</div>
         ) : missions.length === 0 ? (
           <div className="text-center py-6 text-gray-500">No missions yet</div>
